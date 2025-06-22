@@ -1,0 +1,541 @@
+# Type defintions
+
+enum PreferenceStatus {
+  PREFERRED
+  AVAILABLE
+}
+
+type PreferredMatchdayDate @aws_cognito_user_pools {
+  club: Club!
+  season: Season!
+  league: League!
+  preferenceDate: AWSDate!
+  status: PreferenceStatus!
+  notes: String
+}
+
+type Association @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  shortName: String!
+  address: Address!
+  contactName: String!
+  contactEmail: AWSEmail!
+  website: AWSURL
+  phone: String
+  coordinators: [Person]!
+  groupLeaders: [Person]!
+  seasons: [Season]
+}
+
+type Season @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  startDate: AWSDate!
+  endDate: AWSDate!
+  registrationStart: AWSDate
+  registrationEnd: AWSDate!
+  association: Association!
+  leagues: [League]
+}
+
+type League @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  association: Association!
+  season: Season!
+  additionalEligibleAssociations: [Association]
+  shortName: String
+  description: String!
+  minAge: Int
+  maxAge: Int
+  matchdayDates: [AWSDate!]
+  groups: [LeagueGroup]
+}
+
+type LeagueGroup @aws_cognito_user_pools {
+  id: ID!
+  association: Association!
+  season: Season!
+  league: League!
+  number: Int!
+  name: String!
+  shortName: String!
+  leader: Person!
+  regulation: String!
+}
+
+type Club @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  shortName: String
+  address: Address
+  website: AWSURL
+  contact: Person
+  association: Association!
+  teams: [Team]
+  players: [Person]
+}
+
+type Team @aws_cognito_user_pools {
+  id: ID!
+  club: Club!
+  name: String!
+  players: [Person]!
+  league: League!
+  leagueGroup: LeagueGroup
+  withoutCompetition: Boolean
+  secondRightToPlay: Boolean
+  sgClub: Club
+  exemptionRequest: String
+}
+
+type Gym @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  club: Club!
+  address: Address!
+  availableFields: String!
+}
+
+type MatchDay @aws_cognito_user_pools {
+  id: ID!
+  group: LeagueGroup!
+  matchDayNumber: String!
+  startDate: AWSDateTime!
+  endDate: AWSDateTime!
+  gym: Gym!
+  streamingLink: AWSURL
+  teams: [MatchdayTeam]!
+  games: [Game]!
+  commissioners: RefereeInfo
+  secretary: String!
+  report: String
+  pin: String
+}
+
+type Address @aws_cognito_user_pools{
+  street: String
+  zip: String
+  city: String
+  country: String
+}
+
+type Person @aws_cognito_user_pools{ 
+  id: ID!
+  firstName: String!
+  lastName: String!
+  subjectId: ID
+  club: Club
+  gender: String
+  dateOfBirth: AWSDate
+  uciCode: String
+  nationality: String
+  email: AWSEmail
+  phone: String
+  address: Address
+}
+
+type MatchdayTeam @aws_cognito_user_pools {
+  id: ID!
+  team: Team!
+  substitutePlayer: Person
+  present: Boolean!
+}
+
+type Game @aws_cognito_user_pools {
+  gameNumber: Int!
+  team1: MatchdayTeam!
+  team2: MatchdayTeam!
+  halftimeGoalsTeam1: Int
+  halftimeGoalsTeam2: Int
+  finalGoalsTeam1: Int
+  finalGoalsTeam2: Int
+  pointsTeam1: Int
+  pointsTeam2: Int
+  bothLost: Boolean
+  nonCompetitive: Boolean
+}
+
+type RefereeInfo @aws_cognito_user_pools {
+  chiefReferee: Person
+  additionalReferees: [Person]!
+}
+
+type AuditLogEntry @aws_cognito_user_pools {
+  resourceType: String!
+  resourceId: String!
+  timestamp: AWSDateTime!
+  actorId: String!
+  actorName: String!
+  description: String!
+}
+
+type PersonPermission @aws_cognito_user_pools {
+  personId: ID!
+  resourceType: String!
+  resourceId: ID!
+  permission: String!
+}
+
+# Input types
+
+input SaveAssociationInput {
+  name: String!
+  shortName: String!
+  address: AddressInput!
+  contactName: String!
+  contactEmail: AWSEmail!
+  website: AWSURL
+  phone: String
+  coordinators: [ID]!
+}
+
+input ModifyAssociationInput {
+  id: ID!
+  name: String!
+  shortName: String!
+  address: AddressInput!
+  contactName: String!
+  contactEmail: AWSEmail!
+  website: AWSURL
+  phone: String
+  coordinators: [ID]!
+}
+
+input AddressInput {
+  street: String
+  zip: String
+  city: String
+  country: String
+}
+
+input SaveClubInput {
+  name: String!
+  shortName: String
+  address: AddressInput!
+  contactId: ID!
+  website: AWSURL
+  associationId: ID!
+}
+
+input ModifyClubInput {
+  id: ID!
+  name: String!
+  shortName: String
+  address: AddressInput!
+  contactId: ID!
+  website: AWSURL
+}
+
+input SaveSeasonInput {
+  name: String!
+  startDate: AWSDate!
+  endDate: AWSDate!
+  associationId: ID!
+  registrationStart: AWSDate
+  registrationEnd: AWSDate!
+}
+
+input ModifySeasonInput {
+  id: ID!
+  name: String!
+  startDate: AWSDate!
+  endDate: AWSDate!
+  registrationStart: AWSDate
+  registrationEnd: AWSDate!
+}
+
+input SaveLeagueInput {
+  seasonId: ID!
+  name: String!
+  shortName: String
+  description: String!
+  additionalEligibleAssociations: [ID]!
+  minAge: Int
+  maxAge: Int
+  matchdayDates: [AWSDate!]
+}
+input ModifyLeagueInput {
+  id: ID!
+  name: String!
+  shortName: String
+  description: String!
+  additionalEligibleAssociations: [ID]!
+  minAge: Int
+  maxAge: Int
+  matchdayDates: [AWSDate!]
+}
+
+input SaveLeagueGroupInput {
+  leagueId: ID!
+  number: Int!
+  name: String!
+  shortName: String!
+  groupLeaderId: ID!
+  regulation: String!
+}
+
+input ModifyLeagueGroupInput {
+  id: ID!
+  number: Int!
+  name: String!
+  shortName: String!
+  groupLeaderId: ID!
+  regulation: String!
+}
+
+input SavePersonInput {
+  firstName: String!
+  lastName: String!
+  gender: String
+  dateOfBirth: AWSDate
+  clubId: ID!
+  uciCode: String
+  nationality: String
+  email: AWSEmail
+  phone: String
+  address: AddressInput
+}
+
+input ModifyPersonInput {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  gender: String
+  dateOfBirth: AWSDate
+  clubId: ID!
+  uciCode: String
+  nationality: String
+  email: AWSEmail
+  phone: String
+  address: AddressInput
+}
+
+input SaveTeamInput {
+  name: String!
+  clubId: ID!
+  playerIds: [ID]!
+  leagueId: ID!
+  leagueGroupId: ID
+  withoutCompetition: Boolean
+  secondRightToPlay: Boolean
+  sgClubId: ID
+  exemptionRequest: String
+}
+
+input ModifyTeamInput {
+  id: ID!
+  name: String
+  playerIds: [ID]
+  leagueId: ID
+  leagueGroupId: ID
+  withoutCompetition: Boolean
+  secondRightToPlay: Boolean
+  sgClubId: ID
+  exemptionRequest: String
+}
+
+input SaveMatchDayTeamInput {
+  teamId: ID!
+  substitutePlayerId: ID
+  present: Boolean!
+}
+
+input ModifyMatchDayTeamInput {
+  substitutePlayerId: ID
+  present: Boolean!
+}
+
+input AddGameInput{
+  gameNumber: Int!
+  team1Id: ID!
+  team2Id: ID!
+}
+
+input ModifyGameInput {
+  id: ID!
+  halftimeGoalsTeam1: Int
+  halftimeGoalsTeam2: Int
+  finalGoalsTeam1: Int
+  finalGoalsTeam2: Int
+  pointsTeam1: Int
+  pointsTeam2: Int
+  bothLost: Boolean
+  nonCompetitive: Boolean
+}
+
+input SaveGymInput {
+  name: String!
+  clubId: ID!
+  address: AddressInput!
+  availableFields: String!
+}
+
+input ModifyGymInput {
+  name: String!
+  id: ID!
+  address: AddressInput!
+  availableFields: String!
+}
+
+input SaveMatchDayInput {
+  groupId: ID!
+  matchDayNumber: String!
+  startDate: AWSDateTime!
+  endDate: AWSDateTime!
+  gymId: ID!
+  streamingLink: AWSURL
+  teamIds: [ID]!
+  commissioners: RefereeInfoInput
+  secretary: String!
+  report: String
+}
+
+input RefereeInfoInput {
+  chiefRefereeId: ID
+  additionalRefereeIds: [ID]!
+}
+
+input ModifyMatchDayInput {
+  id: ID!
+  matchDayNumber: String!
+  startDate: AWSDateTime!
+  endDate: AWSDateTime!
+  gymId: ID!
+  streamingLink: AWSURL
+  commissioners: RefereeInfoInput
+  secretary: String!
+  report: String
+}
+
+input SavePreferredMatchdayDateInput {
+  clubId: ID!
+  leagueId: ID!
+  preferenceDate: AWSDate!
+  status: PreferenceStatus!
+  notes: String
+}
+
+input ModifyPreferredMatchdayDateInput {
+  clubId: ID!
+  leagueId: ID!
+  preferenceDate: AWSDate!
+  status: PreferenceStatus!
+  notes: String
+}
+
+input RegisterTeamInput {
+  name: String!
+  playerIds: [ID!]!
+  leagueId: ID!
+  withoutCompetition: Boolean
+  secondRightToPlay: Boolean
+  sgClubId: ID
+  exemptionRequest: String
+}
+
+input RegisterTeamsForSeasonInput {
+  clubId: ID!
+  seasonId: ID!
+  teams: [RegisterTeamInput!]!
+  preferredDates: [SavePreferredMatchdayDateInput]
+}
+
+# Queries
+type Query {
+  getAssociationById(id: ID!): Association @aws_cognito_user_pools
+  getSeasonById(id: ID!): Season @aws_cognito_user_pools
+  getLeagueById(id: ID!): League @aws_cognito_user_pools
+  getLeagueGroupById(id: ID!): LeagueGroup @aws_cognito_user_pools
+  getClubById(id: ID!): Club @aws_cognito_user_pools
+  getTeamById(id: ID!): Team @aws_cognito_user_pools
+  getPersonById(id: ID!): Person @aws_cognito_user_pools
+  getPersonByUciCode(uciCode: String!): Person @aws_cognito_user_pools
+  getGymById(id: ID!): Gym @aws_cognito_user_pools
+  getMatchdayById(id: ID!): MatchDay @aws_cognito_user_pools
+  getGameById(matchDayId: ID!, gameId: ID!): Game @aws_cognito_user_pools
+  
+  getListOfAssociations: [Association] @aws_cognito_user_pools
+  getListOfSeasons(associationId: ID!): [Season] @aws_cognito_user_pools
+  getListOfLeagueInSeason(seasonId: ID!): [League] @aws_cognito_user_pools
+  getListOfGroupsInLeague (leagueId: ID!): [LeagueGroup] @aws_cognito_user_pools
+  getListOfMatchdaysInSeason (seasonId: ID!): [MatchDay] @aws_cognito_user_pools
+  getListOfMatchdays(associationId: ID, leagueId: ID, groupId: ID): [MatchDay] @aws_cognito_user_pools
+  getListOfClubs: [Club] @aws_cognito_user_pools
+  getListOfClubsByAssociation(associationId: ID!): [Club] @aws_cognito_user_pools 
+  getListOfClubsByLeague(leagueId: ID!): [Club] @aws_cognito_user_pools 
+  getListOfClubsByLeagueGroup(groupId: ID!): [Club] @aws_cognito_user_pools 
+  getListOfGyms(clubId: ID): [Gym] @aws_cognito_user_pools
+  getListOfPeople(clubId: ID): [Person] @aws_cognito_user_pools
+
+  getListOfTeamsForLeague(leagueId: ID!): [Team] @aws_cognito_user_pools
+  getListOfTeamsForLeagueGroup(leagueId: ID!, groupId: ID!): [Team] @aws_cognito_user_pools
+
+  getAllGamesOfTeamInSeason(seasonId: ID!, teamId: ID!): [Game] @aws_cognito_user_pools
+  getAllMatchdaysOfTeamInSeason (seasonId: ID!, teamId: ID!): [MatchDay] @aws_cognito_user_pools
+  getAllTeamsOfClubInSeason (seasonId: ID!, clubId: ID!): [Team] @aws_cognito_user_pools
+  getAllPlayersOfClubInSeason (seasonId: ID!, clubId: ID!): [Person] @aws_cognito_user_pools
+
+  getAuditLogEntriesForActor(actorId: ID!, startDate: AWSDateTime, endDate: AWSDateTime): [AuditLogEntry] @aws_cognito_user_pools(cognito_groups: ["admin"])
+  getAuditLogEntriesForResource(resourceType: String!, resourceId: ID!, startDate: AWSDateTime, endDate: AWSDateTime): [AuditLogEntry] @aws_cognito_user_pools(cognito_groups: ["admin"])
+  
+  getPreferredDatesForClub(clubId: ID!, seasonId: ID!): [PreferredMatchdayDate] @aws_cognito_user_pools
+  getAvailableDatesForSeason(seasonId: ID!, leagueId: ID): [PreferredMatchdayDate] @aws_cognito_user_pools
+  
+  getPersonPermissions(personId: ID!): [PersonPermission] @aws_cognito_user_pools(cognito_groups: ["admin"])
+}
+
+# Mutations
+type Mutation {
+
+  addAssociation (association: SaveAssociationInput!): Association @aws_cognito_user_pools(cognito_groups: ["admin"])
+  modifyAssociation (association: ModifyAssociationInput!): Association @aws_cognito_user_pools
+  removeAssociation (associationId: ID!): Boolean @aws_cognito_user_pools
+
+  addClub (club: SaveClubInput!): Club @aws_cognito_user_pools
+  modifyClub(club: ModifyClubInput!): Club @aws_cognito_user_pools
+  removeClub (clubId: ID!): Boolean @aws_cognito_user_pools
+
+  addSeason (season: SaveSeasonInput!): Season @aws_cognito_user_pools
+  modifySeason(season: ModifySeasonInput!): Season @aws_cognito_user_pools
+  removeSeason (seasonId: ID!): Boolean @aws_cognito_user_pools
+
+  addLeague (league: SaveLeagueInput!): League @aws_cognito_user_pools
+  modifyLeague (league: ModifyLeagueInput!): League @aws_cognito_user_pools
+  removeLeague (leagueId: ID!): Boolean @aws_cognito_user_pools
+
+  addLeagueGroup (leagueGroup: SaveLeagueGroupInput!): LeagueGroup @aws_cognito_user_pools
+  modifyLeagueGroup (leagueGroup: ModifyLeagueGroupInput!): LeagueGroup @aws_cognito_user_pools
+  removeLeagueGroup (leagueGroupId: ID!): Boolean @aws_cognito_user_pools
+
+  addPerson (person: SavePersonInput!): Person @aws_cognito_user_pools
+  modifyPerson (person: ModifyPersonInput!): Person @aws_cognito_user_pools
+  removePerson (personId: ID!): Boolean @aws_cognito_user_pools
+
+  addTeam (team: SaveTeamInput!): Team @aws_cognito_user_pools
+  modifyTeam (team: ModifyTeamInput!): Team @aws_cognito_user_pools
+  removeTeam (teamId: ID!): Boolean @aws_cognito_user_pools
+
+  addMatchDayTeam (matchDayTeam: SaveMatchDayTeamInput!): MatchdayTeam @aws_cognito_user_pools
+  modifyMatchDayTeam (matchDayTeam: ModifyMatchDayTeamInput!, pin: String): MatchdayTeam @aws_cognito_user_pools
+  removeMatchDayTeam (matchDayTeamId: ID!): Boolean @aws_cognito_user_pools
+
+  addGameToMatchDay (matchDayId: ID!, game: AddGameInput!, pin: String): Game @aws_cognito_user_pools
+  modifyGameInMatchDay (matchDayId: ID!, game: ModifyGameInput!, pin: String): Game @aws_cognito_user_pools
+  removeGameFromMatchDay (matchDayId: ID!, gameId: ID!, pin: String): Boolean @aws_cognito_user_pools
+
+  addGym (gym: SaveGymInput!): Gym @aws_cognito_user_pools
+  modifyGym (gym: ModifyGymInput!): Gym @aws_cognito_user_pools
+  removeGym (gymId: ID!): Boolean @aws_cognito_user_pools
+
+  addMatchDay (matchDay: SaveMatchDayInput!): MatchDay @aws_cognito_user_pools
+  modifyMatchDay (matchDay: ModifyMatchDayInput!): MatchDay @aws_cognito_user_pools
+  removeMatchDay (matchDayId: ID!): Boolean @aws_cognito_user_pools
+
+  addPreferredDateForLeague (date: SavePreferredMatchdayDateInput!): PreferredMatchdayDate @aws_cognito_user_pools
+  modifyPreferredDateForLeague (date: ModifyPreferredMatchdayDateInput!): PreferredMatchdayDate @aws_cognito_user_pools
+  removePreferredDateForLeague (clubId: ID!, leagueId: ID!, preferenceDate: AWSDate): Boolean @aws_cognito_user_pools
+  
+  registerTeamsForSeason (registration: RegisterTeamsForSeasonInput!): [Team] @aws_cognito_user_pools
+}

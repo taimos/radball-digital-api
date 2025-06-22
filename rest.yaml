@@ -1,0 +1,260 @@
+openapi: 3.0.1
+paths:
+  /import/clubs:
+    post:
+      operationId: importClubs
+      security:
+        - CognitoAuth: []
+      description: |
+        Import clubs from a fixed-width text file.
+        
+        File Format:
+        - Fixed-width text file (encoding: UTF-8)
+        - One club per line
+        - Fields:
+          - Club Name (40 chars)
+          - Contact Name (40 chars)
+          - Street Address (40 chars)
+          - City with Postal Code (40 chars)
+          - Phone (15 chars)
+          - Fax (15 chars)
+          - Mobile (15 chars)
+          - Email (40 chars)
+        
+        Example line:
+        ```
+        Ailingen                                          Max Mustermann                                    Hauptstraße 123                                   88046 Musterstadt                                   07541-1234567                                               max.mustermann@example.com
+        ```
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              format: binary
+            example: |
+              Ailingen                                          Max Mustermann                                    Hauptstraße 123                                   88046 Musterstadt                                   07541-1234567                                               max.mustermann@example.com
+              Alpirsbach                                        Erika Musterfrau                                  Musterweg 42                                      72275 Testdorf                                      07444-7654321       0151-98765432       07444-1122334       erika.musterfrau@example.com
+      responses:
+        '200':
+          description: Import successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+              example:
+                success: true
+        '400':
+          description: Invalid file format or content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Invalid file format: Line 1 has incorrect length"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Invalid or missing authentication token"
+  /import/gyms:
+    post:
+      operationId: importGyms
+      security:
+        - CognitoAuth: []
+      description: |
+        Import gyms from a fixed-width text file.
+        
+        File Format:
+        - Fixed-width text file (encoding: UTF-8)
+        - One gym per line
+        - Fields:
+          - Club Name (50 chars)
+          - Gym Name (50 chars)
+          - Street Address (50 chars)
+          - Zip Code (5 chars)
+          - City (50 chars)
+          - Phone (20 chars)
+        
+        Example line:
+        ```
+        Ailingen                                          Rotachhalle Ailingen                              Leonie Fürst Straße                               88048 Friedrichshafen-Ailingen                      0177-1234567
+        ```
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              format: binary
+            example: |
+              Ailingen                                          Rotachhalle Ailingen                              Leonie Fürst Straße                               88048 Friedrichshafen-Ailingen                      0177-1234567
+              Alpirsbach                                        Turnhalle Sulzberg                                Sulzberg                                          72275 Alpirsbach
+      responses:
+        '200':
+          description: Import successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+              example:
+                success: true
+        '400':
+          description: Invalid file format or content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Invalid file format: Line 1 has incorrect length"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Invalid or missing authentication token"
+  /import/persons:
+    post:
+      operationId: importPersons
+      security:
+        - CognitoAuth: []
+      description: |
+        Import persons from a CSV file.
+        
+        File Format:
+        - CSV file with semicolon (;) as separator (encoding: UTF-8)
+        - One person per line
+        - Fields (in order):
+          1. Nachname (lastName)
+          2. Vorname (firstName)
+          3. Strasse (street address)
+          4. PLZ (zip code)
+          5. Wohnort (city)
+          6. Verein (club)
+          7. LV (association)
+          8. E-Mail (email)
+          9. Lizenz-Nr (license number)
+          10. UCI-ID (UCI code)
+          11. Geburtsdatum (date of birth in format DD.MM.YYYY HH:MM:SS)
+          12. Geschlecht (gender: männlich, weiblich, divers)
+          13. Nation (nationality)
+          14. Disziplin (discipline - Only "Radball" will be imported)
+          15. Lizenz 2025 (license status for current year)
+        
+        Example line:
+        ```
+        Mustermann;Max;Musterstraße 123;12345;Musterstadt;RV Musterverein;BDR;max.mustermann@example.com;12345;10012345678,00;15.05.1990 00:00:00;männlich;GER;Radball;1
+        ```
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              format: binary
+            example: |
+              Nachname;Vorname;Strasse;PLZ;Wohnort;Verein;LV;E-Mail;Lizenz-Nr;UCI-ID;Geburtsdatum;Geschlecht;Nation;Disziplin;Lizenz 2025
+              Mustermann;Max;Musterstraße 123;12345;Musterstadt;RV Musterverein;BDR;max.mustermann@example.com;12345;10012345678,00;15.05.1990 00:00:00;männlich;GER;Radball;1
+              Musterfrau;Erika;Beispielweg 42;54321;Beispielstadt;SV Beispielverein;WTB;erika.musterfrau@example.com;54321;10023456789,00;20.10.1995 00:00:00;weiblich;GER;Radball;1
+      responses:
+        '200':
+          description: Import successful
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - stats
+                properties:
+                  success: 
+                    type: boolean
+                  stats:
+                    type: object
+                    required:
+                      - total
+                      - imported
+                      - skipped
+                      - unmatchedClubs
+                      - errors
+                    properties:
+                      total:
+                        type: integer
+                        description: Total number of entries processed
+                      imported:
+                        type: integer
+                        description: Number of successfully imported persons
+                      skipped:
+                        type: integer
+                        description: Number of entries skipped due to errors
+                      unmatchedClubs:
+                        type: integer
+                        description: Number of entries with unmatched clubs
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                        description: List of error messages
+              example:
+                success: true
+                stats:
+                  total: 3
+                  imported: 3
+                  skipped: 0
+                  unmatchedClubs: 1
+                  errors:
+                    - 'Could not find matching club for "Unknown Club"/"BDR" (Person: Max Mustermann)'
+        '400':
+          description: Invalid file format or content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Invalid file format: Line 2 has incorrect number of fields"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: "Invalid or missing authentication token"
+info:
+  title: rest API definition
+  version: '1.0'
+components:
+  securitySchemes:
+    CognitoAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
