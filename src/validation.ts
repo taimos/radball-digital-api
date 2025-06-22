@@ -1,91 +1,146 @@
 import { Address, ModifyAssociationInput, ModifyClubInput, ModifyGymInput, ModifyLeagueInput, ModifyPersonInput, ModifySeasonInput, SaveAssociationInput, SaveClubInput, SaveGymInput, SaveLeagueGroupInput, SaveLeagueInput, SavePersonInput, SaveSeasonInput, ModifyLeagueGroupInput, SaveTeamInput, ModifyTeamInput, RegisterTeamInput } from '@generated/graphql.model.generated';
 
-export function validateAddress(address: Address): void {
-  if (address?.city?.trim().length === 0) {
-    throw new Error('City is required');
+export class ValidationCheckResult {
+
+  public readonly warnings: { [field: string]: string[] } = {};
+  public readonly errors: { [field: string]: string[] } = {};
+
+  public addWarning(field: string, message: string): void {
+    if (!this.warnings[field]) {
+      this.warnings[field] = [];
+    }
+    this.warnings[field].push(message);
   }
-  if (address.city!.length > 200) {
-    throw new Error('City cannot exceed 200 characters');
+
+  public addError(field: string, message: string): void {
+    if (!this.errors[field]) {
+      this.errors[field] = [];
+    }
+    this.errors[field].push(message);
   }
-  if (address?.country?.trim().length === 0) {
-    throw new Error('Country is required');
+
+  public getErrorMessages(): string[] {
+    return Object.values(this.errors).flat();
   }
-  if (address.country!.length > 20) {
-    throw new Error('Country cannot exceed 20 characters');
+
+  public getWarningMessages(): string[] {
+    return Object.values(this.warnings).flat();
   }
-  if (address?.street?.trim().length === 0) {
-    throw new Error('Street is required');
+
+  public getErrorMessagesString(): string {
+    return this.getErrorMessages().join('; ');
   }
-  if (address.street!.length > 200) {
-    throw new Error('Street cannot exceed 200 characters');
+
+  public getWarningMessagesString(): string {
+    return this.getWarningMessages().join('; ');
   }
-  if (address?.zip?.trim().length === 0) {
-    throw new Error('Zip code is required');
-  }
-  if (address.zip!.length > 20) {
-    throw new Error('Zip code cannot exceed 20 characters');
+
+  public validate(): void {
+    if (Object.keys(this.errors).length > 0) {
+      throw new Error(this.getErrorMessagesString());
+    }
   }
 }
 
+export function checkAddress(address: Address): ValidationCheckResult {
+  const result = new ValidationCheckResult();
 
-export function validateLeague(league: SaveLeagueInput | ModifyLeagueInput): void {
+  if (address?.city?.trim().length === 0) {
+    result.addError('city', 'City is required');
+  } else if (address.city!.length > 200) {
+    result.addError('city', 'City cannot exceed 200 characters');
+  }
+
+  if (address?.country?.trim().length === 0) {
+    result.addError('country', 'Country is required');
+  } else if (address.country!.length > 20) {
+    result.addError('country', 'Country cannot exceed 20 characters');
+  }
+
+  if (address?.street?.trim().length === 0) {
+    result.addError('street', 'Street is required');
+  } else if (address.street!.length > 200) {
+    result.addError('street', 'Street cannot exceed 200 characters');
+  }
+
+  if (address?.zip?.trim().length === 0) {
+    result.addError('zip', 'Zip code is required');
+  } else if (address.zip!.length > 20) {
+    result.addError('zip', 'Zip code cannot exceed 20 characters');
+  }
+
+  return result;
+}
+
+export function validateAddress(address: Address): void {
+  const result = checkAddress(address);
+  result.validate();
+}
+
+export function checkLeague(league: SaveLeagueInput | ModifyLeagueInput): ValidationCheckResult {
+  const result = new ValidationCheckResult();
 
   // Age range validations
   if (league.minAge != undefined && league.maxAge != undefined) {
     if (league.minAge < 0) {
-      throw new Error('Minimum age cannot be negative');
+      result.addError('minAge', 'Minimum age cannot be negative');
     }
     if (league.maxAge < 0) {
-      throw new Error('Maximum age cannot be negative');
+      result.addError('maxAge', 'Maximum age cannot be negative');
     }
     if (league.maxAge < league.minAge) {
-      throw new Error('Maximum age must be greater than or equal to minimum age');
+      result.addError('maxAge', 'Maximum age must be greater than or equal to minimum age');
     }
     if (league.maxAge > 100) { // adjust as needed
-      throw new Error('Maximum age exceeds reasonable limit');
+      result.addError('maxAge', 'Maximum age exceeds reasonable limit');
     }
   }
 
   // Name validations
   if (!league.name || league.name.trim().length === 0) {
-    throw new Error('League name is required');
-  }
-  if (league.name.length > 100) { // adjust max length as needed
-    throw new Error('League name cannot exceed 100 characters');
+    result.addError('name', 'League name is required');
+  } else if (league.name.length > 100) { // adjust max length as needed
+    result.addError('name', 'League name cannot exceed 100 characters');
   }
 
   // Description validation (if required)
   if (league.description && league.description.length > 500) {
-    throw new Error('Description cannot exceed 500 characters');
+    result.addError('description', 'Description cannot exceed 500 characters');
   }
 
   // Short name validation
   if (league.shortName) {
     if (league.shortName.length > 10) {
-      throw new Error('Short name cannot exceed 10 characters');
+      result.addError('shortName', 'Short name cannot exceed 10 characters');
     }
     if (!/^[A-Za-z0-9]+$/.test(league.shortName)) {
-      throw new Error('Short name can only contain alphanumeric characters');
+      result.addError('shortName', 'Short name can only contain alphanumeric characters');
     }
   }
+
+  return result;
 }
 
-export function validateClub(club: SaveClubInput | ModifyClubInput): void {
+export function validateLeague(league: SaveLeagueInput | ModifyLeagueInput): void {
+  const result = checkLeague(league);
+  result.validate();
+}
+
+export function checkClub(club: SaveClubInput | ModifyClubInput): ValidationCheckResult {
+  const result = new ValidationCheckResult();
 
   // Full name validations
   if (!club.name || club.name.trim().length === 0) {
-    throw new Error('Club name is required');
-  }
-  if (club.name.length > 100) {
-    throw new Error('Club name cannot exceed 100 characters');
+    result.addError('name', 'Club name is required');
+  } else if (club.name.length > 100) {
+    result.addError('name', 'Club name cannot exceed 100 characters');
   }
 
   // Short name validations
   if (club.shortName) {
     if (club.shortName.length > 30) {
-      throw new Error('Short name cannot exceed 30 characters');
+      result.addError('shortName', 'Short name cannot exceed 30 characters');
     }
-
   }
 
   // Website validation
@@ -93,224 +148,300 @@ export function validateClub(club: SaveClubInput | ModifyClubInput): void {
     try {
       new URL(club.website);
       if (!club.website.startsWith('http://') && !club.website.startsWith('https://')) {
-        throw new Error('Website must start with http:// or https://');
+        result.addError('website', 'Website must start with http:// or https://');
       }
     } catch {
-      throw new Error('Invalid website URL');
+      result.addError('website', 'Invalid website URL');
     }
   }
 
   // Address validation
   if (club.address && (club.address.city || club.address.street || club.address.zip)) {
-    validateAddress(club.address);
-  }
-};
-
-export function validateGym(gym: SaveGymInput | ModifyGymInput): void {
-  // Name validations
-  if (!gym.name || gym.name.trim().length === 0) {
-    throw new Error('Gym name is required');
-  }
-  if (gym.name.length > 100) {
-    throw new Error('Gym name cannot exceed 100 characters');
-  }
-  // available fields validation
-  if (!gym.availableFields || gym.availableFields.trim().length === 0) {
-    throw new Error('Available fields are required');
+    const addressResult = checkAddress(club.address);
+    // Merge address errors into the main result
+    Object.entries(addressResult.errors).forEach(([field, messages]) => {
+      messages.forEach(message => result.addError(`address.${field}`, message));
+    });
+    Object.entries(addressResult.warnings).forEach(([field, messages]) => {
+      messages.forEach(message => result.addWarning(`address.${field}`, message));
+    });
   }
 
-
-  // Address validations
-
-  validateAddress(gym.address);
+  return result;
 }
 
-export function validateSeason(season: SaveSeasonInput | ModifySeasonInput): void {
+export function validateClub(club: SaveClubInput | ModifyClubInput): void {
+  const result = checkClub(club);
+  result.validate();
+}
+
+export function checkGym(gym: SaveGymInput | ModifyGymInput): ValidationCheckResult {
+  const result = new ValidationCheckResult();
+
+  // Name validations
+  if (!gym.name || gym.name.trim().length === 0) {
+    result.addError('name', 'Gym name is required');
+  } else if (gym.name.length > 100) {
+    result.addError('name', 'Gym name cannot exceed 100 characters');
+  }
+
+  // available fields validation
+  if (!gym.availableFields || gym.availableFields.trim().length === 0) {
+    result.addError('availableFields', 'Available fields are required');
+  }
+
+  // Address validations
+  const addressResult = checkAddress(gym.address);
+  // Merge address errors into the main result
+  Object.entries(addressResult.errors).forEach(([field, messages]) => {
+    messages.forEach(message => result.addError(`address.${field}`, message));
+  });
+  Object.entries(addressResult.warnings).forEach(([field, messages]) => {
+    messages.forEach(message => result.addWarning(`address.${field}`, message));
+  });
+
+  return result;
+}
+
+export function validateGym(gym: SaveGymInput | ModifyGymInput): void {
+  const result = checkGym(gym);
+  result.validate();
+}
+
+export function checkSeason(season: SaveSeasonInput | ModifySeasonInput): ValidationCheckResult {
+  const result = new ValidationCheckResult();
+
   // Name validations
   if (!season.name || season.name.trim().length === 0) {
-    throw new Error('Season name is required');
+    result.addError('name', 'Season name is required');
+  } else if (season.name.length > 100) {
+    result.addError('name', 'Season name cannot exceed 100 characters');
   }
-  if (season.name.length > 100) {
-    throw new Error('Season name cannot exceed 100 characters');
-  }
+
   // Check for valid dates
   const startDate = new Date(season.startDate);
   const endDate = new Date(season.endDate);
   const registrationEnd = new Date(season.registrationEnd);
-  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime()) ||
-    isNaN(registrationEnd.getTime())) {
-    throw new Error('Invalid date format');
+
+  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime()) || isNaN(registrationEnd.getTime())) {
+    result.addError('dates', 'Invalid date format');
   }
+
   if (season.registrationStart) {
     const registrationStart = new Date(season.registrationStart);
     if (isNaN(registrationStart.getTime())) {
-      throw new Error('Invalid date format');
+      result.addError('registrationStart', 'Invalid date format');
     }
   }
 
   // Season date validations
   if (endDate <= startDate) {
-    throw new Error('Season end date must be after start date');
+    result.addError('endDate', 'Season end date must be after start date');
   }
+
   // Registration period validations
   if (season.registrationStart) {
     const registrationStart = new Date(season.registrationStart);
     if (registrationStart) {
       if (registrationEnd <= registrationStart) {
-        throw new Error('Registration end date must be after registration start date');
+        result.addError('registrationEnd', 'Registration end date must be after registration start date');
       }
       if (registrationStart >= startDate) {
-        throw new Error('Registration must start before season start date');
+        result.addError('registrationStart', 'Registration must start before season start date');
       }
     }
   }
 
   if (registrationEnd > startDate) {
-    throw new Error('Registration must end before season start date');
+    result.addError('registrationEnd', 'Registration must end before season start date');
   }
+
   // Future date validation
   const now = new Date();
   if (startDate < now) {
-    throw new Error('Season start date cannot be in the past');
+    result.addError('startDate', 'Season start date cannot be in the past');
   }
+
+  return result;
 }
 
-export function validatePerson(person: SavePersonInput | ModifyPersonInput): void {
+export function validateSeason(season: SaveSeasonInput | ModifySeasonInput): void {
+  const result = checkSeason(season);
+  result.validate();
+}
 
-  const errors: string[] = [];
+export function checkPerson(person: SavePersonInput | ModifyPersonInput): ValidationCheckResult {
+  const result = new ValidationCheckResult();
+
   // Name validations
   if (!person.firstName?.trim()) {
-    errors.push('First name is required');
+    result.addError('firstName', 'First name is required');
   }
 
   if (!person.lastName?.trim()) {
-    errors.push('Last name is required');
+    result.addError('lastName', 'Last name is required');
   }
 
   // Email validation
   if (person.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(person.email)) {
-    errors.push('Invalid email format');
+    result.addError('email', 'Invalid email format');
   }
+
   // Phone number validation
   if (person.phone) {
     // Allow digits, spaces, +, -, and ()
     const phoneRegex = /^[\d\s+()-]{8,20}$/;
     if (!phoneRegex.test(person.phone)) {
-      throw new Error('Invalid phone number format');
+      result.addError('phone', 'Invalid phone number format');
     }
   }
+
   // Date of birth validation
   if (person.dateOfBirth) {
     const date = new Date(person.dateOfBirth);
     if (isNaN(date.getTime())) {
-      errors.push('Invalid date of birth format');
+      result.addError('dateOfBirth', 'Invalid date of birth format');
     }
     // Add age restrictions if needed
     const today = new Date();
     if (date > today) {
-      errors.push('Date of birth cannot be in the future');
+      result.addError('dateOfBirth', 'Date of birth cannot be in the future');
     }
-  }
-
-  if (errors.length > 0) {
-    throw new Error(errors.join('; '));
   }
 
   // Address validation
   if (person.address && (person.address.city || person.address.street || person.address.zip)) {
-    validateAddress(person.address);
+    const addressResult = checkAddress(person.address);
+    // Merge address errors into the main result
+    Object.entries(addressResult.errors).forEach(([field, messages]) => {
+      messages.forEach(message => result.addError(`address.${field}`, message));
+    });
+    Object.entries(addressResult.warnings).forEach(([field, messages]) => {
+      messages.forEach(message => result.addWarning(`address.${field}`, message));
+    });
   }
+
+  return result;
 }
 
-export function validateAssociation(association: SaveAssociationInput | ModifyAssociationInput): void {
-  const errors: string[] = [];
+export function validatePerson(person: SavePersonInput | ModifyPersonInput): void {
+  const result = checkPerson(person);
+  result.validate();
+}
+
+export function checkAssociation(association: SaveAssociationInput | ModifyAssociationInput): ValidationCheckResult {
+  const result = new ValidationCheckResult();
+
   // Name validation
   if (!association.name?.trim()) {
-    errors.push('Association name is required');
+    result.addError('name', 'Association name is required');
   } else if (association.name.length > 100) { // adjust max length as needed
-    errors.push('Association name cannot exceed 100 characters');
+    result.addError('name', 'Association name cannot exceed 100 characters');
   }
 
   // Contact Email validation
   if (!association.contactEmail?.trim()) {
-    errors.push('Contact email is required');
+    result.addError('contactEmail', 'Contact email is required');
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(association.contactEmail)) {
-    errors.push('Invalid contact email format');
+    result.addError('contactEmail', 'Invalid contact email format');
   }
 
   // Contact Name validation
   if (!association.contactName?.trim()) {
-    errors.push('Contact name is required');
-  }
-
-  if (errors.length > 0) {
-    throw new Error(errors.join('; '));
+    result.addError('contactName', 'Contact name is required');
   }
 
   // Address validation
-  validateAddress(association.address);
+  const addressResult = checkAddress(association.address);
+  // Merge address errors into the main result
+  Object.entries(addressResult.errors).forEach(([field, messages]) => {
+    messages.forEach(message => result.addError(`address.${field}`, message));
+  });
+  Object.entries(addressResult.warnings).forEach(([field, messages]) => {
+    messages.forEach(message => result.addWarning(`address.${field}`, message));
+  });
+
+  return result;
 }
 
-export function validateLeagueGroup(leagueGroup: SaveLeagueGroupInput | ModifyLeagueGroupInput): void {
+export function validateAssociation(association: SaveAssociationInput | ModifyAssociationInput): void {
+  const result = checkAssociation(association);
+  result.validate();
+}
+
+export function checkLeagueGroup(leagueGroup: SaveLeagueGroupInput | ModifyLeagueGroupInput): ValidationCheckResult {
+  const result = new ValidationCheckResult();
+
   // Name validations
   if (!leagueGroup.name || leagueGroup.name.trim().length === 0) {
-    throw new Error('League group name is required');
-  }
-  if (leagueGroup.name.length > 100) {
-    throw new Error('League group name cannot exceed 100 characters');
+    result.addError('name', 'League group name is required');
+  } else if (leagueGroup.name.length > 100) {
+    result.addError('name', 'League group name cannot exceed 100 characters');
   }
 
   // Number validation
   if (leagueGroup.number < 1) {
-    throw new Error('League group number must be positive');
+    result.addError('number', 'League group number must be positive');
   }
 
   // Short name validations
   if (!leagueGroup.shortName || leagueGroup.shortName.trim().length === 0) {
-    throw new Error('League group short name is required');
-  }
-  if (leagueGroup.shortName.length > 10) {
-    throw new Error('League group short name cannot exceed 10 characters');
-  }
-  if (!/^[A-Za-z0-9]+$/.test(leagueGroup.shortName)) {
-    throw new Error('League group short name can only contain alphanumeric characters');
+    result.addError('shortName', 'League group short name is required');
+  } else if (leagueGroup.shortName.length > 10) {
+    result.addError('shortName', 'League group short name cannot exceed 10 characters');
+  } else if (!/^[A-Za-z0-9]+$/.test(leagueGroup.shortName)) {
+    result.addError('shortName', 'League group short name can only contain alphanumeric characters');
   }
 
   // Regulation validation
   if (!leagueGroup.regulation || leagueGroup.regulation.trim().length === 0) {
-    throw new Error('League group regulation is required');
+    result.addError('regulation', 'League group regulation is required');
   }
+
+  return result;
 }
 
-export function validateTeam(team: SaveTeamInput | ModifyTeamInput | RegisterTeamInput): void {
+export function validateLeagueGroup(leagueGroup: SaveLeagueGroupInput | ModifyLeagueGroupInput): void {
+  const result = checkLeagueGroup(leagueGroup);
+  result.validate();
+}
+
+export function checkTeam(team: SaveTeamInput | ModifyTeamInput | RegisterTeamInput): ValidationCheckResult {
+  const result = new ValidationCheckResult();
+
   // Name validation
   if ('name' in team && team.name !== undefined) {
     if (team.name.trim().length === 0) {
-      throw new Error('Team name cannot be empty');
-    }
-    if (team.name.length > 100) {
-      throw new Error('Team name cannot exceed 100 characters');
+      result.addError('name', 'Team name cannot be empty');
+    } else if (team.name.length > 100) {
+      result.addError('name', 'Team name cannot exceed 100 characters');
     }
   } else if (!('id' in team)) { // if id is not in team, then it is a new team
-    throw new Error('Team name is required');
+    result.addError('name', 'Team name is required');
   }
 
   // League ID validation
   if ('leagueId' in team && team.leagueId !== undefined) {
     if (team.leagueId.trim().length === 0) {
-      throw new Error('League ID cannot be empty');
-    }
-    if (team.leagueId.length > 100) {
-      throw new Error('League ID cannot exceed 100 characters');
+      result.addError('leagueId', 'League ID cannot be empty');
+    } else if (team.leagueId.length > 100) {
+      result.addError('leagueId', 'League ID cannot exceed 100 characters');
     }
   } else if (!('id' in team)) { // if id is not in team, then it is a new team
-    throw new Error('League ID is required');
+    result.addError('leagueId', 'League ID is required');
   }
 
   // Exemption request validation
   if (team.exemptionRequest) {
     if (team.exemptionRequest.trim().length > 1000) {
-      throw new Error('Exemption request cannot exceed 1000 characters');
+      result.addError('exemptionRequest', 'Exemption request cannot exceed 1000 characters');
     }
   }
+
+  return result;
+}
+
+export function validateTeam(team: SaveTeamInput | ModifyTeamInput | RegisterTeamInput): void {
+  const result = checkTeam(team);
+  result.validate();
 }
