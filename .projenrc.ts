@@ -4,7 +4,7 @@ import { GithubCredentials } from 'projen/lib/github';
 import { GitHubAssignApprover } from 'projen-pipelines/lib/assign-approver';
 
 const project = new TaimosTypescriptLibrary({
-  name: 'radball-digital-api',
+  name: '@taimos/radball-digital-api',
   description: 'Radball Digital API',
   keywords: ['radball', 'digital', 'api'],
   repository: 'https://github.com/taimos/radball-digital-api.git',

@@ -1,5 +1,5 @@
 {
-  "name": "radball-digital-api",
+  "name": "@taimos/radball-digital-api",
   "description": "Radball Digital API",
   "repository": {
     "type": "git",
