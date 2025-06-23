@@ -21,7 +21,7 @@ describe('validateAddress', () => {
       country: 'USA',
       zip: '12345',
     };
-    expect(() => validateAddress(address)).toThrow('Street is required');
+    expect(() => validateAddress(address)).toThrow('Straße ist erforderlich');
   });
 
   it('should throw error for street with only whitespace', () => {
@@ -31,7 +31,7 @@ describe('validateAddress', () => {
       country: 'USA',
       zip: '12345',
     };
-    expect(() => validateAddress(address)).toThrow('Street is required');
+    expect(() => validateAddress(address)).toThrow('Straße ist erforderlich');
   });
 
   it('should throw error for street exceeding 200 characters', () => {
@@ -41,7 +41,7 @@ describe('validateAddress', () => {
       country: 'USA',
       zip: '12345',
     };
-    expect(() => validateAddress(address)).toThrow('Street cannot exceed 200 characters');
+    expect(() => validateAddress(address)).toThrow('Straße darf 200 Zeichen nicht überschreiten');
   });
 
   // City tests
@@ -52,7 +52,7 @@ describe('validateAddress', () => {
       country: 'USA',
       zip: '12345',
     };
-    expect(() => validateAddress(address)).toThrow('City is required');
+    expect(() => validateAddress(address)).toThrow('Stadt ist erforderlich');
   });
 
   it('should throw error for city exceeding 200 characters', () => {
@@ -62,7 +62,7 @@ describe('validateAddress', () => {
       country: 'USA',
       zip: '12345',
     };
-    expect(() => validateAddress(address)).toThrow('City cannot exceed 200 characters');
+    expect(() => validateAddress(address)).toThrow('Stadt darf 200 Zeichen nicht überschreiten');
   });
 
   // Country tests
@@ -73,7 +73,7 @@ describe('validateAddress', () => {
       country: '',
       zip: '12345',
     };
-    expect(() => validateAddress(address)).toThrow('Country is required');
+    expect(() => validateAddress(address)).toThrow('Land ist erforderlich');
   });
 
   it('should throw error for country exceeding 20 characters', () => {
@@ -83,7 +83,7 @@ describe('validateAddress', () => {
       country: 'A'.repeat(21),
       zip: '12345',
     };
-    expect(() => validateAddress(address)).toThrow('Country cannot exceed 20 characters');
+    expect(() => validateAddress(address)).toThrow('Land darf 20 Zeichen nicht überschreiten');
   });
 
   // Zip code tests
@@ -94,7 +94,7 @@ describe('validateAddress', () => {
       country: 'USA',
       zip: '',
     };
-    expect(() => validateAddress(address)).toThrow('Zip code is required');
+    expect(() => validateAddress(address)).toThrow('PLZ ist erforderlich');
   });
 
   it('should throw error for zip code exceeding 20 characters', () => {
@@ -104,7 +104,7 @@ describe('validateAddress', () => {
       country: 'USA',
       zip: 'A'.repeat(21),
     };
-    expect(() => validateAddress(address)).toThrow('Zip code cannot exceed 20 characters');
+    expect(() => validateAddress(address)).toThrow('PLZ darf 20 Zeichen nicht überschreiten');
   });
 
   // Edge cases
@@ -155,7 +155,7 @@ describe('validateLeague', () => {
         ...leagueTemplate,
         name: '',
       };
-      expect(() => validateLeague(league)).toThrow('League name is required');
+      expect(() => validateLeague(league)).toThrow('Liganame ist erforderlich');
     });
 
     it('should throw error for whitespace-only name', () => {
@@ -163,7 +163,7 @@ describe('validateLeague', () => {
         ...leagueTemplate,
         name: '   ',
       };
-      expect(() => validateLeague(league)).toThrow('League name is required');
+      expect(() => validateLeague(league)).toThrow('Liganame ist erforderlich');
     });
 
     it('should throw error for name exceeding 100 characters', () => {
@@ -171,7 +171,7 @@ describe('validateLeague', () => {
         ...leagueTemplate,
         name: 'A'.repeat(101),
       };
-      expect(() => validateLeague(league)).toThrow('League name cannot exceed 100 characters');
+      expect(() => validateLeague(league)).toThrow('Liganame darf 100 Zeichen nicht überschreiten');
     });
   });
 
@@ -184,7 +184,7 @@ describe('validateLeague', () => {
         minAge: -1,
         maxAge: 40,
       };
-      expect(() => validateLeague(league)).toThrow('Minimum age cannot be negative');
+      expect(() => validateLeague(league)).toThrow('Mindestalter darf nicht negativ sein');
     });
 
     it('should throw error for negative maximum age', () => {
@@ -194,7 +194,7 @@ describe('validateLeague', () => {
         minAge: 16,
         maxAge: -1,
       };
-      expect(() => validateLeague(league)).toThrow('Maximum age cannot be negative');
+      expect(() => validateLeague(league)).toThrow('Maximalalter darf nicht negativ sein');
     });
 
     it('should throw error when max age is less than min age', () => {
@@ -204,7 +204,7 @@ describe('validateLeague', () => {
         minAge: 20,
         maxAge: 18,
       };
-      expect(() => validateLeague(league)).toThrow('Maximum age must be greater than or equal to minimum age');
+      expect(() => validateLeague(league)).toThrow('Maximalalter muss größer oder gleich dem Mindestalter sein');
     });
 
     it('should throw error for unreasonable maximum age', () => {
@@ -213,7 +213,7 @@ describe('validateLeague', () => {
         name: 'Test League',
         maxAge: 101,
       };
-      expect(() => validateLeague(league)).toThrow('Maximum age exceeds reasonable limit');
+      expect(() => validateLeague(league)).toThrow('Maximalalter überschreitet das vernünftige Limit');
     });
 
   });
@@ -223,7 +223,7 @@ describe('validateLeague', () => {
         ...leagueTemplate,
         description: 'A'.repeat(501),
       };
-      expect(() => validateLeague(league)).toThrow('Description cannot exceed 500 characters');
+      expect(() => validateLeague(league)).toThrow('Beschreibung darf 500 Zeichen nicht überschreiten');
     });
   });
   describe('short name validation', () => {
@@ -232,7 +232,7 @@ describe('validateLeague', () => {
         ...leagueTemplate,
         shortName: 'A'.repeat(11),
       };
-      expect(() => validateLeague(league)).toThrow('Short name cannot exceed 10 characters');
+      expect(() => validateLeague(league)).toThrow('Kurzname darf 10 Zeichen nicht überschreiten');
     });
   });
 });
@@ -272,14 +272,14 @@ describe('validate Club', () => {
         ...clubTemplateShort,
         name: '',
       };
-      expect(() => validateClub(club)).toThrow('Club name is required');
+      expect(() => validateClub(club)).toThrow('Vereinsname ist erforderlich');
     });
     it('should throw error for exceeding 100 characters', () => {
       const club = {
         ...clubTemplateShort,
         name: 'A'.repeat(101),
       };
-      expect(() => validateClub(club)).toThrow('Club name cannot exceed 100 characters');
+      expect(() => validateClub(club)).toThrow('Vereinsname darf 100 Zeichen nicht überschreiten');
     });
   });
   describe('short name tests', () => {
@@ -288,7 +288,7 @@ describe('validate Club', () => {
         ...clubTemplateLong,
         shortName: 'A'.repeat(31),
       };
-      expect(() => validateClub(club)).toThrow('Short name cannot exceed 30 characters');
+      expect(() => validateClub(club)).toThrow('Kurzname darf 30 Zeichen nicht überschreiten');
     });
   });
   describe('website validation', () => {
@@ -297,7 +297,7 @@ describe('validate Club', () => {
         ...clubTemplateLong,
         website: 'joasdohi',
       };
-      expect(() => validateClub(club)).toThrow('Invalid website URL');
+      expect(() => validateClub(club)).toThrow('Ungültige Website-URL');
     });
   });
 });
@@ -318,7 +318,7 @@ describe('validate Gym', () => {
       availableFields: 'viele',
       id: 'ID',
     };
-    expect(() => validateGym(gym)).toThrow('Gym name is required');
+    expect(() => validateGym(gym)).toThrow('Hallenname ist erforderlich');
   });
   it('should throw error for gym name exceeding 100 characters', () => {
     const gym = {
@@ -328,7 +328,7 @@ describe('validate Gym', () => {
       availableFields: 'viele',
       id: 'ID',
     };
-    expect(() => validateGym(gym)).toThrow('Gym name cannot exceed 100 characters');
+    expect(() => validateGym(gym)).toThrow('Hallenname darf 100 Zeichen nicht überschreiten');
   });
   it('should throw error for required available fields', () => {
     const gym = {
@@ -338,7 +338,7 @@ describe('validate Gym', () => {
       availableFields: '',
       id: 'ID',
     };
-    expect(() => validateGym(gym)).toThrow('Available fields are required');
+    expect(() => validateGym(gym)).toThrow('Verfügbare Felder sind erforderlich');
   });
 });
 
@@ -357,14 +357,14 @@ describe('validate Season', () => {
         ...seasonTemplate,
         name: '',
       };
-      expect(() => validateSeason(season)).toThrow('Season name is required');
+      expect(() => validateSeason(season)).toThrow('Saisonname ist erforderlich');
     });
     it('should throw error for season name exceeding 100 characters', () => {
       const season = {
         ...seasonTemplate,
         name: 'A'.repeat(101),
       };
-      expect(() => validateSeason(season)).toThrow('Season name cannot exceed 100 characters');
+      expect(() => validateSeason(season)).toThrow('Saisonname darf 100 Zeichen nicht überschreiten');
     });
   });
   describe('check for valid dates', () => {
@@ -373,28 +373,28 @@ describe('validate Season', () => {
         ...seasonTemplate,
         startDate: 'fdas',
       };
-      expect(() => validateSeason(season)).toThrow('Invalid date format');
+      expect(() => validateSeason(season)).toThrow('Ungültiges Datumsformat');
     });
     it('should throw error for invalid date format for endDate', () => {
       const season = {
         ...seasonTemplate,
         endDate: 'fdas',
       };
-      expect(() => validateSeason(season)).toThrow('Invalid date format');
+      expect(() => validateSeason(season)).toThrow('Ungültiges Datumsformat');
     });
     it('should throw error for invalid date format for registrationStart', () => {
       const season = {
         ...seasonTemplate,
         registrationStart: 'fdas',
       };
-      expect(() => validateSeason(season)).toThrow('Invalid date format');
+      expect(() => validateSeason(season)).toThrow('Ungültiges Datumsformat');
     });
     it('should throw error for invalid date format for registrationEnd', () => {
       const season = {
         ...seasonTemplate,
         registrationEnd: 'fdas',
       };
-      expect(() => validateSeason(season)).toThrow('Invalid date format');
+      expect(() => validateSeason(season)).toThrow('Ungültiges Datumsformat');
     });
     it('should throw error for season endDate before startDate', () => {
       const season = {
@@ -402,7 +402,7 @@ describe('validate Season', () => {
         startDate: '2030-06-20',
         endDate: '2030-06-10',
       };
-      expect(() => validateSeason(season)).toThrow('Season end date must be after start date');
+      expect(() => validateSeason(season)).toThrow('Saison-Enddatum muss nach dem Startdatum liegen');
     });
     it('should throw error for registration start date before registration end date', () => {
       const season = {
@@ -410,7 +410,7 @@ describe('validate Season', () => {
         registrationStart: '2030-07-10',
         registrationEnd: '2030-06-25',
       };
-      expect(() => validateSeason(season)).toThrow('Registration end date must be after registration start date');
+      expect(() => validateSeason(season)).toThrow('Anmeldungsende muss nach dem Anmeldungsstart liegen');
     });
     it('should throw error for registration start date after season start date', () => {
       const season = {
@@ -420,7 +420,7 @@ describe('validate Season', () => {
         startDate: '2030-05-08',
         endDate: '2030-06-07',
       };
-      expect(() => validateSeason(season)).toThrow('Registration must start before season start date');
+      expect(() => validateSeason(season)).toThrow('Anmeldung muss vor dem Saisonstart beginnen');
     });
     it('should throw error for registration end after season start date', () => {
       const season = {
@@ -429,14 +429,14 @@ describe('validate Season', () => {
         startDate: '2030-07-15',
         endDate: '2030-10-20',
       };
-      expect(() => validateSeason(season)).toThrow('Registration must end before season start date');
+      expect(() => validateSeason(season)).toThrow('Anmeldung muss vor dem Saisonstart enden');
     });
     it('should throw error for season start date being in the past', () => {
       const season = {
         ...seasonTemplate,
         startDate: '2023-08-05',
       };
-      expect(() => validateSeason(season)).toThrow('Season start date cannot be in the past');
+      expect(() => validateSeason(season)).toThrow('Saison-Startdatum darf nicht in der Vergangenheit liegen');
     });
 
   });
@@ -467,7 +467,7 @@ describe('validate person', () => {
         ...personTemplate,
         email: 'bio u9p ',
       };
-      expect(() => validatePerson(person)).toThrow('Invalid email format');
+      expect(() => validatePerson(person)).toThrow('Ungültiges E-Mail-Format');
     });
   });
   describe('phone number validation', () => {
@@ -476,7 +476,7 @@ describe('validate person', () => {
         ...personTemplate,
         phone: 'jopn68-d90',
       };
-      expect(() => validatePerson(person)).toThrow('Invalid phone number format');
+      expect(() => validatePerson(person)).toThrow('Ungültiges Telefonnummer-Format');
     });
   });
   describe('date of birth validation', () => {
@@ -485,14 +485,14 @@ describe('validate person', () => {
         ...personTemplate,
         dateOfBirth: 'fsf',
       };
-      expect(() => validatePerson(person)).toThrow('Invalid date of birth format');
+      expect(() => validatePerson(person)).toThrow('Ungültiges Geburtsdatumsformat');
     });
     it('should throw an error for date of birth being in the future', () => {
       const person = {
         ...personTemplate,
         dateOfBirth: '2030-07-23',
       };
-      expect(() => validatePerson(person)).toThrow('Date of birth cannot be in the future');
+      expect(() => validatePerson(person)).toThrow('Geburtsdatum darf nicht in der Zukunft liegen');
     });
   });
 });
@@ -521,14 +521,14 @@ describe('validate Association', () => {
         ...associationTemplate,
         name: '',
       };
-      expect(() => validateAssociation(association)).toThrow('Association name is required');
+      expect(() => validateAssociation(association)).toThrow('Verbandsname ist erforderlich');
     });
     it('should throw an error for association name exceeding 100 characters', () => {
       const association = {
         ...associationTemplate,
         name: 'a'.repeat(101),
       };
-      expect(() => validateAssociation(association)).toThrow('Association name cannot exceed 100 characters');
+      expect(() => validateAssociation(association)).toThrow('Verbandsname darf 100 Zeichen nicht überschreiten');
     });
   });
   describe('email validation', () => {
@@ -537,14 +537,14 @@ describe('validate Association', () => {
         ...associationTemplate,
         contactEmail: '',
       };
-      expect(() => validateAssociation(association)).toThrow('Contact email is required');
+      expect(() => validateAssociation(association)).toThrow('Kontakt-E-Mail ist erforderlich');
     });
     it('should throw en error for invalid contact email format', () => {
       const association = {
         ...associationTemplate,
         contactEmail: 'vdas gfd',
       };
-      expect(() => validateAssociation(association)).toThrow('Invalid contact email format');
+      expect(() => validateAssociation(association)).toThrow('Ungültiges Kontakt-E-Mail-Format');
     });
   });
   describe('contact name validation', () => {
@@ -553,7 +553,7 @@ describe('validate Association', () => {
         ...associationTemplate,
         contactName: '',
       };
-      expect(() => validateAssociation(association)).toThrow('Contact name is required');
+      expect(() => validateAssociation(association)).toThrow('Kontaktname ist erforderlich');
     });
   });
 });
@@ -601,7 +601,7 @@ describe('validateTeam', () => {
         ...saveTeamTemplate,
         name: '',
       };
-      expect(() => validateTeam(team)).toThrow('Team name cannot be empty');
+      expect(() => validateTeam(team)).toThrow('Teamname darf nicht leer sein');
     });
 
     it('should throw error for whitespace-only name in SaveTeamInput', () => {
@@ -609,7 +609,7 @@ describe('validateTeam', () => {
         ...saveTeamTemplate,
         name: '   ',
       };
-      expect(() => validateTeam(team)).toThrow('Team name cannot be empty');
+      expect(() => validateTeam(team)).toThrow('Teamname darf nicht leer sein');
     });
 
     it('should throw error for name exceeding 100 characters in SaveTeamInput', () => {
@@ -617,7 +617,7 @@ describe('validateTeam', () => {
         ...saveTeamTemplate,
         name: 'A'.repeat(101),
       };
-      expect(() => validateTeam(team)).toThrow('Team name cannot exceed 100 characters');
+      expect(() => validateTeam(team)).toThrow('Teamname darf 100 Zeichen nicht überschreiten');
     });
 
     it('should throw error for missing leagueId in SaveTeamInput', () => {
@@ -625,7 +625,7 @@ describe('validateTeam', () => {
         ...saveTeamTemplate,
         leagueId: '',
       };
-      expect(() => validateTeam(team)).toThrow('League ID cannot be empty');
+      expect(() => validateTeam(team)).toThrow('Liga-ID darf nicht leer sein');
     });
 
     it('should throw error for whitespace-only leagueId in SaveTeamInput', () => {
@@ -633,7 +633,7 @@ describe('validateTeam', () => {
         ...saveTeamTemplate,
         leagueId: '   ',
       };
-      expect(() => validateTeam(team)).toThrow('League ID cannot be empty');
+      expect(() => validateTeam(team)).toThrow('Liga-ID darf nicht leer sein');
     });
 
     it('should throw error for leagueId exceeding 100 characters in SaveTeamInput', () => {
@@ -641,7 +641,7 @@ describe('validateTeam', () => {
         ...saveTeamTemplate,
         leagueId: 'A'.repeat(101),
       };
-      expect(() => validateTeam(team)).toThrow('League ID cannot exceed 100 characters');
+      expect(() => validateTeam(team)).toThrow('Liga-ID darf 100 Zeichen nicht überschreiten');
     });
   });
 
@@ -671,7 +671,7 @@ describe('validateTeam', () => {
         ...modifyTeamTemplate,
         name: '',
       };
-      expect(() => validateTeam(team)).toThrow('Team name cannot be empty');
+      expect(() => validateTeam(team)).toThrow('Teamname darf nicht leer sein');
     });
 
     it('should throw error for whitespace-only name in ModifyTeamInput', () => {
@@ -679,7 +679,7 @@ describe('validateTeam', () => {
         ...modifyTeamTemplate,
         name: '   ',
       };
-      expect(() => validateTeam(team)).toThrow('Team name cannot be empty');
+      expect(() => validateTeam(team)).toThrow('Teamname darf nicht leer sein');
     });
 
     it('should throw error for name exceeding 100 characters in ModifyTeamInput', () => {
@@ -687,7 +687,7 @@ describe('validateTeam', () => {
         ...modifyTeamTemplate,
         name: 'A'.repeat(101),
       };
-      expect(() => validateTeam(team)).toThrow('Team name cannot exceed 100 characters');
+      expect(() => validateTeam(team)).toThrow('Teamname darf 100 Zeichen nicht überschreiten');
     });
 
     it('should throw error for empty leagueId in ModifyTeamInput', () => {
@@ -695,7 +695,7 @@ describe('validateTeam', () => {
         ...modifyTeamTemplate,
         leagueId: '',
       };
-      expect(() => validateTeam(team)).toThrow('League ID cannot be empty');
+      expect(() => validateTeam(team)).toThrow('Liga-ID darf nicht leer sein');
     });
 
     it('should throw error for whitespace-only leagueId in ModifyTeamInput', () => {
@@ -703,7 +703,7 @@ describe('validateTeam', () => {
         ...modifyTeamTemplate,
         leagueId: '   ',
       };
-      expect(() => validateTeam(team)).toThrow('League ID cannot be empty');
+      expect(() => validateTeam(team)).toThrow('Liga-ID darf nicht leer sein');
     });
 
     it('should throw error for leagueId exceeding 100 characters in ModifyTeamInput', () => {
@@ -711,7 +711,7 @@ describe('validateTeam', () => {
         ...modifyTeamTemplate,
         leagueId: 'A'.repeat(101),
       };
-      expect(() => validateTeam(team)).toThrow('League ID cannot exceed 100 characters');
+      expect(() => validateTeam(team)).toThrow('Liga-ID darf 100 Zeichen nicht überschreiten');
     });
   });
 
@@ -736,7 +736,7 @@ describe('validateTeam', () => {
         ...registerTeamTemplate,
         name: '',
       };
-      expect(() => validateTeam(team)).toThrow('Team name cannot be empty');
+      expect(() => validateTeam(team)).toThrow('Teamname darf nicht leer sein');
     });
 
     it('should throw error for whitespace-only name in RegisterTeamInput', () => {
@@ -744,7 +744,7 @@ describe('validateTeam', () => {
         ...registerTeamTemplate,
         name: '   ',
       };
-      expect(() => validateTeam(team)).toThrow('Team name cannot be empty');
+      expect(() => validateTeam(team)).toThrow('Teamname darf nicht leer sein');
     });
 
     it('should throw error for name exceeding 100 characters in RegisterTeamInput', () => {
@@ -752,7 +752,7 @@ describe('validateTeam', () => {
         ...registerTeamTemplate,
         name: 'A'.repeat(101),
       };
-      expect(() => validateTeam(team)).toThrow('Team name cannot exceed 100 characters');
+      expect(() => validateTeam(team)).toThrow('Teamname darf 100 Zeichen nicht überschreiten');
     });
 
     it('should throw error for missing leagueId in RegisterTeamInput', () => {
@@ -760,7 +760,7 @@ describe('validateTeam', () => {
         ...registerTeamTemplate,
         leagueId: '',
       };
-      expect(() => validateTeam(team)).toThrow('League ID cannot be empty');
+      expect(() => validateTeam(team)).toThrow('Liga-ID darf nicht leer sein');
     });
 
     it('should throw error for whitespace-only leagueId in RegisterTeamInput', () => {
@@ -768,7 +768,7 @@ describe('validateTeam', () => {
         ...registerTeamTemplate,
         leagueId: '   ',
       };
-      expect(() => validateTeam(team)).toThrow('League ID cannot be empty');
+      expect(() => validateTeam(team)).toThrow('Liga-ID darf nicht leer sein');
     });
 
     it('should throw error for leagueId exceeding 100 characters in RegisterTeamInput', () => {
@@ -776,7 +776,7 @@ describe('validateTeam', () => {
         ...registerTeamTemplate,
         leagueId: 'A'.repeat(101),
       };
-      expect(() => validateTeam(team)).toThrow('League ID cannot exceed 100 characters');
+      expect(() => validateTeam(team)).toThrow('Liga-ID darf 100 Zeichen nicht überschreiten');
     });
   });
 
@@ -794,7 +794,7 @@ describe('validateTeam', () => {
         ...saveTeamTemplate,
         exemptionRequest: 'A'.repeat(1001),
       };
-      expect(() => validateTeam(team)).toThrow('Exemption request cannot exceed 1000 characters');
+      expect(() => validateTeam(team)).toThrow('Freistellungsantrag darf 1000 Zeichen nicht überschreiten');
     });
 
     it('should accept exemptionRequest within 1000 characters for ModifyTeamInput', () => {
@@ -810,7 +810,7 @@ describe('validateTeam', () => {
         ...modifyTeamTemplate,
         exemptionRequest: 'A'.repeat(1001),
       };
-      expect(() => validateTeam(team)).toThrow('Exemption request cannot exceed 1000 characters');
+      expect(() => validateTeam(team)).toThrow('Freistellungsantrag darf 1000 Zeichen nicht überschreiten');
     });
 
     it('should accept exemptionRequest within 1000 characters for RegisterTeamInput', () => {
@@ -826,7 +826,7 @@ describe('validateTeam', () => {
         ...registerTeamTemplate,
         exemptionRequest: 'A'.repeat(1001),
       };
-      expect(() => validateTeam(team)).toThrow('Exemption request cannot exceed 1000 characters');
+      expect(() => validateTeam(team)).toThrow('Freistellungsantrag darf 1000 Zeichen nicht überschreiten');
     });
 
     it('should handle whitespace-only exemptionRequest without error', () => {
@@ -850,7 +850,7 @@ describe('validateTeam', () => {
         ...saveTeamTemplate,
         exemptionRequest: '  ' + 'A'.repeat(1001) + '  ',
       };
-      expect(() => validateTeam(team)).toThrow('Exemption request cannot exceed 1000 characters');
+      expect(() => validateTeam(team)).toThrow('Freistellungsantrag darf 1000 Zeichen nicht überschreiten');
     });
   });
 });
