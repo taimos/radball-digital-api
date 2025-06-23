@@ -46,27 +46,27 @@ export function checkAddress(address: Address): ValidationCheckResult {
   const result = new ValidationCheckResult();
 
   if (address?.city?.trim().length === 0) {
-    result.addError('city', 'City is required');
+    result.addError('city', 'Stadt ist erforderlich');
   } else if (address.city!.length > 200) {
-    result.addError('city', 'City cannot exceed 200 characters');
+    result.addError('city', 'Stadt darf 200 Zeichen nicht überschreiten');
   }
 
   if (address?.country?.trim().length === 0) {
-    result.addError('country', 'Country is required');
+    result.addError('country', 'Land ist erforderlich');
   } else if (address.country!.length > 20) {
-    result.addError('country', 'Country cannot exceed 20 characters');
+    result.addError('country', 'Land darf 20 Zeichen nicht überschreiten');
   }
 
   if (address?.street?.trim().length === 0) {
-    result.addError('street', 'Street is required');
+    result.addError('street', 'Straße ist erforderlich');
   } else if (address.street!.length > 200) {
-    result.addError('street', 'Street cannot exceed 200 characters');
+    result.addError('street', 'Straße darf 200 Zeichen nicht überschreiten');
   }
 
   if (address?.zip?.trim().length === 0) {
-    result.addError('zip', 'Zip code is required');
+    result.addError('zip', 'PLZ ist erforderlich');
   } else if (address.zip!.length > 20) {
-    result.addError('zip', 'Zip code cannot exceed 20 characters');
+    result.addError('zip', 'PLZ darf 20 Zeichen nicht überschreiten');
   }
 
   return result;
@@ -83,38 +83,38 @@ export function checkLeague(league: SaveLeagueInput | ModifyLeagueInput): Valida
   // Age range validations
   if (league.minAge != undefined && league.maxAge != undefined) {
     if (league.minAge < 0) {
-      result.addError('minAge', 'Minimum age cannot be negative');
+      result.addError('minAge', 'Mindestalter darf nicht negativ sein');
     }
     if (league.maxAge < 0) {
-      result.addError('maxAge', 'Maximum age cannot be negative');
+      result.addError('maxAge', 'Maximalalter darf nicht negativ sein');
     }
     if (league.maxAge < league.minAge) {
-      result.addError('maxAge', 'Maximum age must be greater than or equal to minimum age');
+      result.addError('maxAge', 'Maximalalter muss größer oder gleich dem Mindestalter sein');
     }
     if (league.maxAge > 100) { // adjust as needed
-      result.addError('maxAge', 'Maximum age exceeds reasonable limit');
+      result.addError('maxAge', 'Maximalalter überschreitet das vernünftige Limit');
     }
   }
 
   // Name validations
   if (!league.name || league.name.trim().length === 0) {
-    result.addError('name', 'League name is required');
+    result.addError('name', 'Liganame ist erforderlich');
   } else if (league.name.length > 100) { // adjust max length as needed
-    result.addError('name', 'League name cannot exceed 100 characters');
+    result.addError('name', 'Liganame darf 100 Zeichen nicht überschreiten');
   }
 
   // Description validation (if required)
   if (league.description && league.description.length > 500) {
-    result.addError('description', 'Description cannot exceed 500 characters');
+    result.addError('description', 'Beschreibung darf 500 Zeichen nicht überschreiten');
   }
 
   // Short name validation
   if (league.shortName) {
     if (league.shortName.length > 10) {
-      result.addError('shortName', 'Short name cannot exceed 10 characters');
+      result.addError('shortName', 'Kurzname darf 10 Zeichen nicht überschreiten');
     }
     if (!/^[A-Za-z0-9]+$/.test(league.shortName)) {
-      result.addError('shortName', 'Short name can only contain alphanumeric characters');
+      result.addError('shortName', 'Kurzname darf nur alphanumerische Zeichen enthalten');
     }
   }
 
@@ -131,15 +131,15 @@ export function checkClub(club: SaveClubInput | ModifyClubInput): ValidationChec
 
   // Full name validations
   if (!club.name || club.name.trim().length === 0) {
-    result.addError('name', 'Club name is required');
+    result.addError('name', 'Vereinsname ist erforderlich');
   } else if (club.name.length > 100) {
-    result.addError('name', 'Club name cannot exceed 100 characters');
+    result.addError('name', 'Vereinsname darf 100 Zeichen nicht überschreiten');
   }
 
   // Short name validations
   if (club.shortName) {
     if (club.shortName.length > 30) {
-      result.addError('shortName', 'Short name cannot exceed 30 characters');
+      result.addError('shortName', 'Kurzname darf 30 Zeichen nicht überschreiten');
     }
   }
 
@@ -148,10 +148,10 @@ export function checkClub(club: SaveClubInput | ModifyClubInput): ValidationChec
     try {
       new URL(club.website);
       if (!club.website.startsWith('http://') && !club.website.startsWith('https://')) {
-        result.addError('website', 'Website must start with http:// or https://');
+        result.addError('website', 'Website muss mit http:// oder https:// beginnen');
       }
     } catch {
-      result.addError('website', 'Invalid website URL');
+      result.addError('website', 'Ungültige Website-URL');
     }
   }
 
@@ -180,14 +180,14 @@ export function checkGym(gym: SaveGymInput | ModifyGymInput): ValidationCheckRes
 
   // Name validations
   if (!gym.name || gym.name.trim().length === 0) {
-    result.addError('name', 'Gym name is required');
+    result.addError('name', 'Hallenname ist erforderlich');
   } else if (gym.name.length > 100) {
-    result.addError('name', 'Gym name cannot exceed 100 characters');
+    result.addError('name', 'Hallenname darf 100 Zeichen nicht überschreiten');
   }
 
   // available fields validation
   if (!gym.availableFields || gym.availableFields.trim().length === 0) {
-    result.addError('availableFields', 'Available fields are required');
+    result.addError('availableFields', 'Verfügbare Felder sind erforderlich');
   }
 
   // Address validations
@@ -213,9 +213,9 @@ export function checkSeason(season: SaveSeasonInput | ModifySeasonInput): Valida
 
   // Name validations
   if (!season.name || season.name.trim().length === 0) {
-    result.addError('name', 'Season name is required');
+    result.addError('name', 'Saisonname ist erforderlich');
   } else if (season.name.length > 100) {
-    result.addError('name', 'Season name cannot exceed 100 characters');
+    result.addError('name', 'Saisonname darf 100 Zeichen nicht überschreiten');
   }
 
   // Check for valid dates
@@ -224,19 +224,19 @@ export function checkSeason(season: SaveSeasonInput | ModifySeasonInput): Valida
   const registrationEnd = new Date(season.registrationEnd);
 
   if (isNaN(startDate.getTime()) || isNaN(endDate.getTime()) || isNaN(registrationEnd.getTime())) {
-    result.addError('dates', 'Invalid date format');
+    result.addError('dates', 'Ungültiges Datumsformat');
   }
 
   if (season.registrationStart) {
     const registrationStart = new Date(season.registrationStart);
     if (isNaN(registrationStart.getTime())) {
-      result.addError('registrationStart', 'Invalid date format');
+      result.addError('registrationStart', 'Ungültiges Datumsformat');
     }
   }
 
   // Season date validations
   if (endDate <= startDate) {
-    result.addError('endDate', 'Season end date must be after start date');
+    result.addError('endDate', 'Saison-Enddatum muss nach dem Startdatum liegen');
   }
 
   // Registration period validations
@@ -244,22 +244,22 @@ export function checkSeason(season: SaveSeasonInput | ModifySeasonInput): Valida
     const registrationStart = new Date(season.registrationStart);
     if (registrationStart) {
       if (registrationEnd <= registrationStart) {
-        result.addError('registrationEnd', 'Registration end date must be after registration start date');
+        result.addError('registrationEnd', 'Anmeldungsende muss nach dem Anmeldungsstart liegen');
       }
       if (registrationStart >= startDate) {
-        result.addError('registrationStart', 'Registration must start before season start date');
+        result.addError('registrationStart', 'Anmeldung muss vor dem Saisonstart beginnen');
       }
     }
   }
 
   if (registrationEnd > startDate) {
-    result.addError('registrationEnd', 'Registration must end before season start date');
+    result.addError('registrationEnd', 'Anmeldung muss vor dem Saisonstart enden');
   }
 
   // Future date validation
   const now = new Date();
   if (startDate < now) {
-    result.addError('startDate', 'Season start date cannot be in the past');
+    result.addError('startDate', 'Saison-Startdatum darf nicht in der Vergangenheit liegen');
   }
 
   return result;
@@ -275,16 +275,16 @@ export function checkPerson(person: SavePersonInput | ModifyPersonInput): Valida
 
   // Name validations
   if (!person.firstName?.trim()) {
-    result.addError('firstName', 'First name is required');
+    result.addError('firstName', 'Vorname ist erforderlich');
   }
 
   if (!person.lastName?.trim()) {
-    result.addError('lastName', 'Last name is required');
+    result.addError('lastName', 'Nachname ist erforderlich');
   }
 
   // Email validation
   if (person.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(person.email)) {
-    result.addError('email', 'Invalid email format');
+    result.addError('email', 'Ungültiges E-Mail-Format');
   }
 
   // Phone number validation
@@ -292,7 +292,7 @@ export function checkPerson(person: SavePersonInput | ModifyPersonInput): Valida
     // Allow digits, spaces, +, -, and ()
     const phoneRegex = /^[\d\s+()-]{8,20}$/;
     if (!phoneRegex.test(person.phone)) {
-      result.addError('phone', 'Invalid phone number format');
+      result.addError('phone', 'Ungültiges Telefonnummer-Format (+49 1234 567890)');
     }
   }
 
@@ -300,12 +300,12 @@ export function checkPerson(person: SavePersonInput | ModifyPersonInput): Valida
   if (person.dateOfBirth) {
     const date = new Date(person.dateOfBirth);
     if (isNaN(date.getTime())) {
-      result.addError('dateOfBirth', 'Invalid date of birth format');
+      result.addError('dateOfBirth', 'Ungültiges Geburtsdatumsformat');
     }
     // Add age restrictions if needed
     const today = new Date();
     if (date > today) {
-      result.addError('dateOfBirth', 'Date of birth cannot be in the future');
+      result.addError('dateOfBirth', 'Geburtsdatum darf nicht in der Zukunft liegen');
     }
   }
 
@@ -334,21 +334,21 @@ export function checkAssociation(association: SaveAssociationInput | ModifyAssoc
 
   // Name validation
   if (!association.name?.trim()) {
-    result.addError('name', 'Association name is required');
+    result.addError('name', 'Verbandsname ist erforderlich');
   } else if (association.name.length > 100) { // adjust max length as needed
-    result.addError('name', 'Association name cannot exceed 100 characters');
+    result.addError('name', 'Verbandsname darf 100 Zeichen nicht überschreiten');
   }
 
   // Contact Email validation
   if (!association.contactEmail?.trim()) {
-    result.addError('contactEmail', 'Contact email is required');
+    result.addError('contactEmail', 'Kontakt-E-Mail ist erforderlich');
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(association.contactEmail)) {
-    result.addError('contactEmail', 'Invalid contact email format');
+    result.addError('contactEmail', 'Ungültiges Kontakt-E-Mail-Format');
   }
 
   // Contact Name validation
   if (!association.contactName?.trim()) {
-    result.addError('contactName', 'Contact name is required');
+    result.addError('contactName', 'Kontaktname ist erforderlich');
   }
 
   // Address validation
@@ -374,28 +374,28 @@ export function checkLeagueGroup(leagueGroup: SaveLeagueGroupInput | ModifyLeagu
 
   // Name validations
   if (!leagueGroup.name || leagueGroup.name.trim().length === 0) {
-    result.addError('name', 'League group name is required');
+    result.addError('name', 'Staffelname ist erforderlich');
   } else if (leagueGroup.name.length > 100) {
-    result.addError('name', 'League group name cannot exceed 100 characters');
+    result.addError('name', 'Staffelname darf 100 Zeichen nicht überschreiten');
   }
 
   // Number validation
   if (leagueGroup.number < 1) {
-    result.addError('number', 'League group number must be positive');
+    result.addError('number', 'Staffelnummer muss positiv sein');
   }
 
   // Short name validations
   if (!leagueGroup.shortName || leagueGroup.shortName.trim().length === 0) {
-    result.addError('shortName', 'League group short name is required');
+    result.addError('shortName', 'Staffel-Kurzname ist erforderlich');
   } else if (leagueGroup.shortName.length > 10) {
-    result.addError('shortName', 'League group short name cannot exceed 10 characters');
+    result.addError('shortName', 'Staffel-Kurzname darf 10 Zeichen nicht überschreiten');
   } else if (!/^[A-Za-z0-9]+$/.test(leagueGroup.shortName)) {
-    result.addError('shortName', 'League group short name can only contain alphanumeric characters');
+    result.addError('shortName', 'Staffel-Kurzname darf nur alphanumerische Zeichen enthalten');
   }
 
   // Regulation validation
   if (!leagueGroup.regulation || leagueGroup.regulation.trim().length === 0) {
-    result.addError('regulation', 'League group regulation is required');
+    result.addError('regulation', 'Staffel-Regelungen sind erforderlich');
   }
 
   return result;
@@ -412,29 +412,29 @@ export function checkTeam(team: SaveTeamInput | ModifyTeamInput | RegisterTeamIn
   // Name validation
   if ('name' in team && team.name !== undefined) {
     if (team.name.trim().length === 0) {
-      result.addError('name', 'Team name cannot be empty');
+      result.addError('name', 'Teamname darf nicht leer sein');
     } else if (team.name.length > 100) {
-      result.addError('name', 'Team name cannot exceed 100 characters');
+      result.addError('name', 'Teamname darf 100 Zeichen nicht überschreiten');
     }
   } else if (!('id' in team)) { // if id is not in team, then it is a new team
-    result.addError('name', 'Team name is required');
+    result.addError('name', 'Teamname ist erforderlich');
   }
 
   // League ID validation
   if ('leagueId' in team && team.leagueId !== undefined) {
     if (team.leagueId.trim().length === 0) {
-      result.addError('leagueId', 'League ID cannot be empty');
+      result.addError('leagueId', 'Liga-ID darf nicht leer sein');
     } else if (team.leagueId.length > 100) {
-      result.addError('leagueId', 'League ID cannot exceed 100 characters');
+      result.addError('leagueId', 'Liga-ID darf 100 Zeichen nicht überschreiten');
     }
   } else if (!('id' in team)) { // if id is not in team, then it is a new team
-    result.addError('leagueId', 'League ID is required');
+    result.addError('leagueId', 'Liga-ID ist erforderlich');
   }
 
   // Exemption request validation
   if (team.exemptionRequest) {
     if (team.exemptionRequest.trim().length > 1000) {
-      result.addError('exemptionRequest', 'Exemption request cannot exceed 1000 characters');
+      result.addError('exemptionRequest', 'Freistellungsantrag darf 1000 Zeichen nicht überschreiten');
     }
   }
 
