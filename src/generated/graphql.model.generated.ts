@@ -78,7 +78,6 @@ export type Club = {
   contact?: Maybe<Person>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
-  players?: Maybe<Array<Maybe<Person>>>;
   shortName?: Maybe<Scalars['String']['output']>;
   teams?: Maybe<Array<Maybe<Team>>>;
   website?: Maybe<Scalars['AWSURL']['output']>;
