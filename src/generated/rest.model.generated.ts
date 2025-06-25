@@ -614,7 +614,7 @@ export interface components {
             id: string;
             club: components["schemas"]["Club"];
             name: string;
-            players: Record<string, never>;
+            players: components["schemas"]["Person"][];
             league: components["schemas"]["League"];
             leagueGroup?: components["schemas"]["LeagueGroup"];
             withoutCompetition?: boolean;
