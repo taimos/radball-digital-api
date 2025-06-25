@@ -7,7 +7,7 @@ paths:
         - CognitoAuth: []
       description: |
         Import clubs from a fixed-width text file.
-        
+
         File Format:
         - Fixed-width text file (encoding: UTF-8)
         - One club per line
@@ -20,7 +20,7 @@ paths:
           - Fax (15 chars)
           - Mobile (15 chars)
           - Email (40 chars)
-        
+
         Example line:
         ```
         Ailingen                                          Max Mustermann                                    Hauptstraße 123                                   88046 Musterstadt                                   07541-1234567                                               max.mustermann@example.com
@@ -36,18 +36,18 @@ paths:
               Ailingen                                          Max Mustermann                                    Hauptstraße 123                                   88046 Musterstadt                                   07541-1234567                                               max.mustermann@example.com
               Alpirsbach                                        Erika Musterfrau                                  Musterweg 42                                      72275 Testdorf                                      07444-7654321       0151-98765432       07444-1122334       erika.musterfrau@example.com
       responses:
-        '200':
+        "200":
           description: Import successful
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  success: 
+                  success:
                     type: boolean
               example:
                 success: true
-        '400':
+        "400":
           description: Invalid file format or content
           content:
             application/json:
@@ -58,7 +58,7 @@ paths:
                     type: string
               example:
                 error: "Invalid file format: Line 1 has incorrect length"
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -76,7 +76,7 @@ paths:
         - CognitoAuth: []
       description: |
         Import gyms from a fixed-width text file.
-        
+
         File Format:
         - Fixed-width text file (encoding: UTF-8)
         - One gym per line
@@ -87,7 +87,7 @@ paths:
           - Zip Code (5 chars)
           - City (50 chars)
           - Phone (20 chars)
-        
+
         Example line:
         ```
         Ailingen                                          Rotachhalle Ailingen                              Leonie Fürst Straße                               88048 Friedrichshafen-Ailingen                      0177-1234567
@@ -103,18 +103,18 @@ paths:
               Ailingen                                          Rotachhalle Ailingen                              Leonie Fürst Straße                               88048 Friedrichshafen-Ailingen                      0177-1234567
               Alpirsbach                                        Turnhalle Sulzberg                                Sulzberg                                          72275 Alpirsbach
       responses:
-        '200':
+        "200":
           description: Import successful
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  success: 
+                  success:
                     type: boolean
               example:
                 success: true
-        '400':
+        "400":
           description: Invalid file format or content
           content:
             application/json:
@@ -125,7 +125,7 @@ paths:
                     type: string
               example:
                 error: "Invalid file format: Line 1 has incorrect length"
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -143,7 +143,7 @@ paths:
         - CognitoAuth: []
       description: |
         Import persons from a CSV file.
-        
+
         File Format:
         - CSV file with semicolon (;) as separator (encoding: UTF-8)
         - One person per line
@@ -163,7 +163,7 @@ paths:
           13. Nation (nationality)
           14. Disziplin (discipline - Only "Radball" will be imported)
           15. Lizenz 2025 (license status for current year)
-        
+
         Example line:
         ```
         Mustermann;Max;Musterstraße 123;12345;Musterstadt;RV Musterverein;BDR;max.mustermann@example.com;12345;10012345678,00;15.05.1990 00:00:00;männlich;GER;Radball;1
@@ -180,7 +180,7 @@ paths:
               Mustermann;Max;Musterstraße 123;12345;Musterstadt;RV Musterverein;BDR;max.mustermann@example.com;12345;10012345678,00;15.05.1990 00:00:00;männlich;GER;Radball;1
               Musterfrau;Erika;Beispielweg 42;54321;Beispielstadt;SV Beispielverein;WTB;erika.musterfrau@example.com;54321;10023456789,00;20.10.1995 00:00:00;weiblich;GER;Radball;1
       responses:
-        '200':
+        "200":
           description: Import successful
           content:
             application/json:
@@ -190,7 +190,7 @@ paths:
                   - success
                   - stats
                 properties:
-                  success: 
+                  success:
                     type: boolean
                   stats:
                     type: object
@@ -227,7 +227,7 @@ paths:
                   unmatchedClubs: 1
                   errors:
                     - 'Could not find matching club for "Unknown Club"/"BDR" (Person: Max Mustermann)'
-        '400':
+        "400":
           description: Invalid file format or content
           content:
             application/json:
@@ -238,7 +238,7 @@ paths:
                     type: string
               example:
                 error: "Invalid file format: Line 2 has incorrect number of fields"
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -250,19 +250,19 @@ paths:
               example:
                 error: "Invalid or missing authentication token"
   /associations:
-    get: 
+    get:
       summary: "get list of associations"
       description: "get list of associations"
       operationId: getListOfAssociations
       responses:
-        '200':
+        "200":
           description: "successful"
-          content: 
-              application/json:
-                schema:
-                  type: "array"
-                  items:
-                    $ref: "#/components/schemas/Association"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Association"
   /associations/{id}:
     get:
       summary: "get association by id"
@@ -275,7 +275,7 @@ paths:
             type: "string"
             format: "uuid"
       responses:
-        '200':
+        "200":
           description: "successful"
           content:
             application/json:
@@ -294,14 +294,14 @@ paths:
             type: "string"
             format: "uuid"
       responses:
-        '200':
+        "200":
           description: "successful"
-          content: 
-              application/json:
-                schema:
-                  type: "array"
-                  items:
-                    $ref: "#/components/schemas/Season"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Season"
   /seasons/{id}:
     get:
       summary: "get season by id"
@@ -314,7 +314,7 @@ paths:
             type: "string"
             format: "uuid"
       responses:
-        '200':
+        "200":
           description: "successful"
           content:
             application/json:
@@ -324,111 +324,111 @@ paths:
     get:
       summary: "get list of leagues in season"
       operationId: getListOfLeagueInSeason
-      
+
       parameters:
-      - name: "seasonId"
-        in: "query"
-        required: true
-        schema:
-          type: "string"
-          format: "uuid"
+        - name: "seasonId"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
       responses:
-        '200':
+        "200":
           description: "successful"
-          content: 
-              application/json:
-                schema:
-                  type: "array"
-                  items:
-                    $ref: "#/components/schemas/League"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/League"
   /leagues/{id}:
     get:
       summary: "get League by id"
       operationId: getLeagueById
       parameters:
-      - name: "id"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-          format: "uuid"
-      - name: "associationId"
-        in: "query"
-        required: true
-        schema:
-          type: "string"
-          format: "uuid"
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "associationId"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
       responses:
-        '200':
+        "200":
           description: "successful"
-          content: 
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/League"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/League"
 
   /leagues/{leagueId}/groups:
     get:
       summary: "get List of Groups in League"
       operationId: getListOfGroupsInLeague
       parameters:
-      - name: "leagueId"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-          format: "uuid"
+        - name: "leagueId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
       responses:
-        '200':
+        "200":
           description: "successful"
-          content: 
-              application/json:
-                schema:
-                  type: "array"
-                  items:
-                    $ref: "#/components/schemas/LeagueGroup"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/LeagueGroup"
 
   /leagues/{leagueId}/groups/{groupId}:
     get:
       summary: "get LeagueGroup by Id"
       operationId: getLeagueGroupById
       parameters:
-      - name: "leagueId"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-          format: "uuid"
-      - name: "groupId"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-          format: "uuid"
+        - name: "leagueId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "groupId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
       responses:
-        '200':
+        "200":
           description: "successful"
-          content: 
+          content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LeagueGroup" 
+                $ref: "#/components/schemas/LeagueGroup"
 
   /leagues/{leagueId}/groups/{groupId}/matchdays:
     get:
       summary: "get List of Matchdays"
       operationId: getListOfMatchdays
       parameters:
-      - name: "leagueId"
-        in: "path"
-        required: true
-        schema: 
-          type: "string"
-          format: "uuid"
-      - name: "groupId"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-          format: "uuid"
+        - name: "leagueId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "groupId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
       responses:
         "200":
           description: "successful"
@@ -444,24 +444,24 @@ paths:
       summary: "get Matchday by Id"
       operationId: getMatchdayById
       parameters:
-      - name: "leagueId"
-        in: "path"
-        required: true
-        schema: 
-          type: "string"
-          format: "uuid"
-      - name: "groupId"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-          format: "uuid"
-      - name: "matchdayId"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-          format: "uuid"
+        - name: "leagueId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "groupId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "matchdayId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
       responses:
         "200":
           description: "successful"
@@ -477,13 +477,13 @@ paths:
       responses:
         "200":
           description: "successful"
-          content: 
+          content:
             application/json:
               schema:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/Club"
-  
+
   /clubs/{clubId}:
     get:
       summary: "get Club By Id"
@@ -492,7 +492,7 @@ paths:
         - name: "clubId"
           in: "path"
           required: true
-          schema: 
+          schema:
             type: "string"
             format: "uuid"
       responses:
@@ -501,7 +501,7 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: "#/components/schemas/Club"
+                $ref: "#/components/schemas/Club"
 
   /clubs/{clubId}/teams:
     get:
@@ -523,7 +523,7 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/Team"
-  
+
   /associations/{associationId}/clubs:
     get:
       summary: "get List of Clubs by association"
@@ -544,7 +544,7 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/Club"
-  
+
   /leagues/{leagueId}/clubs:
     get:
       summary: "get List of Clubs by League"
@@ -565,7 +565,7 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/Club"
-  
+
   /leagues/{leagueId}/teams:
     get:
       summary: "get List of Teams by League"
@@ -587,7 +587,6 @@ paths:
                 items:
                   $ref: "#/components/schemas/Team"
 
-  
   /leagues/{leagueId}/groups/{groupId}/clubs:
     get:
       summary: "get List of Clubs by LeagueGroup"
@@ -642,27 +641,26 @@ paths:
                 items:
                   $ref: "#/components/schemas/Team"
 
-
   /seasons/{seasonId}/matchdays:
     get:
       summary: "get List of Matchdays in Season"
-      operationId:  getListOfMatchdaysInSeason
+      operationId: getListOfMatchdaysInSeason
       parameters:
         - name: "seasonId"
           in: "path"
           required: true
-          schema: 
+          schema:
             type: "string"
             format: "uuid"
       responses:
-        '200':
+        "200":
           description: "successful"
           content:
             application/json:
               schema:
                 type: "array"
                 items:
-                  $ref: "#/components/schemas/MatchDay"  
+                  $ref: "#/components/schemas/MatchDay"
 
   /teams/{teamId}:
     get:
@@ -676,29 +674,29 @@ paths:
             type: "string"
             format: "uuid"
       responses:
-        '200':
+        "200":
           description: "successful"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Team"  
+                $ref: "#/components/schemas/Team"
 
   /gyms:
     get:
-     summary: "get List of Gyms"
-     operationId: getListOfGyms
-     responses:
-        '200':
+      summary: "get List of Gyms"
+      operationId: getListOfGyms
+      responses:
+        "200":
           description: "successful"
           content:
             application/json:
               schema:
                 type: "array"
                 items:
-                  $ref: "#/components/schemas/Gym"  
+                  $ref: "#/components/schemas/Gym"
 
   /gyms/{gymId}:
-     get:
+    get:
       summary: "get gym by gymId"
       operationId: getGymByGymId
       parameters:
@@ -709,15 +707,15 @@ paths:
             type: "string"
             format: "uuid"
       responses:
-        '200':
+        "200":
           description: "successful"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Gym"  
+                $ref: "#/components/schemas/Gym"
 
   /clubs/{clubId}/gyms/{gymId}:
-     get:
+    get:
       summary: "get gym by clubId"
       operationId: getGymByClubId
       parameters:
@@ -734,7 +732,7 @@ paths:
             type: "string"
             format: "uuid"
       responses:
-        '200':
+        "200":
           description: "successful"
           content:
             application/json:
@@ -753,17 +751,17 @@ paths:
             type: "string"
             format: "uuid"
       responses:
-        '200':
+        "200":
           description: "successful"
           content:
             application/json:
               schema:
                 type: "array"
                 items:
-                  $ref: "#/components/schemas/Person"  
-  
+                  $ref: "#/components/schemas/Person"
+
   /persons/{personId}:
-     get:
+    get:
       summary: "get Person By Id"
       description: personId can be id or uciCode
       operationId: getPersonById
@@ -775,66 +773,58 @@ paths:
             type: "string"
             format: "uuid"
       responses:
-        '200':
+        "200":
           description: "successful"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Person"  
-
-
-
-
-
-    
-
-
+                $ref: "#/components/schemas/Person"
 
 info:
   title: rest API definition
-  version: '1.0'
+  version: "1.0"
 components:
   schemas:
     Address:
       type: "object"
       properties:
-        street: 
+        street:
           type: "string"
-        zip: 
+        zip:
           type: "string"
-        city: 
+        city:
           type: "string"
-        country: 
+        country:
           type: "string"
       required:
         - "street"
         - "zip"
         - "city"
         - "country"
-    Club: 
+    Club:
       type: "object"
       properties:
-        id: 
+        id:
           type: "string"
           format: "uuid"
-        name: 
+        name:
           type: "string"
-        shortName: 
+        shortName:
           type: "string"
-        address: 
+        address:
           $ref: "#/components/schemas/Address"
         website:
           type: "string"
           format: "uri"
-        contact: 
+        contact:
           $ref: "#/components/schemas/Person"
-        association: 
+        association:
           $ref: "#/components/schemas/Association"
-        teams: 
+        teams:
           type: "array"
           items:
             $ref: "#/components/schemas/Team"
-        players: 
+        players:
           type: "array"
           items:
             $ref: "#/components/schemas/Person"
@@ -845,43 +835,43 @@ components:
     Person:
       type: "object"
       properties:
-        id: 
+        id:
           type: "string"
           format: "uuid"
-        firstName: 
+        firstName:
           type: "string"
-        lastName: 
+        lastName:
           type: "string"
-        subjectId: 
+        subjectId:
           type: "string"
           format: "uuid"
-        club: 
+        club:
           $ref: "#/components/schemas/Club"
-        gender: 
+        gender:
           type: "string"
-        dateOfBirth: 
+        dateOfBirth:
           type: "string"
           format: "date"
-        uciCode: 
+        uciCode:
           type: "string"
           format: "uuid"
-        nationality: 
+        nationality:
           type: "string"
-        email: 
+        email:
           type: "string"
           format: "email"
-        phone: 
+        phone:
           type: "string"
-        address: 
+        address:
           $ref: "#/components/schemas/Address"
       required:
         - "id"
         - "firstName"
         - "lastName"
-    Association: 
+    Association:
       type: "object"
-      properties: 
-        id: 
+      properties:
+        id:
           type: "string"
           format: "uuid"
         name:
@@ -890,25 +880,25 @@ components:
           type: "string"
         address:
           $ref: "#/components/schemas/Address"
-        contactName: 
+        contactName:
           type: "string"
-        contactEmail: 
+        contactEmail:
           type: "string"
           format: "email"
-        website: 
+        website:
           type: "string"
           format: "url"
         phone:
           type: "string"
-        coordinators: 
+        coordinators:
           type: "array"
           items:
             $ref: "#/components/schemas/Person"
-        groupLeaders: 
+        groupLeaders:
           type: "array"
-          items: 
+          items:
             $ref: "#/components/schemas/Person"
-        seasons: 
+        seasons:
           type: "array"
           items:
             $ref: "#/components/schemas/Season"
@@ -924,28 +914,28 @@ components:
     Team:
       type: "object"
       properties:
-        id: 
+        id:
           type: "string"
           format: "uuid"
-        club: 
+        club:
           $ref: "#/components/schemas/Club"
-        name: 
+        name:
           type: "string"
-        players: 
+        players:
           type: "array"
           items:
             $ref: "#/components/schemas/Person"
-        league: 
+        league:
           $ref: "#/components/schemas/League"
-        leagueGroup: 
+        leagueGroup:
           $ref: "#/components/schemas/LeagueGroup"
-        withoutCompetition: 
+        withoutCompetition:
           type: "boolean"
-        secondRightToPlay: 
+        secondRightToPlay:
           type: "boolean"
-        sgClub: 
+        sgClub:
           $ref: "#/components/schemas/Club"
-      required: 
+      required:
         - "id"
         - "club"
         - "name"
@@ -956,18 +946,18 @@ components:
         id:
           type: "string"
           format: "uuid"
-        name: 
+        name:
           type: "string"
-        startDate: 
-          type: "string"
-          format: "date"
-        endDate: 
+        startDate:
           type: "string"
           format: "date"
-        registrationStart: 
+        endDate:
           type: "string"
           format: "date"
-        registrationEnd: 
+        registrationStart:
+          type: "string"
+          format: "date"
+        registrationEnd:
           type: "string"
           format: "date"
         association:
@@ -985,28 +975,28 @@ components:
         - "association"
     League:
       properties:
-        id: 
+        id:
           type: "string"
           format: "uuid"
-        name: 
+        name:
           type: "string"
-        association: 
+        association:
           $ref: "#/components/schemas/Association"
-        season: 
+        season:
           $ref: "#/components/schemas/Season"
-        additionalEligibleAssociations: 
+        additionalEligibleAssociations:
           type: "array"
           items:
             $ref: "#/components/schemas/Association"
-        shortName: 
+        shortName:
           type: "string"
-        description: 
+        description:
           type: "string"
-        minAge: 
+        minAge:
           type: "number"
-        maxAge: 
+        maxAge:
           type: "number"
-        groups: 
+        groups:
           type: "array"
           items:
             $ref: "#/components/schemas/LeagueGroup"
@@ -1016,24 +1006,24 @@ components:
         - "association"
     LeagueGroup:
       properties:
-        id: 
+        id:
           type: "string"
           format: "uuid"
-        association: 
+        association:
           $ref: "#/components/schemas/Association"
-        season: 
+        season:
           $ref: "#/components/schemas/Season"
-        league: 
+        league:
           $ref: "#/components/schemas/League"
-        number: 
+        number:
           type: "number"
-        name: 
+        name:
           type: "string"
-        shortName: 
+        shortName:
           type: "string"
         leader:
           $ref: "#/components/schemas/Person"
-        regulation: 
+        regulation:
           type: "string"
       required:
         - "id"
@@ -1046,8 +1036,8 @@ components:
         - "leader"
         - "regulation"
     MatchDay:
-      properties: 
-        id: 
+      properties:
+        id:
           type: "string"
           format: "uuid"
         group:
@@ -1075,7 +1065,7 @@ components:
           type: string
         report:
           type: string
-        pin: 
+        pin:
           type: string
       required:
         - id
@@ -1086,10 +1076,10 @@ components:
         - gym
         - teams
         - secretary
-        
+
     Gym:
       properties:
-        id: 
+        id:
           type: string
           format: "uuid"
         name:
@@ -1101,12 +1091,11 @@ components:
         availableFields:
           type: string
       required:
-       - id
-       - name
-       - club
-       - address
-       - availableFields
-        
+        - id
+        - name
+        - club
+        - address
+        - availableFields
 
     MatchDayTeam:
       properties:
@@ -1124,16 +1113,15 @@ components:
         - team
         - present
 
-
     Game:
       properties:
         gameNumber:
           type: number
-        team1: 
+        team1:
           $ref: "#/components/schemas/MatchDayTeam"
         team2:
           $ref: "#/components/schemas/MatchDayTeam"
-        halftimeGoalsTeam1: 
+        halftimeGoalsTeam1:
           type: number
         halftimeGoalsTeam2:
           type: number
@@ -1165,10 +1153,8 @@ components:
       required:
         - additionalReferees
 
-        
   securitySchemes:
     CognitoAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
-  
