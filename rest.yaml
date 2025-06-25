@@ -511,7 +511,7 @@ paths:
         - name: "clubId"
           in: "path"
           required: true
-          schema: 
+          schema:
             type: "string"
             format: "uuid"
       responses:
@@ -522,8 +522,7 @@ paths:
               schema:
                 type: "array"
                 items:
-                  $ref: "#/components/schemas/Club"
-  
+                  $ref: "#/components/schemas/Team"
   
   /associations/{associationId}/clubs:
     get:
