@@ -567,7 +567,7 @@ export interface components {
             name: string;
             shortName?: string;
             address?: components["schemas"]["Address"];
-            /** Format: email */
+            /** Format: uri */
             website?: string;
             contact?: components["schemas"]["Person"];
             association: components["schemas"]["Association"];
@@ -1206,7 +1206,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Club"][];
+                    "application/json": components["schemas"]["Team"][];
                 };
             };
         };
