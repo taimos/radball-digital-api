@@ -633,7 +633,7 @@ export interface components {
             registrationStart?: string;
             /** Format: date */
             registrationEnd: string;
-            association: components["schemas"]["Season"];
+            association: components["schemas"]["Association"];
             leagues?: components["schemas"]["League"][];
         };
         League: {
