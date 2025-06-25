@@ -932,7 +932,7 @@ components:
         name: 
           type: "string"
         players: 
-          type: "object"
+          type: "array"
           items:
             $ref: "#/components/schemas/Person"
         league: 
