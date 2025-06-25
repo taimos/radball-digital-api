@@ -671,7 +671,7 @@ export interface components {
             /** Format: date */
             endDate: string;
             gym: components["schemas"]["Gym"];
-            /** Format: url */
+            /** Format: uri */
             streamingLink?: string;
             teams: components["schemas"]["MatchDayTeam"];
             games?: components["schemas"]["Game"];
