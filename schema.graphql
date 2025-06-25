@@ -74,7 +74,6 @@ type Club @aws_cognito_user_pools {
   contact: Person
   association: Association!
   teams: [Team]
-  players: [Person]
 }
 
 type Team @aws_cognito_user_pools {
