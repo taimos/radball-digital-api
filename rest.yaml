@@ -1054,7 +1054,7 @@ components:
           $ref: "#/components/schemas/Gym"
         streamingLink:
           type: string
-          format: "url"
+          format: "uri"
         teams:
           $ref: "#/components/schemas/MatchDayTeam"
         games:
