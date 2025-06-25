@@ -971,8 +971,8 @@ components:
         registrationEnd: 
           type: "string"
           format: "date"
-        association: 
-          $ref: "#/components/schemas/Season"
+        association:
+          $ref: "#/components/schemas/Association"
         leagues:
           type: "array"
           items:
