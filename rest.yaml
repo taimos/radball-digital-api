@@ -1060,11 +1060,17 @@ components:
           type: string
           format: "uri"
         teams:
-          $ref: "#/components/schemas/MatchDayTeam"
+          type: "array"
+          items:
+            $ref: "#/components/schemas/MatchDayTeam"
         games:
-          $ref: "#/components/schemas/Game"
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Game"
         commissioners:
-          $ref: "#/components/schemas/RefereeInfo"
+          type: "array"
+          items:
+            $ref: "#/components/schemas/RefereeInfo"
         secretary:
           type: string
         report:
