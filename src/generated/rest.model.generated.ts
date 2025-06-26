@@ -673,9 +673,9 @@ export interface components {
             gym: components["schemas"]["Gym"];
             /** Format: uri */
             streamingLink?: string;
-            teams: components["schemas"]["MatchDayTeam"];
-            games?: components["schemas"]["Game"];
-            commissioners?: components["schemas"]["RefereeInfo"];
+            teams: components["schemas"]["MatchDayTeam"][];
+            games?: components["schemas"]["Game"][];
+            commissioners?: components["schemas"]["RefereeInfo"][];
             secretary: string;
             report?: string;
             pin?: string;
