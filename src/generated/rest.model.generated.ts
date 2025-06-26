@@ -602,7 +602,7 @@ export interface components {
             contactName: string;
             /** Format: email */
             contactEmail: string;
-            /** Format: url */
+            /** Format: uri */
             website?: string;
             phone?: string;
             coordinators: components["schemas"]["Person"][];
