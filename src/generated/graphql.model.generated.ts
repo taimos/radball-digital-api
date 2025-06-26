@@ -126,7 +126,7 @@ export type LeagueGroup = {
   __typename?: 'LeagueGroup';
   association: Association;
   id: Scalars['ID']['output'];
-  leader: Person;
+  leader?: Maybe<Person>;
   league: League;
   name: Scalars['String']['output'];
   number: Scalars['Int']['output'];
@@ -201,7 +201,7 @@ export type ModifyGymInput = {
 };
 
 export type ModifyLeagueGroupInput = {
-  groupLeaderId: Scalars['ID']['input'];
+  groupLeaderId?: InputMaybe<Scalars['ID']['input']>;
   id: Scalars['ID']['input'];
   name: Scalars['String']['input'];
   number: Scalars['Int']['input'];
@@ -823,7 +823,7 @@ export type SaveGymInput = {
 };
 
 export type SaveLeagueGroupInput = {
-  groupLeaderId: Scalars['ID']['input'];
+  groupLeaderId?: InputMaybe<Scalars['ID']['input']>;
   leagueId: Scalars['ID']['input'];
   name: Scalars['String']['input'];
   number: Scalars['Int']['input'];

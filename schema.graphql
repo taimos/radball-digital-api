@@ -61,7 +61,7 @@ type LeagueGroup @aws_cognito_user_pools {
   number: Int!
   name: String!
   shortName: String!
-  leader: Person!
+  leader: Person
   regulation: String!
 }
 
@@ -271,7 +271,7 @@ input SaveLeagueGroupInput {
   number: Int!
   name: String!
   shortName: String!
-  groupLeaderId: ID!
+  groupLeaderId: ID
   regulation: String!
 }
 
@@ -280,7 +280,7 @@ input ModifyLeagueGroupInput {
   number: Int!
   name: String!
   shortName: String!
-  groupLeaderId: ID!
+  groupLeaderId: ID
   regulation: String!
 }
 
