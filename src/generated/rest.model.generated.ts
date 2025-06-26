@@ -117,10 +117,602 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/associations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * get list of associations
+         * @description get list of associations
+         */
+        get: operations["getListOfAssociations"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/associations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get association by id */
+        get: operations["getAssociationById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/seasons": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * get list of seasons for association
+         * @description get list of season for association
+         */
+        get: operations["getListOfSeasons"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/seasons/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get season by id */
+        get: operations["getSeasonById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/leagues": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get list of leagues in season */
+        get: operations["getListOfLeagueInSeason"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/leagues/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get League by id */
+        get: operations["getLeagueById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/leagues/{leagueId}/groups": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get List of Groups in League */
+        get: operations["getListOfGroupsInLeague"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/leagues/{leagueId}/groups/{groupId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get LeagueGroup by Id */
+        get: operations["getLeagueGroupById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/leagues/{leagueId}/groups/{groupId}/matchdays": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get List of Matchdays */
+        get: operations["getListOfMatchdays"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/leagues/{leagueId}/groups/{groupId}/matchdays/{matchdayId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get Matchday by Id */
+        get: operations["getMatchdayById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/clubs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get List of Clubs */
+        get: operations["getListOfClubs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/clubs/{clubId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get Club By Id */
+        get: operations["getClubById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/clubs/{clubId}/teams": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get List of Teams by ClubId */
+        get: operations["getListOfTeamsByClubId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/associations/{associationId}/clubs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get List of Clubs by association */
+        get: operations["getListOfClubsByAssociation"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/leagues/{leagueId}/clubs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get List of Clubs by League */
+        get: operations["getListOfClubsByLeague"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/leagues/{leagueId}/teams": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get List of Teams by League */
+        get: operations["getListOfTeamsByLeague"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/leagues/{leagueId}/groups/{groupId}/clubs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get List of Clubs by LeagueGroup */
+        get: operations["getListOfClubsByLeagueGroup"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/leagues/{leagueId}/groups/{groupId}/teams": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get List of Teams by LeagueGroup */
+        get: operations["getListOfTeamsByLeagueGroup"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/seasons/{seasonId}/matchdays": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get List of Matchdays in Season */
+        get: operations["getListOfMatchdaysInSeason"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/teams/{teamId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get team by teamId */
+        get: operations["getTeamByTeamId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/gyms": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get List of Gyms */
+        get: operations["getListOfGyms"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/gyms/{gymId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get gym by gymId */
+        get: operations["getGymByGymId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/clubs/{clubId}/gyms/{gymId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get gym by clubId */
+        get: operations["getGymByClubId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/clubs/{clubId}/persons": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get List of Persons */
+        get: operations["getListOfPersonsInClub"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/persons/{personId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * get Person By Id
+         * @description personId can be id or uciCode
+         */
+        get: operations["getPersonById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: never;
+    schemas: {
+        Address: {
+            street: string;
+            zip: string;
+            city: string;
+            country: string;
+        };
+        Club: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            shortName?: string;
+            address?: components["schemas"]["Address"];
+            /** Format: uri */
+            website?: string;
+            contact?: components["schemas"]["Person"];
+            association: components["schemas"]["Association"];
+            teams?: components["schemas"]["Team"][];
+            players?: components["schemas"]["Person"][];
+        };
+        Person: {
+            /** Format: uuid */
+            id: string;
+            firstName: string;
+            lastName: string;
+            /** Format: uuid */
+            subjectId?: string;
+            club?: components["schemas"]["Club"];
+            gender?: string;
+            /** Format: date */
+            dateOfBirth?: string;
+            /** Format: uuid */
+            uciCode?: string;
+            nationality?: string;
+            /** Format: email */
+            email?: string;
+            phone?: string;
+            address?: components["schemas"]["Address"];
+        };
+        Association: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            shortName: string;
+            address: components["schemas"]["Address"];
+            contactName: string;
+            /** Format: email */
+            contactEmail: string;
+            /** Format: uri */
+            website?: string;
+            phone?: string;
+            coordinators: components["schemas"]["Person"][];
+            groupLeaders: components["schemas"]["Person"][];
+            seasons?: components["schemas"]["Season"][];
+        };
+        Team: {
+            /** Format: uuid */
+            id: string;
+            club: components["schemas"]["Club"];
+            name: string;
+            players: components["schemas"]["Person"][];
+            league: components["schemas"]["League"];
+            leagueGroup?: components["schemas"]["LeagueGroup"];
+            withoutCompetition?: boolean;
+            secondRightToPlay?: boolean;
+            sgClub?: components["schemas"]["Club"];
+        };
+        Season: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            /** Format: date */
+            startDate: string;
+            /** Format: date */
+            endDate: string;
+            /** Format: date */
+            registrationStart?: string;
+            /** Format: date */
+            registrationEnd: string;
+            association: components["schemas"]["Association"];
+            leagues?: components["schemas"]["League"][];
+        };
+        League: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            association: components["schemas"]["Association"];
+            season?: components["schemas"]["Season"];
+            additionalEligibleAssociations?: components["schemas"]["Association"][];
+            shortName?: string;
+            description?: string;
+            minAge?: number;
+            maxAge?: number;
+            groups?: components["schemas"]["LeagueGroup"][];
+        };
+        LeagueGroup: {
+            /** Format: uuid */
+            id: string;
+            association: components["schemas"]["Association"];
+            season: components["schemas"]["Season"];
+            league: components["schemas"]["League"];
+            number: number;
+            name: string;
+            shortName: string;
+            leader: components["schemas"]["Person"];
+            regulation: string;
+        };
+        MatchDay: {
+            /** Format: uuid */
+            id: string;
+            group: components["schemas"]["LeagueGroup"];
+            matchDayNumber: string;
+            /** Format: date */
+            startDate: string;
+            /** Format: date */
+            endDate: string;
+            gym: components["schemas"]["Gym"];
+            /** Format: uri */
+            streamingLink?: string;
+            teams: components["schemas"]["MatchDayTeam"][];
+            games?: components["schemas"]["Game"][];
+            commissioners?: components["schemas"]["RefereeInfo"][];
+            secretary: string;
+            report?: string;
+            pin?: string;
+        };
+        Gym: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            club: components["schemas"]["Club"];
+            address: components["schemas"]["Address"];
+            availableFields: string;
+        };
+        MatchDayTeam: {
+            /** Format: uuid */
+            id: string;
+            team: components["schemas"]["Team"];
+            substitutePlayer?: components["schemas"]["Person"];
+            present: boolean;
+        };
+        Game: {
+            gameNumber: number;
+            team1: components["schemas"]["MatchDayTeam"];
+            team2: components["schemas"]["MatchDayTeam"];
+            halftimeGoalsTeam1?: number;
+            halftimeGoalsTeam2?: number;
+            finalGoalsTeam1?: number;
+            finalGoalsTeam2?: number;
+            pointsTeam1?: number;
+            pointsTeam2?: number;
+            bothLost?: boolean;
+            nonCompetitive?: boolean;
+        };
+        RefereeInfo: {
+            chiefReferee?: components["schemas"]["Person"];
+            additionalReferees: components["schemas"]["Person"][];
+        };
+    };
     responses: never;
     parameters: never;
     requestBodies: never;
@@ -327,6 +919,559 @@ export interface operations {
                     "application/json": {
                         error?: string;
                     };
+                };
+            };
+        };
+    };
+    getListOfAssociations: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Association"][];
+                };
+            };
+        };
+    };
+    getAssociationById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Association"];
+                };
+            };
+        };
+    };
+    getListOfSeasons: {
+        parameters: {
+            query: {
+                associationId: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Season"][];
+                };
+            };
+        };
+    };
+    getSeasonById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Season"];
+                };
+            };
+        };
+    };
+    getListOfLeagueInSeason: {
+        parameters: {
+            query: {
+                seasonId: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["League"][];
+                };
+            };
+        };
+    };
+    getLeagueById: {
+        parameters: {
+            query: {
+                associationId: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["League"];
+                };
+            };
+        };
+    };
+    getListOfGroupsInLeague: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                leagueId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeagueGroup"][];
+                };
+            };
+        };
+    };
+    getLeagueGroupById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                leagueId: string;
+                groupId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeagueGroup"];
+                };
+            };
+        };
+    };
+    getListOfMatchdays: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                leagueId: string;
+                groupId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MatchDay"][];
+                };
+            };
+        };
+    };
+    getMatchdayById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                leagueId: string;
+                groupId: string;
+                matchdayId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MatchDay"];
+                };
+            };
+        };
+    };
+    getListOfClubs: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Club"][];
+                };
+            };
+        };
+    };
+    getClubById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                clubId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Club"];
+                };
+            };
+        };
+    };
+    getListOfTeamsByClubId: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                clubId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Team"][];
+                };
+            };
+        };
+    };
+    getListOfClubsByAssociation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                associationId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Club"][];
+                };
+            };
+        };
+    };
+    getListOfClubsByLeague: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                leagueId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Club"][];
+                };
+            };
+        };
+    };
+    getListOfTeamsByLeague: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                leagueId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Team"][];
+                };
+            };
+        };
+    };
+    getListOfClubsByLeagueGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                leagueId: string;
+                groupId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Club"][];
+                };
+            };
+        };
+    };
+    getListOfTeamsByLeagueGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                leagueId: string;
+                groupId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Team"][];
+                };
+            };
+        };
+    };
+    getListOfMatchdaysInSeason: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                seasonId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MatchDay"][];
+                };
+            };
+        };
+    };
+    getTeamByTeamId: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                teamId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Team"];
+                };
+            };
+        };
+    };
+    getListOfGyms: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Gym"][];
+                };
+            };
+        };
+    };
+    getGymByGymId: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                gymId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Gym"];
+                };
+            };
+        };
+    };
+    getGymByClubId: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                gymId: string;
+                clubId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Gym"];
+                };
+            };
+        };
+    };
+    getListOfPersonsInClub: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                clubId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Person"][];
+                };
+            };
+        };
+    };
+    getPersonById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                personId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Person"];
                 };
             };
         };
