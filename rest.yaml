@@ -887,7 +887,7 @@ components:
           format: "email"
         website:
           type: "string"
-          format: "url"
+          format: "uri"
         phone:
           type: "string"
         coordinators:
@@ -942,6 +942,7 @@ components:
         - "players"
         - "league"
     Season:
+      type: "object"
       properties:
         id:
           type: "string"
@@ -974,6 +975,7 @@ components:
         - "registrationEnd"
         - "association"
     League:
+      type: "object"
       properties:
         id:
           type: "string"
@@ -1005,6 +1007,7 @@ components:
         - "name"
         - "association"
     LeagueGroup:
+      type: "object"
       properties:
         id:
           type: "string"
@@ -1036,6 +1039,7 @@ components:
         - "leader"
         - "regulation"
     MatchDay:
+      type: "object"
       properties:
         id:
           type: "string"
@@ -1078,6 +1082,7 @@ components:
         - secretary
 
     Gym:
+      type: "object"
       properties:
         id:
           type: string
@@ -1098,6 +1103,7 @@ components:
         - availableFields
 
     MatchDayTeam:
+      type: "object"
       properties:
         id:
           type: string
@@ -1114,6 +1120,7 @@ components:
         - present
 
     Game:
+      type: "object"
       properties:
         gameNumber:
           type: number
@@ -1143,6 +1150,7 @@ components:
         - team2
 
     RefereeInfo:
+      type: "object"
       properties:
         chiefReferee:
           $ref: "#/components/schemas/Person"
