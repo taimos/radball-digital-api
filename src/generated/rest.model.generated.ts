@@ -117,6 +117,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/seasons/{seasonId}/league-order": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** @description Update the order of leagues within a season.
+         *
+         *     The order is determined by the position of league IDs in the provided array.
+         *     All league IDs must belong to the specified season.
+         *      */
+        put: operations["updateLeagueOrder"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -323,6 +344,97 @@ export interface operations {
                 content: {
                     /** @example {
                      *       "error": "Invalid or missing authentication token"
+                     *     } */
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+        };
+    };
+    updateLeagueOrder: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The ID of the season to update */
+                seasonId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /** @example {
+                 *       "leagueOrder": [
+                 *         "league-1-bundesliga",
+                 *         "league-2-bundesliga",
+                 *         "league-regionalliga-1",
+                 *         "league-regionalliga-2"
+                 *       ]
+                 *     } */
+                "application/json": {
+                    /** @description Array of league IDs in the desired order */
+                    leagueOrder: string[];
+                };
+            };
+        };
+        responses: {
+            /** @description League order updated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "id": "season-2024-25",
+                     *       "name": "2024/25",
+                     *       "leagueOrder": [
+                     *         "league-1-bundesliga",
+                     *         "league-2-bundesliga",
+                     *         "league-regionalliga-1",
+                     *         "league-regionalliga-2"
+                     *       ]
+                     *     } */
+                    "application/json": {
+                        id?: string;
+                        name?: string;
+                        leagueOrder?: string[];
+                    };
+                };
+            };
+            /** @description Bad request - validation error */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "error": "Invalid or missing authentication token"
+                     *     } */
+                    "application/json": {
+                        error?: string;
+                    };
+                };
+            };
+            /** @description Season not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "error": "Season not found"
                      *     } */
                     "application/json": {
                         error?: string;

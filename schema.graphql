@@ -37,6 +37,7 @@ type Season @aws_cognito_user_pools {
   registrationEnd: AWSDate!
   association: Association!
   leagues: [League]
+  leagueOrder: [ID!]
 }
 
 type League @aws_cognito_user_pools {
@@ -441,6 +442,11 @@ input RegisterTeamsForSeasonInput {
   preferredDates: [SavePreferredMatchdayDateInput]
 }
 
+input UpdateLeagueOrderInput {
+  seasonId: ID!
+  leagueOrder: [ID!]!
+}
+
 # Queries
 type Query {
   getAssociationById(id: ID!): Association @aws_cognito_user_pools
@@ -499,6 +505,7 @@ type Mutation {
   addSeason (season: SaveSeasonInput!): Season @aws_cognito_user_pools
   modifySeason(season: ModifySeasonInput!): Season @aws_cognito_user_pools
   removeSeason (seasonId: ID!): Boolean @aws_cognito_user_pools
+  updateLeagueOrder (input: UpdateLeagueOrderInput!): Season @aws_cognito_user_pools
 
   addLeague (league: SaveLeagueInput!): League @aws_cognito_user_pools
   modifyLeague (league: ModifyLeagueInput!): League @aws_cognito_user_pools
