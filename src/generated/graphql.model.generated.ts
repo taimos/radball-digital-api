@@ -262,6 +262,7 @@ export type ModifyPreferredMatchdayDateInput = {
 export type ModifySeasonInput = {
   endDate: Scalars['AWSDate']['input'];
   id: Scalars['ID']['input'];
+  leagueOrder?: InputMaybe<Array<Scalars['ID']['input']>>;
   name: Scalars['String']['input'];
   registrationEnd: Scalars['AWSDate']['input'];
   registrationStart?: InputMaybe<Scalars['AWSDate']['input']>;
@@ -319,7 +320,6 @@ export type Mutation = {
   removePreferredDateForLeague?: Maybe<Scalars['Boolean']['output']>;
   removeSeason?: Maybe<Scalars['Boolean']['output']>;
   removeTeam?: Maybe<Scalars['Boolean']['output']>;
-  updateLeagueOrder?: Maybe<Season>;
 };
 
 
@@ -514,11 +514,6 @@ export type MutationRemoveSeasonArgs = {
 
 export type MutationRemoveTeamArgs = {
   teamId: Scalars['ID']['input'];
-};
-
-
-export type MutationUpdateLeagueOrderArgs = {
-  input: UpdateLeagueOrderInput;
 };
 
 export type Person = {
@@ -934,9 +929,4 @@ export type Team = {
   secondRightToPlay?: Maybe<Scalars['Boolean']['output']>;
   sgClub?: Maybe<Club>;
   withoutCompetition?: Maybe<Scalars['Boolean']['output']>;
-};
-
-export type UpdateLeagueOrderInput = {
-  leagueOrder: Array<Scalars['ID']['input']>;
-  seasonId: Scalars['ID']['input'];
 };

@@ -1,4 +1,4 @@
-import { Address, ModifyAssociationInput, ModifyClubInput, ModifyGymInput, ModifyLeagueInput, ModifyPersonInput, ModifySeasonInput, SaveAssociationInput, SaveClubInput, SaveGymInput, SaveLeagueGroupInput, SaveLeagueInput, SavePersonInput, SaveSeasonInput, ModifyLeagueGroupInput, SaveTeamInput, ModifyTeamInput, RegisterTeamInput, UpdateLeagueOrderInput } from '@generated/graphql.model.generated';
+import { Address, ModifyAssociationInput, ModifyClubInput, ModifyGymInput, ModifyLeagueInput, ModifyPersonInput, ModifySeasonInput, SaveAssociationInput, SaveClubInput, SaveGymInput, SaveLeagueGroupInput, SaveLeagueInput, SavePersonInput, SaveSeasonInput, ModifyLeagueGroupInput, SaveTeamInput, ModifyTeamInput, RegisterTeamInput } from '@generated/graphql.model.generated';
 
 export class ValidationCheckResult {
 
@@ -262,6 +262,23 @@ export function checkSeason(season: SaveSeasonInput | ModifySeasonInput): Valida
     result.addError('startDate', 'Saison-Startdatum darf nicht in der Vergangenheit liegen');
   }
 
+  // League order validation (only for ModifySeasonInput)
+  if ('leagueOrder' in season && season.leagueOrder && Array.isArray(season.leagueOrder)) {
+    if (season.leagueOrder.length > 0) {
+      // Check for duplicate league IDs
+      const uniqueIds = new Set(season.leagueOrder);
+      if (uniqueIds.size !== season.leagueOrder.length) {
+        result.addError('leagueOrder', 'Liga-Reihenfolge darf keine doppelten Liga-IDs enthalten');
+      }
+
+      // Check for empty league IDs
+      const emptyIds = season.leagueOrder.filter((id: string) => !id || id.trim().length === 0);
+      if (emptyIds.length > 0) {
+        result.addError('leagueOrder', 'Liga-Reihenfolge darf keine leeren Liga-IDs enthalten');
+      }
+    }
+  }
+
   return result;
 }
 
@@ -446,35 +463,4 @@ export function validateTeam(team: SaveTeamInput | ModifyTeamInput | RegisterTea
   result.validate();
 }
 
-export function checkUpdateLeagueOrder(input: UpdateLeagueOrderInput): ValidationCheckResult {
-  const result = new ValidationCheckResult();
 
-  // Season ID validation
-  if (!input.seasonId || input.seasonId.trim().length === 0) {
-    result.addError('seasonId', 'Saison-ID ist erforderlich');
-  }
-
-  // League order validation
-  if (!input.leagueOrder || input.leagueOrder.length === 0) {
-    result.addError('leagueOrder', 'Liga-Reihenfolge darf nicht leer sein');
-  } else {
-    // Check for duplicate league IDs
-    const uniqueIds = new Set(input.leagueOrder);
-    if (uniqueIds.size !== input.leagueOrder.length) {
-      result.addError('leagueOrder', 'Liga-Reihenfolge darf keine doppelten Liga-IDs enthalten');
-    }
-
-    // Check for empty league IDs
-    const emptyIds = input.leagueOrder.filter(id => !id || id.trim().length === 0);
-    if (emptyIds.length > 0) {
-      result.addError('leagueOrder', 'Liga-Reihenfolge darf keine leeren Liga-IDs enthalten');
-    }
-  }
-
-  return result;
-}
-
-export function validateUpdateLeagueOrder(input: UpdateLeagueOrderInput): void {
-  const result = checkUpdateLeagueOrder(input);
-  result.validate();
-}

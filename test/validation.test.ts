@@ -1,5 +1,5 @@
-import { SaveLeagueInput, SaveTeamInput, ModifyTeamInput, RegisterTeamInput, UpdateLeagueOrderInput } from '../src/generated/graphql.model.generated';
-import { validateAddress, validateAssociation, validateClub, validateGym, validateLeague, validatePerson, validateSeason, validateTeam, validateUpdateLeagueOrder } from '../src/validation';
+import { SaveLeagueInput, SaveTeamInput, ModifyTeamInput, RegisterTeamInput } from '../src/generated/graphql.model.generated';
+import { validateAddress, validateAssociation, validateClub, validateGym, validateLeague, validatePerson, validateSeason, validateTeam } from '../src/validation';
 
 describe('validateAddress', () => {
   // Happy path test
@@ -440,6 +440,56 @@ describe('validate Season', () => {
     });
 
   });
+
+  describe('league order validation for ModifySeasonInput', () => {
+    const modifySeasonTemplate = {
+      id: 'season-123',
+      name: 'SeasonName',
+      startDate: '2030-07-01',
+      endDate: '2030-12-31',
+      registrationEnd: '2030-06-25',
+    };
+
+    it('should accept valid league order', () => {
+      const season = {
+        ...modifySeasonTemplate,
+        leagueOrder: ['league-1', 'league-2', 'league-3'],
+      };
+      expect(() => validateSeason(season)).not.toThrow();
+    });
+
+    it('should accept empty league order', () => {
+      const season = {
+        ...modifySeasonTemplate,
+        leagueOrder: [],
+      };
+      expect(() => validateSeason(season)).not.toThrow();
+    });
+
+    it('should throw error for duplicate league IDs', () => {
+      const season = {
+        ...modifySeasonTemplate,
+        leagueOrder: ['league-1', 'league-2', 'league-1'],
+      };
+      expect(() => validateSeason(season)).toThrow('Liga-Reihenfolge darf keine doppelten Liga-IDs enthalten');
+    });
+
+    it('should throw error for empty league ID', () => {
+      const season = {
+        ...modifySeasonTemplate,
+        leagueOrder: ['league-1', '', 'league-3'],
+      };
+      expect(() => validateSeason(season)).toThrow('Liga-Reihenfolge darf keine leeren Liga-IDs enthalten');
+    });
+
+    it('should throw error for whitespace-only league ID', () => {
+      const season = {
+        ...modifySeasonTemplate,
+        leagueOrder: ['league-1', '   ', 'league-3'],
+      };
+      expect(() => validateSeason(season)).toThrow('Liga-Reihenfolge darf keine leeren Liga-IDs enthalten');
+    });
+  });
 });
 describe('validate person', () => {
   const validAddress = {
@@ -851,130 +901,6 @@ describe('validateTeam', () => {
         exemptionRequest: '  ' + 'A'.repeat(1001) + '  ',
       };
       expect(() => validateTeam(team)).toThrow('Freistellungsantrag darf 1000 Zeichen nicht überschreiten');
-    });
-  });
-});
-
-describe('validateUpdateLeagueOrder', () => {
-  const validInput: UpdateLeagueOrderInput = {
-    seasonId: 'season-2024-25',
-    leagueOrder: ['league-1-bundesliga', 'league-2-bundesliga', 'league-regionalliga-1', 'league-regionalliga-2'],
-  };
-
-  describe('successful validation', () => {
-    it('should accept valid UpdateLeagueOrderInput', () => {
-      expect(() => validateUpdateLeagueOrder(validInput)).not.toThrow();
-    });
-
-    it('should accept UpdateLeagueOrderInput with single league', () => {
-      const input: UpdateLeagueOrderInput = {
-        seasonId: 'season-2024-25',
-        leagueOrder: ['league-1-bundesliga'],
-      };
-      expect(() => validateUpdateLeagueOrder(input)).not.toThrow();
-    });
-
-    it('should accept UpdateLeagueOrderInput with many leagues', () => {
-      const input: UpdateLeagueOrderInput = {
-        seasonId: 'season-2024-25',
-        leagueOrder: Array.from({ length: 10 }, (_, i) => `league-${i + 1}`),
-      };
-      expect(() => validateUpdateLeagueOrder(input)).not.toThrow();
-    });
-  });
-
-  describe('seasonId validation', () => {
-    it('should throw error for missing seasonId', () => {
-      const input: UpdateLeagueOrderInput = {
-        seasonId: '',
-        leagueOrder: ['league-1'],
-      };
-      expect(() => validateUpdateLeagueOrder(input)).toThrow('Saison-ID ist erforderlich');
-    });
-
-    it('should throw error for whitespace-only seasonId', () => {
-      const input: UpdateLeagueOrderInput = {
-        seasonId: '   ',
-        leagueOrder: ['league-1'],
-      };
-      expect(() => validateUpdateLeagueOrder(input)).toThrow('Saison-ID ist erforderlich');
-    });
-  });
-
-  describe('leagueOrder validation', () => {
-    it('should throw error for empty leagueOrder array', () => {
-      const input: UpdateLeagueOrderInput = {
-        seasonId: 'season-2024-25',
-        leagueOrder: [],
-      };
-      expect(() => validateUpdateLeagueOrder(input)).toThrow('Liga-Reihenfolge darf nicht leer sein');
-    });
-
-    it('should throw error for duplicate league IDs', () => {
-      const input: UpdateLeagueOrderInput = {
-        seasonId: 'season-2024-25',
-        leagueOrder: ['league-1', 'league-2', 'league-1', 'league-3'],
-      };
-      expect(() => validateUpdateLeagueOrder(input)).toThrow('Liga-Reihenfolge darf keine doppelten Liga-IDs enthalten');
-    });
-
-    it('should throw error for empty league ID', () => {
-      const input: UpdateLeagueOrderInput = {
-        seasonId: 'season-2024-25',
-        leagueOrder: ['league-1', '', 'league-3'],
-      };
-      expect(() => validateUpdateLeagueOrder(input)).toThrow('Liga-Reihenfolge darf keine leeren Liga-IDs enthalten');
-    });
-
-    it('should throw error for whitespace-only league ID', () => {
-      const input: UpdateLeagueOrderInput = {
-        seasonId: 'season-2024-25',
-        leagueOrder: ['league-1', '   ', 'league-3'],
-      };
-      expect(() => validateUpdateLeagueOrder(input)).toThrow('Liga-Reihenfolge darf keine leeren Liga-IDs enthalten');
-    });
-
-    it('should throw error for multiple empty league IDs', () => {
-      const input: UpdateLeagueOrderInput = {
-        seasonId: 'season-2024-25',
-        leagueOrder: ['league-1', '', 'league-3', '   ', 'league-4'],
-      };
-      expect(() => validateUpdateLeagueOrder(input)).toThrow('Liga-Reihenfolge darf keine leeren Liga-IDs enthalten');
-    });
-
-    it('should throw error for multiple duplicate league IDs', () => {
-      const input: UpdateLeagueOrderInput = {
-        seasonId: 'season-2024-25',
-        leagueOrder: ['league-1', 'league-2', 'league-1', 'league-2'],
-      };
-      expect(() => validateUpdateLeagueOrder(input)).toThrow('Liga-Reihenfolge darf keine doppelten Liga-IDs enthalten');
-    });
-  });
-
-  describe('edge cases', () => {
-    it('should handle very long league IDs', () => {
-      const longLeagueId = 'league-' + 'a'.repeat(1000);
-      const input: UpdateLeagueOrderInput = {
-        seasonId: 'season-2024-25',
-        leagueOrder: [longLeagueId, 'league-2'],
-      };
-      expect(() => validateUpdateLeagueOrder(input)).not.toThrow();
-    });
-
-    it('should handle league IDs with special characters', () => {
-      const input: UpdateLeagueOrderInput = {
-        seasonId: 'season-2024-25',
-        leagueOrder: ['league-1-bundesliga', 'league-2_bundesliga', 'league.regionalliga', 'league:others'],
-      };
-      expect(() => validateUpdateLeagueOrder(input)).not.toThrow();
-    });
-
-    it('should handle numerical league IDs', () => {
-      const input: UpdateLeagueOrderInput = {
-        seasonId: 'season-2024-25',
-        leagueOrder: ['123', '456', '789'],
-      };
-      expect(() => validateUpdateLeagueOrder(input)).not.toThrow();
     });
   });
 });
