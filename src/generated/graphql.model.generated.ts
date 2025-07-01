@@ -262,6 +262,7 @@ export type ModifyPreferredMatchdayDateInput = {
 export type ModifySeasonInput = {
   endDate: Scalars['AWSDate']['input'];
   id: Scalars['ID']['input'];
+  leagueOrder?: InputMaybe<Array<Scalars['ID']['input']>>;
   name: Scalars['String']['input'];
   registrationEnd: Scalars['AWSDate']['input'];
   registrationStart?: InputMaybe<Scalars['AWSDate']['input']>;
@@ -908,6 +909,7 @@ export type Season = {
   association: Association;
   endDate: Scalars['AWSDate']['output'];
   id: Scalars['ID']['output'];
+  leagueOrder?: Maybe<Array<Scalars['ID']['output']>>;
   leagues?: Maybe<Array<Maybe<League>>>;
   name: Scalars['String']['output'];
   registrationEnd: Scalars['AWSDate']['output'];

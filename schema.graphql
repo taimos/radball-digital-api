@@ -37,6 +37,7 @@ type Season @aws_cognito_user_pools {
   registrationEnd: AWSDate!
   association: Association!
   leagues: [League]
+  leagueOrder: [ID!]
 }
 
 type League @aws_cognito_user_pools {
@@ -243,6 +244,7 @@ input ModifySeasonInput {
   endDate: AWSDate!
   registrationStart: AWSDate
   registrationEnd: AWSDate!
+  leagueOrder: [ID!]
 }
 
 input SaveLeagueInput {
@@ -440,6 +442,8 @@ input RegisterTeamsForSeasonInput {
   teams: [RegisterTeamInput!]!
   preferredDates: [SavePreferredMatchdayDateInput]
 }
+
+
 
 # Queries
 type Query {

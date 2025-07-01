@@ -440,6 +440,56 @@ describe('validate Season', () => {
     });
 
   });
+
+  describe('league order validation for ModifySeasonInput', () => {
+    const modifySeasonTemplate = {
+      id: 'season-123',
+      name: 'SeasonName',
+      startDate: '2030-07-01',
+      endDate: '2030-12-31',
+      registrationEnd: '2030-06-25',
+    };
+
+    it('should accept valid league order', () => {
+      const season = {
+        ...modifySeasonTemplate,
+        leagueOrder: ['league-1', 'league-2', 'league-3'],
+      };
+      expect(() => validateSeason(season)).not.toThrow();
+    });
+
+    it('should accept empty league order', () => {
+      const season = {
+        ...modifySeasonTemplate,
+        leagueOrder: [],
+      };
+      expect(() => validateSeason(season)).not.toThrow();
+    });
+
+    it('should throw error for duplicate league IDs', () => {
+      const season = {
+        ...modifySeasonTemplate,
+        leagueOrder: ['league-1', 'league-2', 'league-1'],
+      };
+      expect(() => validateSeason(season)).toThrow('Liga-Reihenfolge darf keine doppelten Liga-IDs enthalten');
+    });
+
+    it('should throw error for empty league ID', () => {
+      const season = {
+        ...modifySeasonTemplate,
+        leagueOrder: ['league-1', '', 'league-3'],
+      };
+      expect(() => validateSeason(season)).toThrow('Liga-Reihenfolge darf keine leeren Liga-IDs enthalten');
+    });
+
+    it('should throw error for whitespace-only league ID', () => {
+      const season = {
+        ...modifySeasonTemplate,
+        leagueOrder: ['league-1', '   ', 'league-3'],
+      };
+      expect(() => validateSeason(season)).toThrow('Liga-Reihenfolge darf keine leeren Liga-IDs enthalten');
+    });
+  });
 });
 describe('validate person', () => {
   const validAddress = {

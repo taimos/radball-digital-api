@@ -262,6 +262,23 @@ export function checkSeason(season: SaveSeasonInput | ModifySeasonInput): Valida
     result.addError('startDate', 'Saison-Startdatum darf nicht in der Vergangenheit liegen');
   }
 
+  // League order validation (only for ModifySeasonInput)
+  if ('leagueOrder' in season && season.leagueOrder && Array.isArray(season.leagueOrder)) {
+    if (season.leagueOrder.length > 0) {
+      // Check for duplicate league IDs
+      const uniqueIds = new Set(season.leagueOrder);
+      if (uniqueIds.size !== season.leagueOrder.length) {
+        result.addError('leagueOrder', 'Liga-Reihenfolge darf keine doppelten Liga-IDs enthalten');
+      }
+
+      // Check for empty league IDs
+      const emptyIds = season.leagueOrder.filter((id: string) => !id || id.trim().length === 0);
+      if (emptyIds.length > 0) {
+        result.addError('leagueOrder', 'Liga-Reihenfolge darf keine leeren Liga-IDs enthalten');
+      }
+    }
+  }
+
   return result;
 }
 
@@ -445,3 +462,5 @@ export function validateTeam(team: SaveTeamInput | ModifyTeamInput | RegisterTea
   const result = checkTeam(team);
   result.validate();
 }
+
+
