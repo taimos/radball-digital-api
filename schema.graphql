@@ -38,6 +38,7 @@ type Season @aws_cognito_user_pools {
   association: Association!
   leagues: [League]
   leagueOrder: [ID!]
+  additionalEligibleAssociations: [Association]
 }
 
 type League @aws_cognito_user_pools {
@@ -45,7 +46,6 @@ type League @aws_cognito_user_pools {
   name: String!
   association: Association!
   season: Season!
-  additionalEligibleAssociations: [Association]
   shortName: String
   description: String!
   minAge: Int
@@ -235,6 +235,7 @@ input SaveSeasonInput {
   associationId: ID!
   registrationStart: AWSDate
   registrationEnd: AWSDate!
+  additionalEligibleAssociations: [ID]!
 }
 
 input ModifySeasonInput {
@@ -245,6 +246,7 @@ input ModifySeasonInput {
   registrationStart: AWSDate
   registrationEnd: AWSDate!
   leagueOrder: [ID!]
+  additionalEligibleAssociations: [ID]!
 }
 
 input SaveLeagueInput {
@@ -252,7 +254,6 @@ input SaveLeagueInput {
   name: String!
   shortName: String
   description: String!
-  additionalEligibleAssociations: [ID]!
   minAge: Int
   maxAge: Int
   matchdayDates: [AWSDate!]
@@ -262,7 +263,6 @@ input ModifyLeagueInput {
   name: String!
   shortName: String
   description: String!
-  additionalEligibleAssociations: [ID]!
   minAge: Int
   maxAge: Int
   matchdayDates: [AWSDate!]

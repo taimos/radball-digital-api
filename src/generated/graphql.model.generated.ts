@@ -109,7 +109,6 @@ export type Gym = {
 
 export type League = {
   __typename?: 'League';
-  additionalEligibleAssociations?: Maybe<Array<Maybe<Association>>>;
   association: Association;
   description: Scalars['String']['output'];
   groups?: Maybe<Array<Maybe<LeagueGroup>>>;
@@ -210,7 +209,6 @@ export type ModifyLeagueGroupInput = {
 };
 
 export type ModifyLeagueInput = {
-  additionalEligibleAssociations: Array<InputMaybe<Scalars['ID']['input']>>;
   description: Scalars['String']['input'];
   id: Scalars['ID']['input'];
   matchdayDates?: InputMaybe<Array<Scalars['AWSDate']['input']>>;
@@ -260,6 +258,7 @@ export type ModifyPreferredMatchdayDateInput = {
 };
 
 export type ModifySeasonInput = {
+  additionalEligibleAssociations: Array<InputMaybe<Scalars['ID']['input']>>;
   endDate: Scalars['AWSDate']['input'];
   id: Scalars['ID']['input'];
   leagueOrder?: InputMaybe<Array<Scalars['ID']['input']>>;
@@ -833,7 +832,6 @@ export type SaveLeagueGroupInput = {
 };
 
 export type SaveLeagueInput = {
-  additionalEligibleAssociations: Array<InputMaybe<Scalars['ID']['input']>>;
   description: Scalars['String']['input'];
   matchdayDates?: InputMaybe<Array<Scalars['AWSDate']['input']>>;
   maxAge?: InputMaybe<Scalars['Int']['input']>;
@@ -884,6 +882,7 @@ export type SavePreferredMatchdayDateInput = {
 };
 
 export type SaveSeasonInput = {
+  additionalEligibleAssociations: Array<InputMaybe<Scalars['ID']['input']>>;
   associationId: Scalars['ID']['input'];
   endDate: Scalars['AWSDate']['input'];
   name: Scalars['String']['input'];
@@ -906,6 +905,7 @@ export type SaveTeamInput = {
 
 export type Season = {
   __typename?: 'Season';
+  additionalEligibleAssociations?: Maybe<Array<Maybe<Association>>>;
   association: Association;
   endDate: Scalars['AWSDate']['output'];
   id: Scalars['ID']['output'];
