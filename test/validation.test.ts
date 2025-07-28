@@ -126,7 +126,6 @@ describe('validateLeague', () => {
     minAge: 16,
     maxAge: 40,
     seasonId: '2023/24',
-    additionalEligibleAssociations: [],
     description: 'Description',
     shortName: 'pl',
   };
@@ -134,7 +133,6 @@ describe('validateLeague', () => {
   it('should accept valid league with minimal data', () => {
     const league: SaveLeagueInput = {
       name: 'Premier League',
-      additionalEligibleAssociations: [],
       description: 'Description',
       seasonId: 'seasonId',
     };
@@ -350,6 +348,7 @@ describe('validate Season', () => {
     associationId: 'ID',
     registrationStart: '2023-06-01',
     registrationEnd: '2023-06-30',
+    additionalEligibleAssociations: [],
   };
   describe('name validation', () => {
     it('should throw error for required season name', () => {
@@ -448,6 +447,7 @@ describe('validate Season', () => {
       startDate: '2030-07-01',
       endDate: '2030-12-31',
       registrationEnd: '2030-06-25',
+      additionalEligibleAssociations: [],
     };
 
     it('should accept valid league order', () => {
