@@ -83,6 +83,12 @@ export type Club = {
   website?: Maybe<Scalars['AWSURL']['output']>;
 };
 
+export type ClubConnection = {
+  __typename?: 'ClubConnection';
+  items: Array<Maybe<Club>>;
+  nextToken?: Maybe<Scalars['String']['output']>;
+};
+
 export type Game = {
   __typename?: 'Game';
   bothLost?: Maybe<Scalars['Boolean']['output']>;
@@ -105,6 +111,12 @@ export type Gym = {
   club: Club;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
+};
+
+export type GymConnection = {
+  __typename?: 'GymConnection';
+  items: Array<Maybe<Gym>>;
+  nextToken?: Maybe<Scalars['String']['output']>;
 };
 
 export type League = {
@@ -531,6 +543,12 @@ export type Person = {
   uciCode?: Maybe<Scalars['String']['output']>;
 };
 
+export type PersonConnection = {
+  __typename?: 'PersonConnection';
+  items: Array<Maybe<Person>>;
+  nextToken?: Maybe<Scalars['String']['output']>;
+};
+
 export type PersonPermission = {
   __typename?: 'PersonPermission';
   permission: Scalars['String']['output'];
@@ -570,16 +588,16 @@ export type Query = {
   getLeagueById?: Maybe<League>;
   getLeagueGroupById?: Maybe<LeagueGroup>;
   getListOfAssociations?: Maybe<Array<Maybe<Association>>>;
-  getListOfClubs?: Maybe<Array<Maybe<Club>>>;
+  getListOfClubs?: Maybe<ClubConnection>;
   getListOfClubsByAssociation?: Maybe<Array<Maybe<Club>>>;
   getListOfClubsByLeague?: Maybe<Array<Maybe<Club>>>;
   getListOfClubsByLeagueGroup?: Maybe<Array<Maybe<Club>>>;
   getListOfGroupsInLeague?: Maybe<Array<Maybe<LeagueGroup>>>;
-  getListOfGyms?: Maybe<Array<Maybe<Gym>>>;
+  getListOfGyms?: Maybe<GymConnection>;
   getListOfLeagueInSeason?: Maybe<Array<Maybe<League>>>;
   getListOfMatchdays?: Maybe<Array<Maybe<MatchDay>>>;
   getListOfMatchdaysInSeason?: Maybe<Array<Maybe<MatchDay>>>;
-  getListOfPeople?: Maybe<Array<Maybe<Person>>>;
+  getListOfPeople?: Maybe<PersonConnection>;
   getListOfSeasons?: Maybe<Array<Maybe<Season>>>;
   getListOfTeamsForLeague?: Maybe<Array<Maybe<Team>>>;
   getListOfTeamsForLeagueGroup?: Maybe<Array<Maybe<Team>>>;
@@ -669,6 +687,12 @@ export type QueryGetLeagueGroupByIdArgs = {
 };
 
 
+export type QueryGetListOfClubsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  nextToken?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 export type QueryGetListOfClubsByAssociationArgs = {
   associationId: Scalars['ID']['input'];
 };
@@ -691,6 +715,8 @@ export type QueryGetListOfGroupsInLeagueArgs = {
 
 export type QueryGetListOfGymsArgs = {
   clubId?: InputMaybe<Scalars['ID']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  nextToken?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -713,6 +739,8 @@ export type QueryGetListOfMatchdaysInSeasonArgs = {
 
 export type QueryGetListOfPeopleArgs = {
   clubId?: InputMaybe<Scalars['ID']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  nextToken?: InputMaybe<Scalars['String']['input']>;
 };
 
 
