@@ -178,6 +178,23 @@ type PersonPermission @aws_cognito_user_pools {
   permission: String!
 }
 
+# Connection types for pagination
+
+type PersonConnection @aws_cognito_user_pools {
+  items: [Person]!
+  nextToken: String
+}
+
+type GymConnection @aws_cognito_user_pools {
+  items: [Gym]!
+  nextToken: String
+}
+
+type ClubConnection @aws_cognito_user_pools {
+  items: [Club]!
+  nextToken: String
+}
+
 # Input types
 
 input SaveAssociationInput {
@@ -465,12 +482,12 @@ type Query {
   getListOfGroupsInLeague (leagueId: ID!): [LeagueGroup] @aws_cognito_user_pools
   getListOfMatchdaysInSeason (seasonId: ID!): [MatchDay] @aws_cognito_user_pools
   getListOfMatchdays(associationId: ID, leagueId: ID, groupId: ID): [MatchDay] @aws_cognito_user_pools
-  getListOfClubs: [Club] @aws_cognito_user_pools
+  getListOfClubs(limit: Int, nextToken: String): ClubConnection @aws_cognito_user_pools
   getListOfClubsByAssociation(associationId: ID!): [Club] @aws_cognito_user_pools 
   getListOfClubsByLeague(leagueId: ID!): [Club] @aws_cognito_user_pools 
   getListOfClubsByLeagueGroup(groupId: ID!): [Club] @aws_cognito_user_pools 
-  getListOfGyms(clubId: ID): [Gym] @aws_cognito_user_pools
-  getListOfPeople(clubId: ID): [Person] @aws_cognito_user_pools
+  getListOfGyms(clubId: ID, limit: Int, nextToken: String): GymConnection @aws_cognito_user_pools
+  getListOfPeople(clubId: ID, limit: Int, nextToken: String): PersonConnection @aws_cognito_user_pools
 
   getListOfTeamsForLeague(leagueId: ID!): [Team] @aws_cognito_user_pools
   getListOfTeamsForLeagueGroup(leagueId: ID!, groupId: ID!): [Team] @aws_cognito_user_pools
