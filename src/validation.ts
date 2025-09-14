@@ -289,10 +289,12 @@ export function validateSeason(season: SaveSeasonInput | ModifySeasonInput): voi
 
 export function isSeasonOpenForRegistration(season: SaveSeasonInput | ModifySeasonInput, date: string): boolean {
   const { registrationStart, registrationEnd } = season;
-  if (!registrationStart || !registrationEnd) {
-    return false;
-  }
-  return date >= registrationStart && date <= registrationEnd;
+  if (!registrationStart || !registrationEnd) return false;
+  // Expect AWSDate (YYYY-MM-DD); guard to keep comparisons reliable
+  const isAwsDate = (s: string): boolean => /^\d{4}-\d{2}-\d{2}$/.test(s);
+  if (!isAwsDate(date) || !isAwsDate(registrationStart) || !isAwsDate(registrationEnd)) return false;
+  // Inclusive range
+  return registrationStart <= date && date <= registrationEnd;
 }
 
 export function checkPerson(person: SavePersonInput | ModifyPersonInput): ValidationCheckResult {
