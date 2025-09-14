@@ -519,6 +519,14 @@ describe('validate person', () => {
       };
       expect(() => validatePerson(person)).toThrow('Ungültiges E-Mail-Format');
     });
+
+    it('should not throw an error for non-existing email format', () => {
+      const person = {
+        ...personTemplate,
+        email: undefined,
+      };
+      expect(() => validatePerson(person)).not.toThrow();
+    });
   });
   describe('phone number validation', () => {
     it('should throw error for invalid phone number format', () => {
@@ -621,6 +629,7 @@ describe('validateTeam', () => {
     id: 'team-123',
     name: 'Modified Team Name',
     leagueId: 'league-123',
+    playerIds: ['player1', 'player2'],
   };
 
   const registerTeamTemplate: RegisterTeamInput = {
@@ -686,6 +695,23 @@ describe('validateTeam', () => {
       expect(() => validateTeam(team)).toThrow('Liga-ID darf nicht leer sein');
     });
 
+
+    it('should throw error for one player in SaveTeamInput', () => {
+      const team: SaveTeamInput = {
+        ...saveTeamTemplate,
+        playerIds: ['player1'],
+      };
+      expect(() => validateTeam(team)).toThrow('Es müssen mindestens 2 Spieler für ein Team angegeben werden');
+    });
+
+    it('should throw error for no players in SaveTeamInput', () => {
+      const team: SaveTeamInput = {
+        ...saveTeamTemplate,
+        playerIds: [],
+      };
+      expect(() => validateTeam(team)).toThrow('Es müssen mindestens 2 Spieler für ein Team angegeben werden');
+    });
+
     it('should throw error for leagueId exceeding 100 characters in SaveTeamInput', () => {
       const team: SaveTeamInput = {
         ...saveTeamTemplate,
@@ -699,6 +725,7 @@ describe('validateTeam', () => {
     it('should accept valid ModifyTeamInput with minimal data', () => {
       const team: ModifyTeamInput = {
         id: 'team-123',
+        playerIds: ['player1', 'player2'],
       };
       expect(() => validateTeam(team)).not.toThrow();
     });

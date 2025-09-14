@@ -287,6 +287,16 @@ export function validateSeason(season: SaveSeasonInput | ModifySeasonInput): voi
   result.validate();
 }
 
+export function isSeasonOpenForRegistration(season: SaveSeasonInput | ModifySeasonInput, date: string): boolean {
+  const { registrationStart, registrationEnd } = season;
+  if (!registrationStart || !registrationEnd) return false;
+  // Expect AWSDate (YYYY-MM-DD); guard to keep comparisons reliable
+  const isAwsDate = (s: string): boolean => /^\d{4}-\d{2}-\d{2}$/.test(s);
+  if (!isAwsDate(date) || !isAwsDate(registrationStart) || !isAwsDate(registrationEnd)) return false;
+  // Inclusive range
+  return registrationStart <= date && date <= registrationEnd;
+}
+
 export function checkPerson(person: SavePersonInput | ModifyPersonInput): ValidationCheckResult {
   const result = new ValidationCheckResult();
 
@@ -453,6 +463,11 @@ export function checkTeam(team: SaveTeamInput | ModifyTeamInput | RegisterTeamIn
     if (team.exemptionRequest.trim().length > 1000) {
       result.addError('exemptionRequest', 'Freistellungsantrag darf 1000 Zeichen nicht überschreiten');
     }
+  }
+
+  // Player IDs validation
+  if (!team.playerIds || team.playerIds.length < 2) {
+    result.addError('playerIds', 'Es müssen mindestens 2 Spieler für ein Team angegeben werden');
   }
 
   return result;
