@@ -354,6 +354,11 @@ input ModifyTeamInput {
   exemptionRequest: String
 }
 
+input UpdateTeamGroupInput {
+  teamId: ID!
+  leagueGroupId: ID
+}
+
 input SaveMatchDayTeamInput {
   teamId: ID!
   substitutePlayerId: ID
@@ -536,6 +541,7 @@ type Mutation {
   addTeam (team: SaveTeamInput!): Team @aws_cognito_user_pools
   modifyTeam (team: ModifyTeamInput!): Team @aws_cognito_user_pools
   removeTeam (teamId: ID!): Boolean @aws_cognito_user_pools
+  updateTeamGroup (data: UpdateTeamGroupInput!): Team @aws_cognito_user_pools
 
   addMatchDayTeam (matchDayTeam: SaveMatchDayTeamInput!): MatchdayTeam @aws_cognito_user_pools
   modifyMatchDayTeam (matchDayTeam: ModifyMatchDayTeamInput!, pin: String): MatchdayTeam @aws_cognito_user_pools

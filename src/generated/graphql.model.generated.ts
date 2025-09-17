@@ -331,6 +331,7 @@ export type Mutation = {
   removePreferredDateForLeague?: Maybe<Scalars['Boolean']['output']>;
   removeSeason?: Maybe<Scalars['Boolean']['output']>;
   removeTeam?: Maybe<Scalars['Boolean']['output']>;
+  updateTeamGroup?: Maybe<Team>;
 };
 
 
@@ -525,6 +526,11 @@ export type MutationRemoveSeasonArgs = {
 
 export type MutationRemoveTeamArgs = {
   teamId: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdateTeamGroupArgs = {
+  data: UpdateTeamGroupInput;
 };
 
 export type Person = {
@@ -957,4 +963,9 @@ export type Team = {
   secondRightToPlay?: Maybe<Scalars['Boolean']['output']>;
   sgClub?: Maybe<Club>;
   withoutCompetition?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type UpdateTeamGroupInput = {
+  leagueGroupId?: InputMaybe<Scalars['ID']['input']>;
+  teamId: Scalars['ID']['input'];
 };
