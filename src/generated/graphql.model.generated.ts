@@ -146,6 +146,23 @@ export type LeagueGroup = {
   shortName: Scalars['String']['output'];
 };
 
+export type LeagueGroupStatistics = {
+  __typename?: 'LeagueGroupStatistics';
+  totalClubs: Scalars['Int']['output'];
+  totalGyms: Scalars['Int']['output'];
+  totalPlayers: Scalars['Int']['output'];
+  totalTeams: Scalars['Int']['output'];
+};
+
+export type LeagueGroupView = {
+  __typename?: 'LeagueGroupView';
+  clubs: Array<Maybe<Club>>;
+  group: LeagueGroup;
+  gyms: Array<Maybe<Gym>>;
+  statistics?: Maybe<LeagueGroupStatistics>;
+  teams: Array<Maybe<TeamDetail>>;
+};
+
 export type MatchDay = {
   __typename?: 'MatchDay';
   commissioners?: Maybe<RefereeInfo>;
@@ -587,6 +604,7 @@ export type Query = {
   getGymById?: Maybe<Gym>;
   getLeagueById?: Maybe<League>;
   getLeagueGroupById?: Maybe<LeagueGroup>;
+  getLeagueGroupView?: Maybe<LeagueGroupView>;
   getListOfAssociations?: Maybe<Array<Maybe<Association>>>;
   getListOfClubs?: Maybe<ClubConnection>;
   getListOfClubsByAssociation?: Maybe<Array<Maybe<Club>>>;
@@ -684,6 +702,11 @@ export type QueryGetLeagueByIdArgs = {
 
 export type QueryGetLeagueGroupByIdArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetLeagueGroupViewArgs = {
+  groupId: Scalars['ID']['input'];
 };
 
 
@@ -954,6 +977,19 @@ export type Team = {
   leagueGroup?: Maybe<LeagueGroup>;
   name: Scalars['String']['output'];
   players: Array<Maybe<Person>>;
+  secondRightToPlay?: Maybe<Scalars['Boolean']['output']>;
+  sgClub?: Maybe<Club>;
+  withoutCompetition?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type TeamDetail = {
+  __typename?: 'TeamDetail';
+  club: Club;
+  exemptionRequest?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  players: Array<Maybe<Person>>;
+  preferredDates?: Maybe<Array<Maybe<PreferredMatchdayDate>>>;
   secondRightToPlay?: Maybe<Scalars['Boolean']['output']>;
   sgClub?: Maybe<Club>;
   withoutCompetition?: Maybe<Scalars['Boolean']['output']>;
