@@ -17,12 +17,16 @@ import {
   Season,
   League,
   LeagueGroup,
+  LeagueGroupView,
+  TeamDetail,
+  LeagueGroupStatistics,
   Club,
   Team,
   Person,
   Gym,
   Game,
   MatchDay,
+  PreferredMatchdayDate,
   SaveAssociationInput,
   SaveClubInput,
   SaveTeamInput,
@@ -706,6 +710,71 @@ function parseValidationErrors(message: string): Record<string, string[]> {
   }
   
   return errors;
+}
+```
+
+### League Group Manager View
+
+```typescript
+// League Group View types for comprehensive group management
+interface LeagueGroupView {
+  __typename?: 'LeagueGroupView';
+  group: LeagueGroup;
+  teams: TeamDetail[];
+  clubs: Club[];
+  gyms: Gym[];
+  statistics: LeagueGroupStatistics;
+}
+
+interface TeamDetail {
+  __typename?: 'TeamDetail';
+  id: Scalars['ID'];
+  club: Club;
+  name: Scalars['String'];
+  players: Person[];
+  withoutCompetition?: Maybe<Scalars['Boolean']>;
+  secondRightToPlay?: Maybe<Scalars['Boolean']>;
+  sgClub?: Maybe<Club>;
+  exemptionRequest?: Maybe<Scalars['String']>;
+  preferredDates?: Maybe<PreferredMatchdayDate[]>;
+}
+
+interface LeagueGroupStatistics {
+  __typename?: 'LeagueGroupStatistics';
+  totalTeams: Scalars['Int'];
+  totalPlayers: Scalars['Int'];
+  totalClubs: Scalars['Int'];
+  totalGyms: Scalars['Int'];
+}
+
+// Query for league group manager
+const getLeagueGroupViewArgs = {
+  groupId: 'group-123'
+};
+
+// Usage example
+async function exportLeagueGroupData(groupId: string): Promise<void> {
+  const groupView = await apiClient.query({
+    getLeagueGroupView: {
+      groupId
+    }
+  });
+
+  // Export teams with all players
+  const teamsExport = groupView.teams.map(team => ({
+    name: team.name,
+    club: team.club.name,
+    players: team.players.map(p => `${p.firstName} ${p.lastName}`),
+    withoutCompetition: team.withoutCompetition,
+    preferredDates: team.preferredDates
+  }));
+
+  // Export statistics
+  const stats = groupView.statistics;
+  console.log(`Total Teams: ${stats.totalTeams}`);
+  console.log(`Total Players: ${stats.totalPlayers}`);
+  console.log(`Total Clubs: ${stats.totalClubs}`);
+  console.log(`Total Gyms: ${stats.totalGyms}`);
 }
 ```
 

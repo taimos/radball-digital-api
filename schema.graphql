@@ -178,6 +178,34 @@ type PersonPermission @aws_cognito_user_pools {
   permission: String!
 }
 
+# League Group Manager View Types
+type LeagueGroupView @aws_cognito_user_pools {
+  group: LeagueGroup!
+  teams: [TeamDetail]!
+  clubs: [Club]!
+  gyms: [Gym]!
+  statistics: LeagueGroupStatistics
+}
+
+type TeamDetail @aws_cognito_user_pools {
+  id: ID!
+  club: Club!
+  name: String!
+  players: [Person]!
+  withoutCompetition: Boolean
+  secondRightToPlay: Boolean
+  sgClub: Club
+  exemptionRequest: String
+  preferredDates: [PreferredMatchdayDate]
+}
+
+type LeagueGroupStatistics @aws_cognito_user_pools {
+  totalTeams: Int!
+  totalPlayers: Int!
+  totalClubs: Int!
+  totalGyms: Int!
+}
+
 # Connection types for pagination
 
 type PersonConnection @aws_cognito_user_pools {
@@ -509,6 +537,9 @@ type Query {
   getAvailableDatesForSeason(seasonId: ID!, leagueId: ID): [PreferredMatchdayDate] @aws_cognito_user_pools
   
   getPersonPermissions(personId: ID!): [PersonPermission] @aws_cognito_user_pools(cognito_groups: ["admin"])
+
+  # League Group Manager comprehensive view - returns all relevant information for managing a league group
+  getLeagueGroupView(groupId: ID!): LeagueGroupView @aws_cognito_user_pools
 }
 
 # Mutations
