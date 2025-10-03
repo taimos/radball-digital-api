@@ -1,0 +1,722 @@
+{
+  "group": {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "number": 1,
+    "name": "Regionalliga Nord - Staffel 1",
+    "shortName": "RLN",
+    "season": {
+      "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "name": "Saison 2024/2025",
+      "startDate": "2024-09-01",
+      "endDate": "2025-06-30"
+    },
+    "league": {
+      "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+      "name": "Regionalliga Nord",
+      "shortName": "RLN",
+      "description": "Regional competition for northern teams",
+      "minAge": null,
+      "maxAge": null,
+      "matchdayDates": [
+        "2024-10-05",
+        "2024-11-16",
+        "2024-12-07",
+        "2025-01-18",
+        "2025-02-22",
+        "2025-03-15"
+      ]
+    },
+    "leader": {
+      "id": "d4e5f6a7-b8c9-0123-def1-234567890123",
+      "firstName": "Thomas",
+      "lastName": "Schmidt",
+      "email": "t.schmidt@example.com",
+      "phone": "+49 151 12345678"
+    },
+    "regulation": "Standard league regulations apply"
+  },
+  "teams": [
+    {
+      "id": "e5f6a7b8-c9d0-1234-ef12-345678901234",
+      "name": "Hamburg Dragons 1",
+      "withoutCompetition": false,
+      "secondRightToPlay": false,
+      "exemptionRequest": null,
+      "players": [
+        {
+          "id": "f6a7b8c9-d0e1-2345-f123-456789012345",
+          "firstName": "Max",
+          "lastName": "Mueller",
+          "email": "max.mueller@example.com",
+          "phone": "+49 160 11111111",
+          "gender": "m",
+          "dateOfBirth": "1995-03-15",
+          "uciCode": "10012345678",
+          "nationality": "GER",
+          "clubId": "11111111-1111-1111-1111-111111111111"
+        },
+        {
+          "id": "a7b8c9d0-e1f2-3456-1234-567890123456",
+          "firstName": "Felix",
+          "lastName": "Wagner",
+          "email": "felix.wagner@example.com",
+          "phone": "+49 160 11111112",
+          "gender": "m",
+          "dateOfBirth": "1997-07-22",
+          "uciCode": "10012345679",
+          "nationality": "GER",
+          "clubId": "11111111-1111-1111-1111-111111111111"
+        }
+      ],
+      "clubId": "11111111-1111-1111-1111-111111111111",
+      "sgClubId": null
+    },
+    {
+      "id": "b8c9d0e1-f2a3-4567-2345-678901234567",
+      "name": "Hamburg Dragons 2",
+      "withoutCompetition": false,
+      "secondRightToPlay": false,
+      "exemptionRequest": null,
+      "players": [
+        {
+          "id": "c9d0e1f2-a3b4-5678-3456-789012345678",
+          "firstName": "Jonas",
+          "lastName": "Becker",
+          "email": "jonas.becker@example.com",
+          "phone": "+49 160 11111113",
+          "gender": "m",
+          "dateOfBirth": "1998-11-08",
+          "uciCode": "10012345680",
+          "nationality": "GER",
+          "clubId": "11111111-1111-1111-1111-111111111111"
+        },
+        {
+          "id": "d0e1f2a3-b4c5-6789-4567-890123456789",
+          "firstName": "Leon",
+          "lastName": "Fischer",
+          "email": "leon.fischer@example.com",
+          "phone": "+49 160 11111114",
+          "gender": "m",
+          "dateOfBirth": "1999-05-19",
+          "uciCode": "10012345681",
+          "nationality": "GER",
+          "clubId": "11111111-1111-1111-1111-111111111111"
+        }
+      ],
+      "clubId": "11111111-1111-1111-1111-111111111111",
+      "sgClubId": null
+    },
+    {
+      "id": "e1f2a3b4-c5d6-7890-5678-901234567890",
+      "name": "Bremen Riders 1",
+      "withoutCompetition": false,
+      "secondRightToPlay": false,
+      "exemptionRequest": null,
+      "players": [
+        {
+          "id": "f2a3b4c5-d6e7-8901-6789-012345678901",
+          "firstName": "Paul",
+          "lastName": "Hoffmann",
+          "email": "paul.hoffmann@example.com",
+          "phone": "+49 160 22222221",
+          "gender": "m",
+          "dateOfBirth": "1996-02-12",
+          "uciCode": "10012345682",
+          "nationality": "GER",
+          "clubId": "22222222-2222-2222-2222-222222222222"
+        },
+        {
+          "id": "a3b4c5d6-e7f8-9012-7890-123456789012",
+          "firstName": "Tim",
+          "lastName": "Schulz",
+          "email": "tim.schulz@example.com",
+          "phone": "+49 160 22222222",
+          "gender": "m",
+          "dateOfBirth": "1994-09-27",
+          "uciCode": "10012345683",
+          "nationality": "GER",
+          "clubId": "22222222-2222-2222-2222-222222222222"
+        }
+      ],
+      "clubId": "22222222-2222-2222-2222-222222222222",
+      "sgClubId": null
+    },
+    {
+      "id": "b4c5d6e7-f8a9-0123-8901-234567890123",
+      "name": "Hannover Wheels 1",
+      "withoutCompetition": false,
+      "secondRightToPlay": false,
+      "exemptionRequest": null,
+      "players": [
+        {
+          "id": "c5d6e7f8-a9b0-1234-9012-345678901234",
+          "firstName": "Lukas",
+          "lastName": "Koch",
+          "email": "lukas.koch@example.com",
+          "phone": "+49 160 33333331",
+          "gender": "m",
+          "dateOfBirth": "2000-01-10",
+          "uciCode": "10012345684",
+          "nationality": "GER",
+          "clubId": "33333333-3333-3333-3333-333333333333"
+        },
+        {
+          "id": "d6e7f8a9-b0c1-2345-0123-456789012345",
+          "firstName": "Noah",
+          "lastName": "Weber",
+          "email": "noah.weber@example.com",
+          "phone": "+49 160 33333332",
+          "gender": "m",
+          "dateOfBirth": "2001-06-14",
+          "uciCode": "10012345685",
+          "nationality": "GER",
+          "clubId": "33333333-3333-3333-3333-333333333333"
+        }
+      ],
+      "clubId": "33333333-3333-3333-3333-333333333333",
+      "sgClubId": null
+    },
+    {
+      "id": "e7f8a9b0-c1d2-3456-1234-567890123456",
+      "name": "Kiel Cyclones 1",
+      "withoutCompetition": false,
+      "secondRightToPlay": false,
+      "exemptionRequest": null,
+      "players": [
+        {
+          "id": "f8a9b0c1-d2e3-4567-2345-678901234567",
+          "firstName": "Ben",
+          "lastName": "Richter",
+          "email": "ben.richter@example.com",
+          "phone": "+49 160 44444441",
+          "gender": "m",
+          "dateOfBirth": "1998-04-03",
+          "uciCode": "10012345686",
+          "nationality": "GER",
+          "clubId": "44444444-4444-4444-4444-444444444444"
+        },
+        {
+          "id": "a9b0c1d2-e3f4-5678-3456-789012345678",
+          "firstName": "Finn",
+          "lastName": "Klein",
+          "email": "finn.klein@example.com",
+          "phone": "+49 160 44444442",
+          "gender": "m",
+          "dateOfBirth": "1999-12-20",
+          "uciCode": "10012345687",
+          "nationality": "GER",
+          "clubId": "44444444-4444-4444-4444-444444444444"
+        }
+      ],
+      "clubId": "44444444-4444-4444-4444-444444444444",
+      "sgClubId": null
+    },
+    {
+      "id": "b0c1d2e3-f4a5-6789-4567-890123456789",
+      "name": "Luebeck Stars 1",
+      "withoutCompetition": false,
+      "secondRightToPlay": false,
+      "exemptionRequest": null,
+      "players": [
+        {
+          "id": "c1d2e3f4-a5b6-7890-5678-901234567890",
+          "firstName": "Elias",
+          "lastName": "Braun",
+          "email": "elias.braun@example.com",
+          "phone": "+49 160 55555551",
+          "gender": "m",
+          "dateOfBirth": "1997-08-16",
+          "uciCode": "10012345688",
+          "nationality": "GER",
+          "clubId": "55555555-5555-5555-5555-555555555555"
+        },
+        {
+          "id": "d2e3f4a5-b6c7-8901-6789-012345678901",
+          "firstName": "Emil",
+          "lastName": "Neumann",
+          "email": "emil.neumann@example.com",
+          "phone": "+49 160 55555552",
+          "gender": "m",
+          "dateOfBirth": "1996-11-25",
+          "uciCode": "10012345689",
+          "nationality": "GER",
+          "clubId": "55555555-5555-5555-5555-555555555555"
+        }
+      ],
+      "clubId": "55555555-5555-5555-5555-555555555555",
+      "sgClubId": null
+    },
+    {
+      "id": "e3f4a5b6-c7d8-9012-7890-123456789012",
+      "name": "Luebeck Stars 2",
+      "withoutCompetition": false,
+      "secondRightToPlay": false,
+      "exemptionRequest": null,
+      "players": [
+        {
+          "id": "f4a5b6c7-d8e9-0123-8901-234567890123",
+          "firstName": "Anton",
+          "lastName": "Wolf",
+          "email": "anton.wolf@example.com",
+          "phone": "+49 160 55555553",
+          "gender": "m",
+          "dateOfBirth": "2000-03-07",
+          "uciCode": "10012345690",
+          "nationality": "GER",
+          "clubId": "55555555-5555-5555-5555-555555555555"
+        },
+        {
+          "id": "a5b6c7d8-e9f0-1234-9012-345678901234",
+          "firstName": "Henry",
+          "lastName": "Krause",
+          "email": "henry.krause@example.com",
+          "phone": "+49 160 55555554",
+          "gender": "m",
+          "dateOfBirth": "2001-09-11",
+          "uciCode": "10012345691",
+          "nationality": "GER",
+          "clubId": "55555555-5555-5555-5555-555555555555"
+        }
+      ],
+      "clubId": "55555555-5555-5555-5555-555555555555",
+      "sgClubId": null
+    },
+    {
+      "id": "b6c7d8e9-f0a1-2345-0123-456789012345",
+      "name": "Oldenburg Thunder 1",
+      "withoutCompetition": false,
+      "secondRightToPlay": false,
+      "exemptionRequest": null,
+      "players": [
+        {
+          "id": "c7d8e9f0-a1b2-3456-1234-567890123456",
+          "firstName": "Oskar",
+          "lastName": "Lange",
+          "email": "oskar.lange@example.com",
+          "phone": "+49 160 66666661",
+          "gender": "m",
+          "dateOfBirth": "1995-05-30",
+          "uciCode": "10012345692",
+          "nationality": "GER",
+          "clubId": "66666666-6666-6666-6666-666666666666"
+        },
+        {
+          "id": "d8e9f0a1-b2c3-4567-2345-678901234567",
+          "firstName": "Theo",
+          "lastName": "Zimmermann",
+          "email": "theo.zimmermann@example.com",
+          "phone": "+49 160 66666662",
+          "gender": "m",
+          "dateOfBirth": "1994-10-18",
+          "uciCode": "10012345693",
+          "nationality": "GER",
+          "clubId": "66666666-6666-6666-6666-666666666666"
+        }
+      ],
+      "clubId": "66666666-6666-6666-6666-666666666666",
+      "sgClubId": null
+    },
+    {
+      "id": "e9f0a1b2-c3d4-5678-3456-789012345678",
+      "name": "Rostock Eagles 1",
+      "withoutCompetition": false,
+      "secondRightToPlay": false,
+      "exemptionRequest": null,
+      "players": [
+        {
+          "id": "f0a1b2c3-d4e5-6789-4567-890123456789",
+          "firstName": "Matteo",
+          "lastName": "Kraus",
+          "email": "matteo.kraus@example.com",
+          "phone": "+49 160 77777771",
+          "gender": "m",
+          "dateOfBirth": "1999-02-28",
+          "uciCode": "10012345694",
+          "nationality": "GER",
+          "clubId": "77777777-7777-7777-7777-777777777777"
+        },
+        {
+          "id": "a1b2c3d4-e5f6-7890-5678-901234567890",
+          "firstName": "Julian",
+          "lastName": "Hartmann",
+          "email": "julian.hartmann@example.com",
+          "phone": "+49 160 77777772",
+          "gender": "m",
+          "dateOfBirth": "1998-07-13",
+          "uciCode": "10012345695",
+          "nationality": "GER",
+          "clubId": "77777777-7777-7777-7777-777777777777"
+        }
+      ],
+      "clubId": "77777777-7777-7777-7777-777777777777",
+      "sgClubId": null
+    },
+    {
+      "id": "f1a2b3c4-d5e6-8901-6789-012345678901",
+      "name": "Schwerin Racers 1",
+      "withoutCompetition": false,
+      "secondRightToPlay": false,
+      "exemptionRequest": null,
+      "players": [
+        {
+          "id": "a2b3c4d5-e6f7-9012-7890-123456789012",
+          "firstName": "Simon",
+          "lastName": "Vogt",
+          "email": "simon.vogt@example.com",
+          "phone": "+49 160 88888881",
+          "gender": "m",
+          "dateOfBirth": "1997-12-05",
+          "uciCode": "10012345696",
+          "nationality": "GER",
+          "clubId": "88888888-8888-8888-8888-888888888888"
+        },
+        {
+          "id": "b3c4d5e6-f7a8-0123-8901-234567890123",
+          "firstName": "David",
+          "lastName": "Peters",
+          "email": "david.peters@example.com",
+          "phone": "+49 160 88888882",
+          "gender": "m",
+          "dateOfBirth": "1996-04-21",
+          "uciCode": "10012345697",
+          "nationality": "GER",
+          "clubId": "88888888-8888-8888-8888-888888888888"
+        }
+      ],
+      "clubId": "88888888-8888-8888-8888-888888888888",
+      "sgClubId": null
+    },
+    {
+      "id": "c4d5e6f7-a8b9-1234-9012-345678901234",
+      "name": "Flensburg Flames 1",
+      "withoutCompetition": false,
+      "secondRightToPlay": false,
+      "exemptionRequest": null,
+      "players": [
+        {
+          "id": "d5e6f7a8-b9c0-2345-0123-456789012345",
+          "firstName": "Moritz",
+          "lastName": "Schroeder",
+          "email": "moritz.schroeder@example.com",
+          "phone": "+49 160 99999991",
+          "gender": "m",
+          "dateOfBirth": "2000-08-09",
+          "uciCode": "10012345698",
+          "nationality": "GER",
+          "clubId": "99999999-9999-9999-9999-999999999999"
+        },
+        {
+          "id": "e6f7a8b9-c0d1-3456-1234-567890123456",
+          "firstName": "Jakob",
+          "lastName": "Lehmann",
+          "email": "jakob.lehmann@example.com",
+          "phone": "+49 160 99999992",
+          "gender": "m",
+          "dateOfBirth": "2001-03-17",
+          "uciCode": "10012345699",
+          "nationality": "GER",
+          "clubId": "99999999-9999-9999-9999-999999999999"
+        }
+      ],
+      "clubId": "99999999-9999-9999-9999-999999999999",
+      "sgClubId": null
+    },
+    {
+      "id": "f7a8b9c0-d1e2-4567-2345-678901234567",
+      "name": "SG Wolfsburg/Braunschweig 1",
+      "withoutCompetition": false,
+      "secondRightToPlay": false,
+      "exemptionRequest": null,
+      "players": [
+        {
+          "id": "a8b9c0d1-e2f3-5678-3456-789012345678",
+          "firstName": "Niklas",
+          "lastName": "Huber",
+          "email": "niklas.huber@example.com",
+          "phone": "+49 160 00000001",
+          "gender": "m",
+          "dateOfBirth": "1995-11-23",
+          "uciCode": "10012345700",
+          "nationality": "GER",
+          "clubId": "00000000-0000-0000-0000-000000000000"
+        },
+        {
+          "id": "b9c0d1e2-f3a4-6789-4567-890123456789",
+          "firstName": "Robin",
+          "lastName": "Gross",
+          "email": "robin.gross@example.com",
+          "phone": "+49 160 00000002",
+          "gender": "m",
+          "dateOfBirth": "1994-06-08",
+          "uciCode": "10012345701",
+          "nationality": "GER",
+          "clubId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+        }
+      ],
+      "clubId": "00000000-0000-0000-0000-000000000000",
+      "sgClubId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    }
+  ],
+  "clubs": [
+    {
+      "id": "11111111-1111-1111-1111-111111111111",
+      "name": "RC Hamburg Dragons",
+      "shortName": "HHD",
+      "preferredDates": [
+        {
+          "preferenceDate": "2024-10-05",
+          "status": "PREFERRED",
+          "notes": null
+        },
+        {
+          "preferenceDate": "2024-11-16",
+          "status": "AVAILABLE",
+          "notes": null
+        },
+        {
+          "preferenceDate": "2025-01-18",
+          "status": "PREFERRED",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "id": "22222222-2222-2222-2222-222222222222",
+      "name": "RV Bremen Riders",
+      "shortName": "BRR",
+      "preferredDates": [
+        {
+          "preferenceDate": "2024-11-16",
+          "status": "PREFERRED",
+          "notes": null
+        },
+        {
+          "preferenceDate": "2025-02-22",
+          "status": "PREFERRED",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "id": "33333333-3333-3333-3333-333333333333",
+      "name": "RSC Hannover Wheels",
+      "shortName": "HWH",
+      "preferredDates": [
+        {
+          "preferenceDate": "2024-12-07",
+          "status": "PREFERRED",
+          "notes": null
+        },
+        {
+          "preferenceDate": "2025-03-15",
+          "status": "AVAILABLE",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "id": "44444444-4444-4444-4444-444444444444",
+      "name": "RV Kiel Cyclones",
+      "shortName": "KIC",
+      "preferredDates": [
+        {
+          "preferenceDate": "2024-10-05",
+          "status": "AVAILABLE",
+          "notes": null
+        },
+        {
+          "preferenceDate": "2025-01-18",
+          "status": "PREFERRED",
+          "notes": null
+        },
+        {
+          "preferenceDate": "2025-03-15",
+          "status": "PREFERRED",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "id": "55555555-5555-5555-5555-555555555555",
+      "name": "RC Luebeck Stars",
+      "shortName": "LBS",
+      "preferredDates": [
+        {
+          "preferenceDate": "2024-11-16",
+          "status": "PREFERRED",
+          "notes": null
+        },
+        {
+          "preferenceDate": "2024-12-07",
+          "status": "AVAILABLE",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "id": "66666666-6666-6666-6666-666666666666",
+      "name": "RV Oldenburg Thunder",
+      "shortName": "OLT",
+      "preferredDates": [
+        {
+          "preferenceDate": "2024-10-05",
+          "status": "PREFERRED",
+          "notes": null
+        },
+        {
+          "preferenceDate": "2025-02-22",
+          "status": "PREFERRED",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "id": "77777777-7777-7777-7777-777777777777",
+      "name": "RSV Rostock Eagles",
+      "shortName": "ROE",
+      "preferredDates": [
+        {
+          "preferenceDate": "2024-12-07",
+          "status": "PREFERRED",
+          "notes": null
+        },
+        {
+          "preferenceDate": "2025-01-18",
+          "status": "AVAILABLE",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "id": "88888888-8888-8888-8888-888888888888",
+      "name": "RC Schwerin Racers",
+      "shortName": "SCR",
+      "preferredDates": [
+        {
+          "preferenceDate": "2024-11-16",
+          "status": "AVAILABLE",
+          "notes": null
+        },
+        {
+          "preferenceDate": "2025-03-15",
+          "status": "PREFERRED",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "id": "99999999-9999-9999-9999-999999999999",
+      "name": "RV Flensburg Flames",
+      "shortName": "FLF",
+      "preferredDates": [
+        {
+          "preferenceDate": "2024-10-05",
+          "status": "PREFERRED",
+          "notes": null
+        },
+        {
+          "preferenceDate": "2025-02-22",
+          "status": "AVAILABLE",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "name": "RSC Wolfsburg Velocity",
+      "shortName": "WOV",
+      "preferredDates": [
+        {
+          "preferenceDate": "2024-12-07",
+          "status": "PREFERRED",
+          "notes": null
+        },
+        {
+          "preferenceDate": "2025-01-18",
+          "status": "PREFERRED",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+      "name": "RV Braunschweig Lions",
+      "shortName": "BSL",
+      "preferredDates": [
+        {
+          "preferenceDate": "2024-11-16",
+          "status": "PREFERRED",
+          "notes": null
+        }
+      ]
+    }
+  ],
+  "gyms": [
+    {
+      "id": "gym1-111-1111-1111-111111111111",
+      "name": "Sporthalle Hamburg-Nord",
+      "availableFields": "2 courts available",
+      "address": {
+        "street": "Sportweg 15",
+        "zip": "22299",
+        "city": "Hamburg",
+        "country": "DE"
+      },
+      "clubId": "11111111-1111-1111-1111-111111111111"
+    },
+    {
+      "id": "gym2-222-2222-2222-222222222222",
+      "name": "Turnhalle Bremen-Ost",
+      "availableFields": "1 court",
+      "address": {
+        "street": "Hallenstraße 42",
+        "zip": "28329",
+        "city": "Bremen",
+        "country": "DE"
+      },
+      "clubId": "22222222-2222-2222-2222-222222222222"
+    },
+    {
+      "id": "gym3-333-3333-3333-333333333333",
+      "name": "Mehrzweckhalle Hannover",
+      "availableFields": "2 courts available",
+      "address": {
+        "street": "Stadionweg 8",
+        "zip": "30519",
+        "city": "Hannover",
+        "country": "DE"
+      },
+      "clubId": "33333333-3333-3333-3333-333333333333"
+    },
+    {
+      "id": "gym4-444-4444-4444-444444444444",
+      "name": "Kieler Sporthalle",
+      "availableFields": "1 court",
+      "address": {
+        "street": "Fördeblick 23",
+        "zip": "24159",
+        "city": "Kiel",
+        "country": "DE"
+      },
+      "clubId": "44444444-4444-4444-4444-444444444444"
+    },
+    {
+      "id": "gym5-555-5555-5555-555555555555",
+      "name": "Lübecker Stadtsporthalle",
+      "availableFields": "2 courts available",
+      "address": {
+        "street": "Hansestraße 56",
+        "zip": "23568",
+        "city": "Lübeck",
+        "country": "DE"
+      },
+      "clubId": "55555555-5555-5555-5555-555555555555"
+    }
+  ],
+  "statistics": {
+    "totalTeams": 12,
+    "totalPlayers": 24,
+    "totalClubs": 11,
+    "totalGyms": 5
+  }
+}
