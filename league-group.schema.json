@@ -181,7 +181,7 @@
     },
     "Person": {
       "type": "object",
-      "required": ["id", "firstName", "lastName", "email", "phone", "gender", "dateOfBirth", "uciCode", "nationality", "clubId"],
+      "required": ["id", "firstName", "lastName", "dateOfBirth", "uciCode", "nationality", "clubId"],
       "properties": {
         "id": {
           "type": "string",
