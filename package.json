@@ -38,9 +38,9 @@
     "@graphql-codegen/cli": "^5.0.7",
     "@graphql-codegen/typescript": "^4.1.6",
     "@stylistic/eslint-plugin": "^2",
-    "@taimos/projen": "^0.1.25",
+    "@taimos/projen": "^0.1.26",
     "@types/jest": "^30.0.0",
-    "@types/node": "^24.5.2",
+    "@types/node": "^24.6.2",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
     "commit-and-tag-version": "^12",
@@ -50,12 +50,12 @@
     "eslint-plugin-import": "^2.32.0",
     "jest": "^29.7.0",
     "jest-junit": "^16",
-    "projen": "0.96.3",
-    "projen-pipelines": "^0.2.15",
+    "projen": "0.97.0",
+    "projen-pipelines": "^0.3.0",
     "ts-jest": "^29.4.4",
     "ts-node": "^10.9.2",
     "typedoc": "^0.28.13",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
