@@ -13,7 +13,8 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** @description Import clubs from a fixed-width text file.
+        /**
+         * @description Import clubs from a fixed-width text file.
          *
          *     File Format:
          *     - Fixed-width text file (encoding: UTF-8)
@@ -32,7 +33,7 @@ export interface paths {
          *     ```
          *     Ailingen                                          Max Mustermann                                    Hauptstraße 123                                   88046 Musterstadt                                   07541-1234567                                               max.mustermann@example.com
          *     ```
-         *      */
+         */
         post: operations["importClubs"];
         delete?: never;
         options?: never;
@@ -49,7 +50,8 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** @description Import gyms from a fixed-width text file.
+        /**
+         * @description Import gyms from a fixed-width text file.
          *
          *     File Format:
          *     - Fixed-width text file (encoding: UTF-8)
@@ -66,7 +68,7 @@ export interface paths {
          *     ```
          *     Ailingen                                          Rotachhalle Ailingen                              Leonie Fürst Straße                               88048 Friedrichshafen-Ailingen                      0177-1234567
          *     ```
-         *      */
+         */
         post: operations["importGyms"];
         delete?: never;
         options?: never;
@@ -83,7 +85,8 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** @description Import persons from a CSV file.
+        /**
+         * @description Import persons from a CSV file.
          *
          *     File Format:
          *     - CSV file with semicolon (;) as separator (encoding: UTF-8)
@@ -109,7 +112,7 @@ export interface paths {
          *     ```
          *     Mustermann;Max;Musterstraße 123;12345;Musterstadt;RV Musterverein;BDR;max.mustermann@example.com;12345;10012345678,00;15.05.1990 00:00:00;männlich;GER;Radball;1
          *     ```
-         *      */
+         */
         post: operations["importPersons"];
         delete?: never;
         options?: never;
@@ -138,9 +141,10 @@ export interface operations {
         };
         requestBody: {
             content: {
-                /** @example Ailingen                                          Max Mustermann                                    Hauptstraße 123                                   88046 Musterstadt                                   07541-1234567                                               max.mustermann@example.com
+                /**
+                 * @example Ailingen                                          Max Mustermann                                    Hauptstraße 123                                   88046 Musterstadt                                   07541-1234567                                               max.mustermann@example.com
                  *     Alpirsbach                                        Erika Musterfrau                                  Musterweg 42                                      72275 Testdorf                                      07444-7654321       0151-98765432       07444-1122334       erika.musterfrau@example.com
-                 *      */
+                 */
                 "text/plain": string;
             };
         };
@@ -151,9 +155,11 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
+                    /**
+                     * @example {
                      *       "success": true
-                     *     } */
+                     *     }
+                     */
                     "application/json": {
                         success?: boolean;
                     };
@@ -165,9 +171,11 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
+                    /**
+                     * @example {
                      *       "error": "Invalid file format: Line 1 has incorrect length"
-                     *     } */
+                     *     }
+                     */
                     "application/json": {
                         error?: string;
                     };
@@ -179,9 +187,11 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
+                    /**
+                     * @example {
                      *       "error": "Invalid or missing authentication token"
-                     *     } */
+                     *     }
+                     */
                     "application/json": {
                         error?: string;
                     };
@@ -198,9 +208,10 @@ export interface operations {
         };
         requestBody: {
             content: {
-                /** @example Ailingen                                          Rotachhalle Ailingen                              Leonie Fürst Straße                               88048 Friedrichshafen-Ailingen                      0177-1234567
+                /**
+                 * @example Ailingen                                          Rotachhalle Ailingen                              Leonie Fürst Straße                               88048 Friedrichshafen-Ailingen                      0177-1234567
                  *     Alpirsbach                                        Turnhalle Sulzberg                                Sulzberg                                          72275 Alpirsbach
-                 *      */
+                 */
                 "text/plain": string;
             };
         };
@@ -211,9 +222,11 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
+                    /**
+                     * @example {
                      *       "success": true
-                     *     } */
+                     *     }
+                     */
                     "application/json": {
                         success?: boolean;
                     };
@@ -225,9 +238,11 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
+                    /**
+                     * @example {
                      *       "error": "Invalid file format: Line 1 has incorrect length"
-                     *     } */
+                     *     }
+                     */
                     "application/json": {
                         error?: string;
                     };
@@ -239,9 +254,11 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
+                    /**
+                     * @example {
                      *       "error": "Invalid or missing authentication token"
-                     *     } */
+                     *     }
+                     */
                     "application/json": {
                         error?: string;
                     };
@@ -258,10 +275,11 @@ export interface operations {
         };
         requestBody: {
             content: {
-                /** @example Nachname;Vorname;Strasse;PLZ;Wohnort;Verein;LV;E-Mail;Lizenz-Nr;UCI-ID;Geburtsdatum;Geschlecht;Nation;Disziplin;Lizenz 2025
+                /**
+                 * @example Nachname;Vorname;Strasse;PLZ;Wohnort;Verein;LV;E-Mail;Lizenz-Nr;UCI-ID;Geburtsdatum;Geschlecht;Nation;Disziplin;Lizenz 2025
                  *     Mustermann;Max;Musterstraße 123;12345;Musterstadt;RV Musterverein;BDR;max.mustermann@example.com;12345;10012345678,00;15.05.1990 00:00:00;männlich;GER;Radball;1
                  *     Musterfrau;Erika;Beispielweg 42;54321;Beispielstadt;SV Beispielverein;WTB;erika.musterfrau@example.com;54321;10023456789,00;20.10.1995 00:00:00;weiblich;GER;Radball;1
-                 *      */
+                 */
                 "text/plain": string;
             };
         };
@@ -272,7 +290,8 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
+                    /**
+                     * @example {
                      *       "success": true,
                      *       "stats": {
                      *         "total": 3,
@@ -283,7 +302,8 @@ export interface operations {
                      *           "Could not find matching club for \"Unknown Club\"/\"BDR\" (Person: Max Mustermann)"
                      *         ]
                      *       }
-                     *     } */
+                     *     }
+                     */
                     "application/json": {
                         success: boolean;
                         stats: {
@@ -307,9 +327,11 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
+                    /**
+                     * @example {
                      *       "error": "Invalid file format: Line 2 has incorrect number of fields"
-                     *     } */
+                     *     }
+                     */
                     "application/json": {
                         error?: string;
                     };
@@ -321,9 +343,11 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
+                    /**
+                     * @example {
                      *       "error": "Invalid or missing authentication token"
-                     *     } */
+                     *     }
+                     */
                     "application/json": {
                         error?: string;
                     };
