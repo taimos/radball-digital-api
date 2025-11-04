@@ -73,11 +73,14 @@ export type AuditLogEntry = {
 
 export type Club = {
   __typename?: 'Club';
+  additionalContacts?: Maybe<Array<Maybe<Person>>>;
   address?: Maybe<Address>;
   association: Association;
   contact?: Maybe<Person>;
+  email?: Maybe<Scalars['AWSEmail']['output']>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
+  resultServiceEmail?: Maybe<Scalars['AWSEmail']['output']>;
   shortName?: Maybe<Scalars['String']['output']>;
   teams?: Maybe<Array<Maybe<Team>>>;
   website?: Maybe<Scalars['AWSURL']['output']>;
@@ -201,10 +204,13 @@ export type ModifyAssociationInput = {
 };
 
 export type ModifyClubInput = {
+  additionalContactIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   address: AddressInput;
   contactId: Scalars['ID']['input'];
+  email?: InputMaybe<Scalars['AWSEmail']['input']>;
   id: Scalars['ID']['input'];
   name: Scalars['String']['input'];
+  resultServiceEmail?: InputMaybe<Scalars['AWSEmail']['input']>;
   shortName?: InputMaybe<Scalars['String']['input']>;
   website?: InputMaybe<Scalars['AWSURL']['input']>;
 };
@@ -864,10 +870,13 @@ export type SaveAssociationInput = {
 };
 
 export type SaveClubInput = {
+  additionalContactIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   address: AddressInput;
   associationId: Scalars['ID']['input'];
   contactId: Scalars['ID']['input'];
+  email?: InputMaybe<Scalars['AWSEmail']['input']>;
   name: Scalars['String']['input'];
+  resultServiceEmail?: InputMaybe<Scalars['AWSEmail']['input']>;
   shortName?: InputMaybe<Scalars['String']['input']>;
   website?: InputMaybe<Scalars['AWSURL']['input']>;
 };
