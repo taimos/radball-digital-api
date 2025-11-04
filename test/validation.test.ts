@@ -298,6 +298,24 @@ describe('validate Club', () => {
       expect(() => validateClub(club)).toThrow('Ungültige Website-URL');
     });
   });
+  describe('email validation', () => {
+    it('should throw error for invalid email format', () => {
+      const club = {
+        ...clubTemplateLong,
+        email: 'joasdohi',
+      };
+      expect(() => validateClub(club)).toThrow('Ungültiges E-Mail-Format');
+    });
+  });
+  describe('result service email validation', () => {
+    it('should throw error for invalid result service email format', () => {
+      const club = {
+        ...clubTemplateLong,
+        resultServiceEmail: 'joasdohi',
+      };
+      expect(() => validateClub(club)).toThrow('Ungültiges E-Mail-Format');
+    });
+  });
 });
 
 describe('validate Gym', () => {

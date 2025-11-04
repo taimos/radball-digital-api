@@ -1,5 +1,7 @@
 import { Address, ModifyAssociationInput, ModifyClubInput, ModifyGymInput, ModifyLeagueInput, ModifyPersonInput, ModifySeasonInput, SaveAssociationInput, SaveClubInput, SaveGymInput, SaveLeagueGroupInput, SaveLeagueInput, SavePersonInput, SaveSeasonInput, ModifyLeagueGroupInput, SaveTeamInput, ModifyTeamInput, RegisterTeamInput } from '@generated/graphql.model.generated';
 
+export const REGEX_EMAIL_FORMAT = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export class ValidationCheckResult {
 
   public readonly warnings: { [field: string]: string[] } = {};
@@ -153,6 +155,15 @@ export function checkClub(club: SaveClubInput | ModifyClubInput): ValidationChec
     } catch {
       result.addError('website', 'Ungültige Website-URL');
     }
+  }
+
+  // Email validation
+  if (club.email && !REGEX_EMAIL_FORMAT.test(club.email)) {
+    result.addError('email', 'Ungültiges E-Mail-Format');
+  }
+  // Result service email validation
+  if (club.resultServiceEmail && !REGEX_EMAIL_FORMAT.test(club.resultServiceEmail)) {
+    result.addError('resultServiceEmail', 'Ungültiges E-Mail-Format');
   }
 
   // Address validation
@@ -310,7 +321,7 @@ export function checkPerson(person: SavePersonInput | ModifyPersonInput): Valida
   }
 
   // Email validation
-  if (person.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(person.email)) {
+  if (person.email && !REGEX_EMAIL_FORMAT.test(person.email)) {
     result.addError('email', 'Ungültiges E-Mail-Format');
   }
 
@@ -369,7 +380,7 @@ export function checkAssociation(association: SaveAssociationInput | ModifyAssoc
   // Contact Email validation
   if (!association.contactEmail?.trim()) {
     result.addError('contactEmail', 'Kontakt-E-Mail ist erforderlich');
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(association.contactEmail)) {
+  } else if (!REGEX_EMAIL_FORMAT.test(association.contactEmail)) {
     result.addError('contactEmail', 'Ungültiges Kontakt-E-Mail-Format');
   }
 
