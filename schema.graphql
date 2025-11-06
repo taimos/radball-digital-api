@@ -73,6 +73,9 @@ type Club @aws_cognito_user_pools {
   address: Address
   website: AWSURL
   contact: Person
+  additionalContacts: [Person]
+  email: AWSEmail
+  resultServiceEmail: AWSEmail
   association: Association!
   teams: [Team]
 }
@@ -260,6 +263,9 @@ input SaveClubInput {
   shortName: String
   address: AddressInput!
   contactId: ID!
+  additionalContactIds: [ID]
+  email: AWSEmail
+  resultServiceEmail: AWSEmail
   website: AWSURL
   associationId: ID!
 }
@@ -270,6 +276,9 @@ input ModifyClubInput {
   shortName: String
   address: AddressInput!
   contactId: ID!
+  additionalContactIds: [ID]
+  email: AWSEmail
+  resultServiceEmail: AWSEmail
   website: AWSURL
 }
 
