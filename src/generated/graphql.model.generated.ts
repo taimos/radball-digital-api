@@ -332,6 +332,8 @@ export type Mutation = {
   addPreferredDateForLeague?: Maybe<PreferredMatchdayDate>;
   addSeason?: Maybe<Season>;
   addTeam?: Maybe<Team>;
+  generateMatchdayAttachmentUploadUrl?: Maybe<UploadUrl>;
+  generateSeasonRegulationUploadUrl?: Maybe<UploadUrl>;
   modifyAssociation?: Maybe<Association>;
   modifyClub?: Maybe<Club>;
   modifyGameInMatchDay?: Maybe<Game>;
@@ -420,6 +422,18 @@ export type MutationAddSeasonArgs = {
 
 export type MutationAddTeamArgs = {
   team: SaveTeamInput;
+};
+
+
+export type MutationGenerateMatchdayAttachmentUploadUrlArgs = {
+  fileName: Scalars['String']['input'];
+  matchdayId: Scalars['ID']['input'];
+};
+
+
+export type MutationGenerateSeasonRegulationUploadUrlArgs = {
+  fileName: Scalars['String']['input'];
+  seasonId: Scalars['ID']['input'];
 };
 
 
@@ -1018,4 +1032,10 @@ export type TeamDetail = {
 export type UpdateTeamGroupInput = {
   leagueGroupId?: InputMaybe<Scalars['ID']['input']>;
   teamId: Scalars['ID']['input'];
+};
+
+export type UploadUrl = {
+  __typename?: 'UploadUrl';
+  fileUrl: Scalars['AWSURL']['output'];
+  uploadUrl: Scalars['AWSURL']['output'];
 };

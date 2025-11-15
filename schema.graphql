@@ -183,6 +183,11 @@ type PersonPermission @aws_cognito_user_pools {
   permission: String!
 }
 
+type UploadUrl @aws_cognito_user_pools {
+  uploadUrl: AWSURL!
+  fileUrl: AWSURL!
+}
+
 # League Group Manager View Types
 type LeagueGroupView @aws_cognito_user_pools {
   group: LeagueGroup!
@@ -607,6 +612,9 @@ type Mutation {
   addPreferredDateForLeague (date: SavePreferredMatchdayDateInput!): PreferredMatchdayDate @aws_cognito_user_pools
   modifyPreferredDateForLeague (date: ModifyPreferredMatchdayDateInput!): PreferredMatchdayDate @aws_cognito_user_pools
   removePreferredDateForLeague (clubId: ID!, leagueId: ID!, preferenceDate: AWSDate): Boolean @aws_cognito_user_pools
-  
+
   registerTeamsForSeason (registration: RegisterTeamsForSeasonInput!): [Team] @aws_cognito_user_pools
+
+  generateSeasonRegulationUploadUrl (seasonId: ID!, fileName: String!): UploadUrl @aws_cognito_user_pools
+  generateMatchdayAttachmentUploadUrl (matchdayId: ID!, fileName: String!): UploadUrl @aws_cognito_user_pools
 }
