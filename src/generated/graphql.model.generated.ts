@@ -184,6 +184,12 @@ export type MatchDay = {
   teams: Array<Maybe<MatchdayTeam>>;
 };
 
+export type MatchdayAttachmentUpload = {
+  __typename?: 'MatchdayAttachmentUpload';
+  matchday: MatchDay;
+  uploadUrl: Scalars['AWSURL']['output'];
+};
+
 export type MatchdayTeam = {
   __typename?: 'MatchdayTeam';
   id: Scalars['ID']['output'];
@@ -332,8 +338,8 @@ export type Mutation = {
   addPreferredDateForLeague?: Maybe<PreferredMatchdayDate>;
   addSeason?: Maybe<Season>;
   addTeam?: Maybe<Team>;
-  generateMatchdayAttachmentUploadUrl?: Maybe<UploadUrl>;
-  generateSeasonRegulationUploadUrl?: Maybe<UploadUrl>;
+  generateMatchdayAttachmentUploadUrl?: Maybe<MatchdayAttachmentUpload>;
+  generateSeasonRegulationUploadUrl?: Maybe<SeasonRegulationUpload>;
   modifyAssociation?: Maybe<Association>;
   modifyClub?: Maybe<Club>;
   modifyGameInMatchDay?: Maybe<Game>;
@@ -1002,6 +1008,12 @@ export type Season = {
   startDate: Scalars['AWSDate']['output'];
 };
 
+export type SeasonRegulationUpload = {
+  __typename?: 'SeasonRegulationUpload';
+  season: Season;
+  uploadUrl: Scalars['AWSURL']['output'];
+};
+
 export type Team = {
   __typename?: 'Team';
   club: Club;
@@ -1032,10 +1044,4 @@ export type TeamDetail = {
 export type UpdateTeamGroupInput = {
   leagueGroupId?: InputMaybe<Scalars['ID']['input']>;
   teamId: Scalars['ID']['input'];
-};
-
-export type UploadUrl = {
-  __typename?: 'UploadUrl';
-  fileUrl: Scalars['AWSURL']['output'];
-  uploadUrl: Scalars['AWSURL']['output'];
 };

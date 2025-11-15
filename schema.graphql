@@ -183,9 +183,14 @@ type PersonPermission @aws_cognito_user_pools {
   permission: String!
 }
 
-type UploadUrl @aws_cognito_user_pools {
+type SeasonRegulationUpload @aws_cognito_user_pools {
+  season: Season!
   uploadUrl: AWSURL!
-  fileUrl: AWSURL!
+}
+
+type MatchdayAttachmentUpload @aws_cognito_user_pools {
+  matchday: MatchDay!
+  uploadUrl: AWSURL!
 }
 
 # League Group Manager View Types
@@ -615,6 +620,6 @@ type Mutation {
 
   registerTeamsForSeason (registration: RegisterTeamsForSeasonInput!): [Team] @aws_cognito_user_pools
 
-  generateSeasonRegulationUploadUrl (seasonId: ID!, fileName: String!): UploadUrl @aws_cognito_user_pools
-  generateMatchdayAttachmentUploadUrl (matchdayId: ID!, fileName: String!): UploadUrl @aws_cognito_user_pools
+  generateSeasonRegulationUploadUrl (seasonId: ID!, fileName: String!): SeasonRegulationUpload @aws_cognito_user_pools
+  generateMatchdayAttachmentUploadUrl (matchdayId: ID!, fileName: String!): MatchdayAttachmentUpload @aws_cognito_user_pools
 }
