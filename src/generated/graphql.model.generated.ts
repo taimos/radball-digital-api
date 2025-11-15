@@ -177,6 +177,7 @@ export type MatchDay = {
   matchDayNumber: Scalars['String']['output'];
   pin?: Maybe<Scalars['String']['output']>;
   report?: Maybe<Scalars['String']['output']>;
+  reportAttachments?: Maybe<Array<Maybe<Scalars['AWSURL']['output']>>>;
   secretary: Scalars['String']['output'];
   startDate: Scalars['AWSDateTime']['output'];
   streamingLink?: Maybe<Scalars['AWSURL']['output']>;
@@ -260,6 +261,7 @@ export type ModifyMatchDayInput = {
   id: Scalars['ID']['input'];
   matchDayNumber: Scalars['String']['input'];
   report?: InputMaybe<Scalars['String']['input']>;
+  reportAttachments?: InputMaybe<Array<InputMaybe<Scalars['AWSURL']['input']>>>;
   secretary: Scalars['String']['input'];
   startDate: Scalars['AWSDateTime']['input'];
   streamingLink?: InputMaybe<Scalars['AWSURL']['input']>;
@@ -300,6 +302,7 @@ export type ModifySeasonInput = {
   name: Scalars['String']['input'];
   registrationEnd: Scalars['AWSDate']['input'];
   registrationStart?: InputMaybe<Scalars['AWSDate']['input']>;
+  regulationFileUrl?: InputMaybe<Scalars['AWSURL']['input']>;
   startDate: Scalars['AWSDate']['input'];
 };
 
@@ -914,6 +917,7 @@ export type SaveMatchDayInput = {
   gymId: Scalars['ID']['input'];
   matchDayNumber: Scalars['String']['input'];
   report?: InputMaybe<Scalars['String']['input']>;
+  reportAttachments?: InputMaybe<Array<InputMaybe<Scalars['AWSURL']['input']>>>;
   secretary: Scalars['String']['input'];
   startDate: Scalars['AWSDateTime']['input'];
   streamingLink?: InputMaybe<Scalars['AWSURL']['input']>;
@@ -980,6 +984,7 @@ export type Season = {
   name: Scalars['String']['output'];
   registrationEnd: Scalars['AWSDate']['output'];
   registrationStart?: Maybe<Scalars['AWSDate']['output']>;
+  regulationFileUrl?: Maybe<Scalars['AWSURL']['output']>;
   startDate: Scalars['AWSDate']['output'];
 };
 

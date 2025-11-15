@@ -39,6 +39,7 @@ type Season @aws_cognito_user_pools {
   leagues: [League]
   leagueOrder: [ID!]
   additionalEligibleAssociations: [Association]
+  regulationFileUrl: AWSURL
 }
 
 type League @aws_cognito_user_pools {
@@ -114,6 +115,7 @@ type MatchDay @aws_cognito_user_pools {
   commissioners: RefereeInfo
   secretary: String!
   report: String
+  reportAttachments: [AWSURL]
   pin: String
 }
 
@@ -301,6 +303,7 @@ input ModifySeasonInput {
   registrationEnd: AWSDate!
   leagueOrder: [ID!]
   additionalEligibleAssociations: [ID]!
+  regulationFileUrl: AWSURL
 }
 
 input SaveLeagueInput {
@@ -450,6 +453,7 @@ input SaveMatchDayInput {
   commissioners: RefereeInfoInput
   secretary: String!
   report: String
+  reportAttachments: [AWSURL]
 }
 
 input RefereeInfoInput {
@@ -467,6 +471,7 @@ input ModifyMatchDayInput {
   commissioners: RefereeInfoInput
   secretary: String!
   report: String
+  reportAttachments: [AWSURL]
 }
 
 input SavePreferredMatchdayDateInput {
