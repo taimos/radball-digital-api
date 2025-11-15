@@ -39,6 +39,7 @@ type Season @aws_cognito_user_pools {
   leagues: [League]
   leagueOrder: [ID!]
   additionalEligibleAssociations: [Association]
+  regulationFileUrl: AWSURL
 }
 
 type League @aws_cognito_user_pools {
@@ -114,6 +115,7 @@ type MatchDay @aws_cognito_user_pools {
   commissioners: RefereeInfo
   secretary: String!
   report: String
+  reportAttachments: [AWSURL]
   pin: String
 }
 
@@ -179,6 +181,16 @@ type PersonPermission @aws_cognito_user_pools {
   resourceType: String!
   resourceId: ID!
   permission: String!
+}
+
+type SeasonRegulationUpload @aws_cognito_user_pools {
+  season: Season!
+  uploadUrl: AWSURL!
+}
+
+type MatchdayAttachmentUpload @aws_cognito_user_pools {
+  matchday: MatchDay!
+  uploadUrl: AWSURL!
 }
 
 # League Group Manager View Types
@@ -301,6 +313,7 @@ input ModifySeasonInput {
   registrationEnd: AWSDate!
   leagueOrder: [ID!]
   additionalEligibleAssociations: [ID]!
+  regulationFileUrl: AWSURL
 }
 
 input SaveLeagueInput {
@@ -450,6 +463,7 @@ input SaveMatchDayInput {
   commissioners: RefereeInfoInput
   secretary: String!
   report: String
+  reportAttachments: [AWSURL]
 }
 
 input RefereeInfoInput {
@@ -467,6 +481,7 @@ input ModifyMatchDayInput {
   commissioners: RefereeInfoInput
   secretary: String!
   report: String
+  reportAttachments: [AWSURL]
 }
 
 input SavePreferredMatchdayDateInput {
@@ -602,6 +617,9 @@ type Mutation {
   addPreferredDateForLeague (date: SavePreferredMatchdayDateInput!): PreferredMatchdayDate @aws_cognito_user_pools
   modifyPreferredDateForLeague (date: ModifyPreferredMatchdayDateInput!): PreferredMatchdayDate @aws_cognito_user_pools
   removePreferredDateForLeague (clubId: ID!, leagueId: ID!, preferenceDate: AWSDate): Boolean @aws_cognito_user_pools
-  
+
   registerTeamsForSeason (registration: RegisterTeamsForSeasonInput!): [Team] @aws_cognito_user_pools
+
+  generateSeasonRegulationUploadUrl (seasonId: ID!, fileName: String!): SeasonRegulationUpload @aws_cognito_user_pools
+  generateMatchdayAttachmentUploadUrl (matchdayId: ID!, fileName: String!): MatchdayAttachmentUpload @aws_cognito_user_pools
 }
