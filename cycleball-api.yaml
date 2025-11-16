@@ -9,7 +9,7 @@ info:
     name: free to use
   version: "1.0"
 servers:
-- url: http://dev.cycleball.eu/api
+- url: https://dev.cycleball.eu/api
 tags:
 - name: admin
 - name: leagues
