@@ -106,6 +106,12 @@ const generateRestTask = project.addTask('generate:api:rest', {
 });
 project.preCompileTask.prependSpawn(generateRestTask);
 
+const generateRestCycleballTask = project.addTask('generate:api:restCB', {
+  exec: 'openapi-typescript cycleball-api.yaml --output src/generated/rest.cycleball.model.generated.ts',
+  description: 'Generate Types from the Cycleball EU API OpenAPI specification',
+});
+project.preCompileTask.prependSpawn(generateRestCycleballTask);
+
 new GitHubAssignApprover(project, {
   approverMapping: [{
     author: 'hoegertn',

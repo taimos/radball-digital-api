@@ -16,6 +16,7 @@
     "eslint": "npx projen eslint",
     "generate:api:graphql": "npx projen generate:api:graphql",
     "generate:api:rest": "npx projen generate:api:rest",
+    "generate:api:restCB": "npx projen generate:api:restCB",
     "package": "npx projen package",
     "post-compile": "npx projen post-compile",
     "post-upgrade": "npx projen post-upgrade",
