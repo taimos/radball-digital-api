@@ -145,6 +145,15 @@
         }
       ]
     },
+    "generate:api:restCB": {
+      "name": "generate:api:restCB",
+      "description": "Generate Types from the Cycleball EU API OpenAPI specification",
+      "steps": [
+        {
+          "exec": "openapi-typescript cycleball-api.yaml --output src/generated/rest.cycleball.model.generated.ts"
+        }
+      ]
+    },
     "install": {
       "name": "install",
       "description": "Install project dependencies and update lockfile (non-frozen)",
@@ -192,6 +201,9 @@
       "name": "pre-compile",
       "description": "Prepare the project for compilation",
       "steps": [
+        {
+          "spawn": "generate:api:restCB"
+        },
         {
           "spawn": "generate:api:rest"
         },

@@ -1,0 +1,611 @@
+openapi: 3.0.1
+info:
+  title: Cycleball EU
+  description: Radball Ergebnisdienst
+  contact:
+    name: Thorsten Höger
+    email: info@taimos.de
+  license:
+    name: free to use
+  version: "1.0"
+servers:
+- url: http://dev.cycleball.eu/api
+tags:
+- name: admin
+- name: leagues
+- name: info
+paths:
+  '/leagues':
+    get:
+      tags:
+      - leagues
+      summary: return list of leagues
+      operationId: getLeagues
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/League'
+  '/leagues/{oid}':
+    get:
+      tags:
+      - leagues
+      summary: get a league by its id
+      operationId: getLeague
+      parameters:
+      - name: oid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/League'
+  '/leagues/{oid}/ranking':
+    get:
+      tags:
+      - leagues
+      summary: return ranking of the given league
+      operationId: getLeagueRanking
+      parameters:
+      - name: oid
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: nonCompetitive
+        in: query
+        description: include non-competitive teams into ranking
+        schema:
+          type: boolean
+          default: false
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ranking'
+  '/leagues/{oid}/teams':
+    get:
+      tags:
+      - leagues
+      summary: return list of teams for given league
+      operationId: getLeagueTeams
+      parameters:
+      - name: oid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+  '/leagues/{oid}/matchdays':
+    get:
+      tags:
+      - leagues
+      summary: return list of matchdays for given league
+      operationId: getLeagueDays
+      parameters:
+      - name: oid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SimpleMatchday'
+    post:
+      tags:
+      - leagues
+      summary: import matchday for given league via rbt-file
+      operationId: importMatchday
+      parameters:
+      - name: oid
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: object
+        required: false
+      responses:
+        201:
+          description: successful operation
+          content: {}
+      x-codegen-request-body-name: body
+  '/leagues/{oid}/matchdays/{dayId}':
+    get:
+      tags:
+      - leagues
+      summary: return a single matchday for given league
+      operationId: getLeagueDay
+      parameters:
+      - name: x-pin
+        in: header
+      - name: oid
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dayId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Matchday'
+  # '/leagues/{oid}/matchdays/{dayId}/print':
+  #   get:
+  #     tags:
+  #     - leagues
+  #     summary: return a single matchday for given league as PDF
+  #     operationId: getLeagueDayPdf
+  #     parameters:
+  #     - name: oid
+  #       in: path
+  #       required: true
+  #       schema:
+  #         type: string
+  #     - name: dayId
+  #       in: path
+  #       required: true
+  #       schema:
+  #         type: string
+  #     responses:
+  #       200:
+  #         description: successful operation
+  #         content:
+  #           application/pdf:
+  '/leagues/{oid}/matchdays/{dayId}/teams/{teamId}':
+    put:
+      tags:
+      - leagues
+      summary: update a single team of a matchday
+      operationId: updateMatchdayTeam
+      parameters:
+      - name: x-pin
+        in: header
+      - name: oid
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dayId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: teamId
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMatchdayTeam'
+      responses:
+        204:
+          description: successful operation
+        403:
+          description: forbidden due to invalid PIN
+  '/leagues/{oid}/matchdays/{dayId}/games/{gameNumber}':
+    put:
+      tags:
+      - leagues
+      summary: update a single game of a matchday
+      operationId: updateMatchdayGame
+      parameters:
+      - name: x-pin
+        in: header
+      - name: oid
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dayId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: gameNumber
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameUpdateInfo'
+      responses:
+        204:
+          description: successful operation
+        403:
+          description: forbidden due to invalid PIN
+  '/teams':
+    get:
+      tags:
+      - info
+      summary: return list of teams
+      operationId: getTeams
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+  '/teams/{oid}':
+    get:
+      tags:
+      - info
+      summary: get team by its id
+      operationId: getTeamById
+      parameters:
+      - name: oid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+  /clubs:
+    get:
+      tags:
+      - info
+      summary: return list of clubs
+      operationId: getClubs
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Club"
+  /calendar:
+    get:
+      tags:
+      - info
+      summary: return the list of upcoming calender entries
+      operationId: getCalendar
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CalendarDate"
+components:
+  securitySchemes:
+    OpenID:
+      type: openIdConnect
+      openIdConnectUrl: https://auth.cycleball.eu/.well-known/openid-configuration
+  schemas:
+    AddressWithUser:
+      type: object
+      required:
+        - name
+        - email
+      properties:
+        name: 
+          type: string
+        street: 
+          type: string
+        zip: 
+          type: string
+        city: 
+          type: string
+        phone: 
+          type: string
+        email: 
+          type: string
+    League:
+      type: object
+      required:
+        - shortName
+        - longName
+        - season
+        - manager
+      properties:
+        shortName: 
+          type: string
+        longName: 
+          type: string
+        season: 
+          type: string
+        rules: 
+          type: array
+          items:
+            type: string
+        hasNonCompetitive: 
+          type: boolean
+          default: false
+        lastImport:
+          type: string
+        manager:
+          $ref: "#/components/schemas/AddressWithUser"
+        # rankStyles:
+        #   type: array
+        #   items:
+        #     type: string
+    Team:
+      type: object
+      required:
+        - name
+        - clubName
+        - leagueShortName
+        - leagueLongName
+        - players
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        clubName:
+          type: string
+        leagueShortName:
+          type: string
+        leagueLongName:
+          type: string
+        nonCompetitive:
+          type: boolean
+          default: false
+        players:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMember'
+        lastImport:
+          type: string
+    TeamMember:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        uciCode:
+          type: string
+    SimpleMatchday:
+      type: object
+      properties:
+        number:
+          type: integer
+        leagueShortName:
+          type: string
+        leagueLongName:
+          type: string
+        pin:
+          type: string
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        hostClub:
+          type: string
+        lastImport:
+          type: string
+        gym:
+          $ref: '#/components/schemas/Gym'
+    Gym:
+      type: object
+      properties:
+        name:
+          type: string
+        city:
+          type: string
+        zip:
+          type: string
+        street:
+          type: string
+        phone:
+          type: string
+    Matchday:
+      type: object
+      properties:
+        number:
+          type: integer
+        leagueShortName:
+          type: string
+        leagueLongName:
+          type: string
+        pin:
+          type: string
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        hostClub:
+          type: string
+        lastImport:
+          type: string
+        gym:
+          $ref: '#/components/schemas/Gym'
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/MatchdayTeam'
+        games:
+          type: array
+          items:
+            $ref: '#/components/schemas/Game'
+        comment:
+          type: string
+    Game:
+      type: object
+      properties:
+        number:
+          type: integer
+        teamA:
+          type: string
+        teamB:
+          type: string
+        goalsAHalf:
+          type: integer
+        goalsBHalf:
+          type: integer
+        goalsA:
+          type: integer
+        goalsB:
+          type: integer
+        bothLost:
+          type: boolean
+          default: false
+        state:
+          type: string
+    GameUpdateInfo:
+      type: object
+      properties:
+        goalsAHalf:
+          type: integer
+        goalsBHalf:
+          type: integer
+        goalsA:
+          type: integer
+        goalsB:
+          type: integer
+        bothLost:
+          type: boolean
+          default: false
+        state:
+          type: string
+    MatchdayTeam:
+      type: object
+      properties:
+        name:
+          type: string
+        present:
+          type: boolean
+          default: false
+        excused:
+          type: boolean
+          default: false
+        players:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              uciCode:
+                type: string
+              regular:
+                type: boolean
+    UpdateMatchdayTeam:
+      type: object
+      required:
+        - present
+        - excused
+        - players
+      properties:
+        present:
+          type: boolean
+        excused:
+          type: boolean
+        players:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              uciCode:
+                type: string
+              regular:
+                type: boolean
+    Ranking:
+      type: object
+      properties:
+        rank:
+          type: integer
+          format: int32
+        team:
+          type: string
+        games:
+          type: integer
+          format: int32
+        goalsPlus:
+          type: integer
+          format: int32
+        goalsMinus:
+          type: integer
+          format: int32
+        goalsDiff:
+          type: integer
+          format: int32
+        points:
+          type: integer
+          format: int32
+        style:
+          type: string
+    Club:
+      type: object
+      properties:
+        name:
+          type: string
+        city:
+          type: string
+        contact:
+          $ref: "#/components/schemas/AddressWithUser"
+        gyms:
+          type: array
+          items:
+            $ref: "#/components/schemas/Gym"
+    CalendarDate:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        days:
+          type: array
+          items:
+            $ref:  "#/components/schemas/SimpleMatchday"
