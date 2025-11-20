@@ -564,6 +564,8 @@ type Query {
 
   # League Group Manager comprehensive view - returns all relevant information for managing a league group
   getLeagueGroupView(groupId: ID!): LeagueGroupView @aws_cognito_user_pools
+  # Export the season in RBW format
+  getSeasonExportRBW(associationId: ID!, seasonId: ID!): String @aws_cognito_user_pools
 }
 
 # Mutations

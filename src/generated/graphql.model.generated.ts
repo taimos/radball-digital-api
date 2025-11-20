@@ -660,6 +660,7 @@ export type Query = {
   getPersonPermissions?: Maybe<Array<Maybe<PersonPermission>>>;
   getPreferredDatesForClub?: Maybe<Array<Maybe<PreferredMatchdayDate>>>;
   getSeasonById?: Maybe<Season>;
+  getSeasonExportRBW?: Maybe<Scalars['String']['output']>;
   getTeamById?: Maybe<Team>;
 };
 
@@ -846,6 +847,12 @@ export type QueryGetPreferredDatesForClubArgs = {
 
 export type QueryGetSeasonByIdArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetSeasonExportRbwArgs = {
+  associationId: Scalars['ID']['input'];
+  seasonId: Scalars['ID']['input'];
 };
 
 
