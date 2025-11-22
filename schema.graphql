@@ -221,6 +221,23 @@ type LeagueGroupStatistics @aws_cognito_user_pools {
   totalGyms: Int!
 }
 
+# Ranking types
+type RankingEntry @aws_cognito_user_pools {
+  rank: Int!
+  team: Team!
+  games: Int!
+  goalsPlus: Int!
+  goalsMinus: Int!
+  goalsDiff: Int!
+  points: Int!
+}
+
+# Calendar types
+type CalendarDate @aws_cognito_user_pools {
+  date: AWSDate!
+  matchdays: [MatchDay!]!
+}
+
 # Connection types for pagination
 
 type PersonConnection @aws_cognito_user_pools {
@@ -566,6 +583,15 @@ type Query {
   getLeagueGroupView(groupId: ID!): LeagueGroupView @aws_cognito_user_pools
   # Export the season in RBW format
   getSeasonExportRBW(associationId: ID!, seasonId: ID!): String @aws_cognito_user_pools
+
+  # Ranking
+  getLeagueGroupRanking(groupId: ID!, includeNonCompetitive: Boolean): [RankingEntry!]! @aws_cognito_user_pools
+
+  # Calendar
+  getUpcomingMatchdays(associationId: ID!, seasonId: ID!): [CalendarDate!]! @aws_cognito_user_pools
+
+  # Aggregated queries
+  getAllMatchdaysInSeason(seasonId: ID!): [MatchDay!]! @aws_cognito_user_pools
 }
 
 # Mutations
@@ -624,4 +650,7 @@ type Mutation {
 
   generateSeasonRegulationUploadUrl (seasonId: ID!, fileName: String!): SeasonRegulationUpload @aws_cognito_user_pools
   generateMatchdayAttachmentUploadUrl (matchdayId: ID!, fileName: String!): MatchdayAttachmentUpload @aws_cognito_user_pools
+
+  # Bulk import
+  importMatchdayFromRBT(groupId: ID!, data: String!): MatchDay @aws_cognito_user_pools
 }
