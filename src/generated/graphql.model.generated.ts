@@ -71,6 +71,12 @@ export type AuditLogEntry = {
   timestamp: Scalars['AWSDateTime']['output'];
 };
 
+export type CalendarDate = {
+  __typename?: 'CalendarDate';
+  date: Scalars['AWSDate']['output'];
+  matchdays: Array<MatchDay>;
+};
+
 export type Club = {
   __typename?: 'Club';
   additionalContacts?: Maybe<Array<Maybe<Person>>>;
@@ -340,6 +346,7 @@ export type Mutation = {
   addTeam?: Maybe<Team>;
   generateMatchdayAttachmentUploadUrl?: Maybe<MatchdayAttachmentUpload>;
   generateSeasonRegulationUploadUrl?: Maybe<SeasonRegulationUpload>;
+  importMatchdayFromRBT?: Maybe<MatchDay>;
   modifyAssociation?: Maybe<Association>;
   modifyClub?: Maybe<Club>;
   modifyGameInMatchDay?: Maybe<Game>;
@@ -440,6 +447,12 @@ export type MutationGenerateMatchdayAttachmentUploadUrlArgs = {
 export type MutationGenerateSeasonRegulationUploadUrlArgs = {
   fileName: Scalars['String']['input'];
   seasonId: Scalars['ID']['input'];
+};
+
+
+export type MutationImportMatchdayFromRbtArgs = {
+  data: Scalars['String']['input'];
+  groupId: Scalars['ID']['input'];
 };
 
 
@@ -627,6 +640,7 @@ export type PreferredMatchdayDate = {
 export type Query = {
   __typename?: 'Query';
   getAllGamesOfTeamInSeason?: Maybe<Array<Maybe<Game>>>;
+  getAllMatchdaysInSeason: Array<MatchDay>;
   getAllMatchdaysOfTeamInSeason?: Maybe<Array<Maybe<MatchDay>>>;
   getAllPlayersOfClubInSeason?: Maybe<Array<Maybe<Person>>>;
   getAllTeamsOfClubInSeason?: Maybe<Array<Maybe<Team>>>;
@@ -639,6 +653,7 @@ export type Query = {
   getGymById?: Maybe<Gym>;
   getLeagueById?: Maybe<League>;
   getLeagueGroupById?: Maybe<LeagueGroup>;
+  getLeagueGroupRanking: Array<RankingEntry>;
   getLeagueGroupView?: Maybe<LeagueGroupView>;
   getListOfAssociations?: Maybe<Array<Maybe<Association>>>;
   getListOfClubs?: Maybe<ClubConnection>;
@@ -662,12 +677,18 @@ export type Query = {
   getSeasonById?: Maybe<Season>;
   getSeasonExportRBW?: Maybe<Scalars['String']['output']>;
   getTeamById?: Maybe<Team>;
+  getUpcomingMatchdays: Array<CalendarDate>;
 };
 
 
 export type QueryGetAllGamesOfTeamInSeasonArgs = {
   seasonId: Scalars['ID']['input'];
   teamId: Scalars['ID']['input'];
+};
+
+
+export type QueryGetAllMatchdaysInSeasonArgs = {
+  seasonId: Scalars['ID']['input'];
 };
 
 
@@ -738,6 +759,12 @@ export type QueryGetLeagueByIdArgs = {
 
 export type QueryGetLeagueGroupByIdArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetLeagueGroupRankingArgs = {
+  groupId: Scalars['ID']['input'];
+  includeNonCompetitive?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -858,6 +885,23 @@ export type QueryGetSeasonExportRbwArgs = {
 
 export type QueryGetTeamByIdArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetUpcomingMatchdaysArgs = {
+  associationId: Scalars['ID']['input'];
+  seasonId: Scalars['ID']['input'];
+};
+
+export type RankingEntry = {
+  __typename?: 'RankingEntry';
+  games: Scalars['Int']['output'];
+  goalsDiff: Scalars['Int']['output'];
+  goalsMinus: Scalars['Int']['output'];
+  goalsPlus: Scalars['Int']['output'];
+  points: Scalars['Int']['output'];
+  rank: Scalars['Int']['output'];
+  team: Team;
 };
 
 export type RefereeInfo = {
