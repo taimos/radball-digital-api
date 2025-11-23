@@ -524,7 +524,7 @@ export function checkPlayerEligibility(
   dateOfBirth: string | null | undefined,
   minAge: number | null | undefined,
   maxAge: number | null | undefined,
-  referenceDate: Date = new Date()
+  referenceDate: Date = new Date(),
 ): ValidationCheckResult {
   const result = new ValidationCheckResult();
 
@@ -571,7 +571,7 @@ export function validatePlayerEligibility(
   dateOfBirth: string | null | undefined,
   minAge: number | null | undefined,
   maxAge: number | null | undefined,
-  referenceDate: Date = new Date()
+  referenceDate: Date = new Date(),
 ): void {
   const result = checkPlayerEligibility(dateOfBirth, minAge, maxAge, referenceDate);
   result.validate();
@@ -589,7 +589,7 @@ export function isPlayerEligible(
   dateOfBirth: string | null | undefined,
   minAge: number | null | undefined,
   maxAge: number | null | undefined,
-  referenceDate: Date = new Date()
+  referenceDate: Date = new Date(),
 ): boolean {
   const result = checkPlayerEligibility(dateOfBirth, minAge, maxAge, referenceDate);
   return Object.keys(result.errors).length === 0;

@@ -1023,24 +1023,24 @@ describe('checkPlayerEligibility', () => {
   describe('missing date of birth', () => {
     it('should return error when dateOfBirth is null but age restrictions exist', () => {
       const result = checkPlayerEligibility(null, 16, 40, referenceDate);
-      expect(result.errors['dateOfBirth']).toContain('Geburtsdatum ist erforderlich für die Altersüberprüfung');
+      expect(result.errors.dateOfBirth).toContain('Geburtsdatum ist erforderlich für die Altersüberprüfung');
     });
 
     it('should return error when dateOfBirth is undefined but age restrictions exist', () => {
       const result = checkPlayerEligibility(undefined, 16, 40, referenceDate);
-      expect(result.errors['dateOfBirth']).toContain('Geburtsdatum ist erforderlich für die Altersüberprüfung');
+      expect(result.errors.dateOfBirth).toContain('Geburtsdatum ist erforderlich für die Altersüberprüfung');
     });
 
     it('should return error when dateOfBirth is empty string but age restrictions exist', () => {
       const result = checkPlayerEligibility('', 16, 40, referenceDate);
-      expect(result.errors['dateOfBirth']).toContain('Geburtsdatum ist erforderlich für die Altersüberprüfung');
+      expect(result.errors.dateOfBirth).toContain('Geburtsdatum ist erforderlich für die Altersüberprüfung');
     });
   });
 
   describe('invalid date format', () => {
     it('should return error for invalid date format', () => {
       const result = checkPlayerEligibility('invalid-date', 16, 40, referenceDate);
-      expect(result.errors['dateOfBirth']).toContain('Ungültiges Geburtsdatumsformat');
+      expect(result.errors.dateOfBirth).toContain('Ungültiges Geburtsdatumsformat');
     });
   });
 
@@ -1048,7 +1048,7 @@ describe('checkPlayerEligibility', () => {
     it('should return error when player is too young', () => {
       // Player born 2010-01-15, age = 14 on 2024-06-15
       const result = checkPlayerEligibility('2010-01-15', 16, null, referenceDate);
-      expect(result.errors['age']).toContain('Spieler ist zu jung. Mindestalter: 16 Jahre, aktuelles Alter: 14 Jahre');
+      expect(result.errors.age).toContain('Spieler ist zu jung. Mindestalter: 16 Jahre, aktuelles Alter: 14 Jahre');
     });
 
     it('should return no error when player meets minimum age', () => {
@@ -1068,7 +1068,7 @@ describe('checkPlayerEligibility', () => {
     it('should return error when player is too old', () => {
       // Player born 1980-01-15, age = 44 on 2024-06-15
       const result = checkPlayerEligibility('1980-01-15', null, 40, referenceDate);
-      expect(result.errors['age']).toContain('Spieler ist zu alt. Maximalalter: 40 Jahre, aktuelles Alter: 44 Jahre');
+      expect(result.errors.age).toContain('Spieler ist zu alt. Maximalalter: 40 Jahre, aktuelles Alter: 44 Jahre');
     });
 
     it('should return no error when player meets maximum age', () => {
@@ -1094,13 +1094,13 @@ describe('checkPlayerEligibility', () => {
     it('should return error when player is below age range', () => {
       // Player born 2010-01-15, age = 14 on 2024-06-15
       const result = checkPlayerEligibility('2010-01-15', 16, 40, referenceDate);
-      expect(result.errors['age']).toContain('Spieler ist zu jung. Mindestalter: 16 Jahre, aktuelles Alter: 14 Jahre');
+      expect(result.errors.age).toContain('Spieler ist zu jung. Mindestalter: 16 Jahre, aktuelles Alter: 14 Jahre');
     });
 
     it('should return error when player is above age range', () => {
       // Player born 1980-01-15, age = 44 on 2024-06-15
       const result = checkPlayerEligibility('1980-01-15', 16, 40, referenceDate);
-      expect(result.errors['age']).toContain('Spieler ist zu alt. Maximalalter: 40 Jahre, aktuelles Alter: 44 Jahre');
+      expect(result.errors.age).toContain('Spieler ist zu alt. Maximalalter: 40 Jahre, aktuelles Alter: 44 Jahre');
     });
 
     it('should return no error when player is exactly at minimum age', () => {
@@ -1126,7 +1126,7 @@ describe('checkPlayerEligibility', () => {
     it('should return error when player does not match exact age requirement', () => {
       // Player born 2007-01-15, age = 17 on 2024-06-15
       const result = checkPlayerEligibility('2007-01-15', 18, 18, referenceDate);
-      expect(result.errors['age']).toContain('Spieler ist zu jung. Mindestalter: 18 Jahre, aktuelles Alter: 17 Jahre');
+      expect(result.errors.age).toContain('Spieler ist zu jung. Mindestalter: 18 Jahre, aktuelles Alter: 17 Jahre');
     });
 
     it('should handle zero as minimum age', () => {
