@@ -67,6 +67,7 @@ export interface PreferredMatchdayDate {
   preferenceDate: string;
   status: PreferredDateStatus;
   notes: string | null;
+  gymId: string | null;
 }
 
 export interface TeamDetail {
