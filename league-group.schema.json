@@ -233,6 +233,10 @@
         },
         "notes": {
           "type": ["string", "null"]
+        },
+        "gymId": {
+          "type": ["string", "null"],
+          "format": "uuid"
         }
       }
     },

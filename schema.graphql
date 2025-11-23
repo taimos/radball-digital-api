@@ -12,6 +12,7 @@ type PreferredMatchdayDate @aws_cognito_user_pools {
   preferenceDate: AWSDate!
   status: PreferenceStatus!
   notes: String
+  gym: Gym
 }
 
 type Association @aws_cognito_user_pools {
@@ -507,6 +508,7 @@ input SavePreferredMatchdayDateInput {
   preferenceDate: AWSDate!
   status: PreferenceStatus!
   notes: String
+  gymId: ID
 }
 
 input ModifyPreferredMatchdayDateInput {
@@ -515,6 +517,7 @@ input ModifyPreferredMatchdayDateInput {
   preferenceDate: AWSDate!
   status: PreferenceStatus!
   notes: String
+  gymId: ID
 }
 
 input RegisterTeamInput {

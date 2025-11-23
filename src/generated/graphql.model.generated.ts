@@ -300,6 +300,7 @@ export type ModifyPersonInput = {
 
 export type ModifyPreferredMatchdayDateInput = {
   clubId: Scalars['ID']['input'];
+  gymId?: InputMaybe<Scalars['ID']['input']>;
   leagueId: Scalars['ID']['input'];
   notes?: InputMaybe<Scalars['String']['input']>;
   preferenceDate: Scalars['AWSDate']['input'];
@@ -630,6 +631,7 @@ export enum PreferenceStatus {
 export type PreferredMatchdayDate = {
   __typename?: 'PreferredMatchdayDate';
   club: Club;
+  gym?: Maybe<Gym>;
   league: League;
   notes?: Maybe<Scalars['String']['output']>;
   preferenceDate: Scalars['AWSDate']['output'];
@@ -1016,6 +1018,7 @@ export type SavePersonInput = {
 
 export type SavePreferredMatchdayDateInput = {
   clubId: Scalars['ID']['input'];
+  gymId?: InputMaybe<Scalars['ID']['input']>;
   leagueId: Scalars['ID']['input'];
   notes?: InputMaybe<Scalars['String']['input']>;
   preferenceDate: Scalars['AWSDate']['input'];
