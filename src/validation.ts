@@ -489,4 +489,109 @@ export function validateTeam(team: SaveTeamInput | ModifyTeamInput | RegisterTea
   result.validate();
 }
 
+/**
+ * Calculates the age of a person based on their date of birth and a reference date.
+ * @param dateOfBirth - The date of birth in AWSDate format (YYYY-MM-DD)
+ * @param referenceDate - The date to calculate age at (defaults to today)
+ * @returns The age in years, or null if dateOfBirth is invalid
+ */
+export function calculateAge(dateOfBirth: string, referenceDate: Date = new Date()): number | null {
+  const birthDate = new Date(dateOfBirth);
+  if (isNaN(birthDate.getTime())) {
+    return null;
+  }
+
+  let age = referenceDate.getFullYear() - birthDate.getFullYear();
+  const monthDiff = referenceDate.getMonth() - birthDate.getMonth();
+
+  // Adjust age if birthday hasn't occurred yet this year
+  if (monthDiff < 0 || (monthDiff === 0 && referenceDate.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  return age;
+}
+
+/**
+ * Checks if a player is eligible to participate in a league based on age restrictions.
+ * @param dateOfBirth - The player's date of birth in AWSDate format (YYYY-MM-DD)
+ * @param minAge - The minimum age required for the league (optional)
+ * @param maxAge - The maximum age allowed for the league (optional)
+ * @param referenceDate - The date to calculate age at (defaults to today)
+ * @returns ValidationCheckResult with any eligibility errors
+ */
+export function checkPlayerEligibility(
+  dateOfBirth: string | null | undefined,
+  minAge: number | null | undefined,
+  maxAge: number | null | undefined,
+  referenceDate: Date = new Date()
+): ValidationCheckResult {
+  const result = new ValidationCheckResult();
+
+  // If no age restrictions are set, player is eligible
+  if (minAge == null && maxAge == null) {
+    return result;
+  }
+
+  // If age restrictions exist but no date of birth is provided, player cannot be validated
+  if (!dateOfBirth) {
+    result.addError('dateOfBirth', 'Geburtsdatum ist erforderlich für die Altersüberprüfung');
+    return result;
+  }
+
+  const age = calculateAge(dateOfBirth, referenceDate);
+
+  if (age === null) {
+    result.addError('dateOfBirth', 'Ungültiges Geburtsdatumsformat');
+    return result;
+  }
+
+  // Check minimum age requirement
+  if (minAge != null && age < minAge) {
+    result.addError('age', `Spieler ist zu jung. Mindestalter: ${minAge} Jahre, aktuelles Alter: ${age} Jahre`);
+  }
+
+  // Check maximum age requirement
+  if (maxAge != null && age > maxAge) {
+    result.addError('age', `Spieler ist zu alt. Maximalalter: ${maxAge} Jahre, aktuelles Alter: ${age} Jahre`);
+  }
+
+  return result;
+}
+
+/**
+ * Validates if a player is eligible to participate in a league based on age restrictions.
+ * Throws an error if the player is not eligible.
+ * @param dateOfBirth - The player's date of birth in AWSDate format (YYYY-MM-DD)
+ * @param minAge - The minimum age required for the league (optional)
+ * @param maxAge - The maximum age allowed for the league (optional)
+ * @param referenceDate - The date to calculate age at (defaults to today)
+ */
+export function validatePlayerEligibility(
+  dateOfBirth: string | null | undefined,
+  minAge: number | null | undefined,
+  maxAge: number | null | undefined,
+  referenceDate: Date = new Date()
+): void {
+  const result = checkPlayerEligibility(dateOfBirth, minAge, maxAge, referenceDate);
+  result.validate();
+}
+
+/**
+ * Checks if a player is eligible for a league (convenience method that returns a boolean).
+ * @param dateOfBirth - The player's date of birth in AWSDate format (YYYY-MM-DD)
+ * @param minAge - The minimum age required for the league (optional)
+ * @param maxAge - The maximum age allowed for the league (optional)
+ * @param referenceDate - The date to calculate age at (defaults to today)
+ * @returns true if the player is eligible, false otherwise
+ */
+export function isPlayerEligible(
+  dateOfBirth: string | null | undefined,
+  minAge: number | null | undefined,
+  maxAge: number | null | undefined,
+  referenceDate: Date = new Date()
+): boolean {
+  const result = checkPlayerEligibility(dateOfBirth, minAge, maxAge, referenceDate);
+  return Object.keys(result.errors).length === 0;
+}
 
