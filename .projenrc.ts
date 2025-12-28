@@ -33,6 +33,7 @@ const project = new TaimosTypescriptLibrary({
       mergeGroup: {},
     },
   },
+  npmTrustedPublishing: true,
   tsconfig: {
     compilerOptions: {
       skipLibCheck: true,
