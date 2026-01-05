@@ -8,22 +8,8 @@ enum PreferenceStatus {
 # Competition enums
 enum RegistrationPermission {
   ALL_CLUBS
-  LANDESVERBAENDE_ONLY
+  ASSOCIATIONS_ONLY
   INVITE_ONLY
-}
-
-enum CompetitionFormat {
-  ROUND_ROBIN
-  GROUP_STAGE
-  KNOCKOUT
-  GROUP_THEN_KNOCKOUT
-}
-
-enum GroupNamingScheme {
-  NUMBERED
-  REGIONAL
-  ALPHABETICAL
-  CUSTOM
 }
 
 type PreferredMatchdayDate @aws_cognito_user_pools {
@@ -99,7 +85,7 @@ type Competition @aws_cognito_user_pools {
 
   association: Association!
 
-  # Own date range (standalone, not tied to Season)
+  # Own date range
   startDate: AWSDate!
   endDate: AWSDate!
 
@@ -114,10 +100,6 @@ type Competition @aws_cognito_user_pools {
   # Age restrictions
   minAge: Int
   maxAge: Int
-
-  # Competition structure
-  format: CompetitionFormat!
-  groupNamingScheme: GroupNamingScheme
 
   # Relations
   groups: [CompetitionGroup]
@@ -146,21 +128,17 @@ type CompetitionTeam @aws_cognito_user_pools {
   id: ID!
 
   name: String!
-  designation: String
 
   club: Club!
   competition: Competition!
   competitionGroup: CompetitionGroup
 
-  # Federation registration tracking
-  registeredBy: Club
-  registeredByPerson: Person
-
   players: [Person]!
 
   withoutCompetition: Boolean
   exemptionRequest: String
-  seedNumber: Int
+  secondRightToPlay: Boolean
+  sgClub: Club
 }
 
 type Club @aws_cognito_user_pools {
@@ -353,6 +331,21 @@ type CompetitionRegistrationError @aws_cognito_user_pools {
   clubId: ID
   errorCode: String!
   message: String!
+}
+
+type CompetitionGroupView @aws_cognito_user_pools {
+  competitionGroup: CompetitionGroup!
+  teams: [TeamDetail]!
+  clubs: [Club]!
+  gyms: [Gym]!
+  statistics: CompetitionGroupStatistics
+}
+
+type CompetitionGroupStatistics @aws_cognito_user_pools {
+  totalTeams: Int!
+  totalPlayers: Int!
+  totalClubs: Int!
+  totalGyms: Int!
 }
 
 # Connection types for pagination
@@ -667,8 +660,6 @@ input SaveCompetitionInput {
   allowedRegistrars: [ID]
   minAge: Int
   maxAge: Int
-  format: CompetitionFormat!
-  groupNamingScheme: GroupNamingScheme
   regulationFileUrl: AWSURL
   coordinatorIds: [ID]
 }
@@ -686,8 +677,6 @@ input ModifyCompetitionInput {
   allowedRegistrars: [ID]
   minAge: Int
   maxAge: Int
-  format: CompetitionFormat
-  groupNamingScheme: GroupNamingScheme
   regulationFileUrl: AWSURL
   coordinatorIds: [ID]
 }
@@ -712,25 +701,25 @@ input ModifyCompetitionGroupInput {
 
 input SaveCompetitionTeamInput {
   name: String!
-  designation: String
   clubId: ID!
   competitionId: ID!
   competitionGroupId: ID
   playerIds: [ID!]!
   withoutCompetition: Boolean
   exemptionRequest: String
-  seedNumber: Int
+  secondRightToPlay: Boolean
+  sgClubId: ID
 }
 
 input ModifyCompetitionTeamInput {
   id: ID!
   name: String
-  designation: String
   competitionGroupId: ID
   playerIds: [ID]
   withoutCompetition: Boolean
   exemptionRequest: String
-  seedNumber: Int
+  secondRightToPlay: Boolean
+  sgClubId: ID
 }
 
 # Federation bulk registration for competitions
@@ -744,12 +733,12 @@ input RegisterCompetitionTeamsInput {
 input RegisterCompetitionTeamInput {
   clubId: ID!
   name: String!
-  designation: String
   playerIds: [ID!]!
   competitionGroupId: ID
   withoutCompetition: Boolean
   exemptionRequest: String
-  seedNumber: Int
+  secondRightToPlay: Boolean
+  sgClubId: ID
 }
 
 
@@ -814,7 +803,8 @@ type Query {
   getCompetitionById(id: ID!): Competition @aws_cognito_user_pools
   getListOfCompetitions(associationId: ID!): [Competition] @aws_cognito_user_pools
 
-  getCompetitionGroupById(id: ID!): CompetitionGroup @aws_cognito_user_pools
+  getCompetitionGroupById(groupId: ID!): CompetitionGroup @aws_cognito_user_pools
+  getCompetitionGroupView(groupId: ID!): CompetitionGroupView @aws_cognito_user_pools
   getListOfGroupsInCompetition(competitionId: ID!): [CompetitionGroup] @aws_cognito_user_pools
 
   getCompetitionTeamById(id: ID!): CompetitionTeam @aws_cognito_user_pools
@@ -893,7 +883,6 @@ type Mutation {
   addCompetitionGroup(group: SaveCompetitionGroupInput!): CompetitionGroup @aws_cognito_user_pools
   modifyCompetitionGroup(group: ModifyCompetitionGroupInput!): CompetitionGroup @aws_cognito_user_pools
   removeCompetitionGroup(groupId: ID!): Boolean @aws_cognito_user_pools
-  createCompetitionGroups(competitionId: ID!, groups: [SaveCompetitionGroupInput!]!): [CompetitionGroup] @aws_cognito_user_pools
 
   addCompetitionTeam(team: SaveCompetitionTeamInput!): CompetitionTeam @aws_cognito_user_pools
   modifyCompetitionTeam(team: ModifyCompetitionTeamInput!): CompetitionTeam @aws_cognito_user_pools

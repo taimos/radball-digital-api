@@ -106,8 +106,6 @@ export type Competition = {
   coordinators?: Maybe<Array<Maybe<Person>>>;
   description?: Maybe<Scalars['String']['output']>;
   endDate: Scalars['AWSDate']['output'];
-  format: CompetitionFormat;
-  groupNamingScheme?: Maybe<GroupNamingScheme>;
   groups?: Maybe<Array<Maybe<CompetitionGroup>>>;
   id: Scalars['ID']['output'];
   maxAge?: Maybe<Scalars['Int']['output']>;
@@ -121,13 +119,6 @@ export type Competition = {
   startDate: Scalars['AWSDate']['output'];
 };
 
-export enum CompetitionFormat {
-  GroupStage = 'GROUP_STAGE',
-  GroupThenKnockout = 'GROUP_THEN_KNOCKOUT',
-  Knockout = 'KNOCKOUT',
-  RoundRobin = 'ROUND_ROBIN'
-}
-
 export type CompetitionGroup = {
   __typename?: 'CompetitionGroup';
   association: Association;
@@ -139,6 +130,23 @@ export type CompetitionGroup = {
   regulation: Scalars['String']['output'];
   shortName: Scalars['String']['output'];
   teams?: Maybe<Array<Maybe<CompetitionTeam>>>;
+};
+
+export type CompetitionGroupStatistics = {
+  __typename?: 'CompetitionGroupStatistics';
+  totalClubs: Scalars['Int']['output'];
+  totalGyms: Scalars['Int']['output'];
+  totalPlayers: Scalars['Int']['output'];
+  totalTeams: Scalars['Int']['output'];
+};
+
+export type CompetitionGroupView = {
+  __typename?: 'CompetitionGroupView';
+  clubs: Array<Maybe<Club>>;
+  competitionGroup: CompetitionGroup;
+  gyms: Array<Maybe<Gym>>;
+  statistics?: Maybe<CompetitionGroupStatistics>;
+  teams: Array<Maybe<TeamDetail>>;
 };
 
 export type CompetitionRegistrationError = {
@@ -161,14 +169,12 @@ export type CompetitionTeam = {
   club: Club;
   competition: Competition;
   competitionGroup?: Maybe<CompetitionGroup>;
-  designation?: Maybe<Scalars['String']['output']>;
   exemptionRequest?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   players: Array<Maybe<Person>>;
-  registeredBy?: Maybe<Club>;
-  registeredByPerson?: Maybe<Person>;
-  seedNumber?: Maybe<Scalars['Int']['output']>;
+  secondRightToPlay?: Maybe<Scalars['Boolean']['output']>;
+  sgClub?: Maybe<Club>;
   withoutCompetition?: Maybe<Scalars['Boolean']['output']>;
 };
 
@@ -186,13 +192,6 @@ export type Game = {
   team1: MatchdayTeam;
   team2: MatchdayTeam;
 };
-
-export enum GroupNamingScheme {
-  Alphabetical = 'ALPHABETICAL',
-  Custom = 'CUSTOM',
-  Numbered = 'NUMBERED',
-  Regional = 'REGIONAL'
-}
 
 export type Gym = {
   __typename?: 'Gym';
@@ -323,8 +322,6 @@ export type ModifyCompetitionInput = {
   coordinatorIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   description?: InputMaybe<Scalars['String']['input']>;
   endDate?: InputMaybe<Scalars['AWSDate']['input']>;
-  format?: InputMaybe<CompetitionFormat>;
-  groupNamingScheme?: InputMaybe<GroupNamingScheme>;
   id: Scalars['ID']['input'];
   maxAge?: InputMaybe<Scalars['Int']['input']>;
   minAge?: InputMaybe<Scalars['Int']['input']>;
@@ -339,12 +336,12 @@ export type ModifyCompetitionInput = {
 
 export type ModifyCompetitionTeamInput = {
   competitionGroupId?: InputMaybe<Scalars['ID']['input']>;
-  designation?: InputMaybe<Scalars['String']['input']>;
   exemptionRequest?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['ID']['input'];
   name?: InputMaybe<Scalars['String']['input']>;
   playerIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  seedNumber?: InputMaybe<Scalars['Int']['input']>;
+  secondRightToPlay?: InputMaybe<Scalars['Boolean']['input']>;
+  sgClubId?: InputMaybe<Scalars['ID']['input']>;
   withoutCompetition?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -468,7 +465,6 @@ export type Mutation = {
   addPreferredDateForLeague?: Maybe<PreferredMatchdayDate>;
   addSeason?: Maybe<Season>;
   addTeam?: Maybe<Team>;
-  createCompetitionGroups?: Maybe<Array<Maybe<CompetitionGroup>>>;
   generateMatchdayAttachmentUploadUrl?: Maybe<MatchdayAttachmentUpload>;
   generateSeasonRegulationUploadUrl?: Maybe<SeasonRegulationUpload>;
   importMatchdayFromRBT?: Maybe<MatchDay>;
@@ -583,12 +579,6 @@ export type MutationAddSeasonArgs = {
 
 export type MutationAddTeamArgs = {
   team: SaveTeamInput;
-};
-
-
-export type MutationCreateCompetitionGroupsArgs = {
-  competitionId: Scalars['ID']['input'];
-  groups: Array<SaveCompetitionGroupInput>;
 };
 
 
@@ -848,6 +838,7 @@ export type Query = {
   getClubById?: Maybe<Club>;
   getCompetitionById?: Maybe<Competition>;
   getCompetitionGroupById?: Maybe<CompetitionGroup>;
+  getCompetitionGroupView?: Maybe<CompetitionGroupView>;
   getCompetitionTeamById?: Maybe<CompetitionTeam>;
   getGameById?: Maybe<Game>;
   getGymById?: Maybe<Gym>;
@@ -957,7 +948,12 @@ export type QueryGetCompetitionByIdArgs = {
 
 
 export type QueryGetCompetitionGroupByIdArgs = {
-  id: Scalars['ID']['input'];
+  groupId: Scalars['ID']['input'];
+};
+
+
+export type QueryGetCompetitionGroupViewArgs = {
+  groupId: Scalars['ID']['input'];
 };
 
 
@@ -1163,11 +1159,11 @@ export type RefereeInfoInput = {
 export type RegisterCompetitionTeamInput = {
   clubId: Scalars['ID']['input'];
   competitionGroupId?: InputMaybe<Scalars['ID']['input']>;
-  designation?: InputMaybe<Scalars['String']['input']>;
   exemptionRequest?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   playerIds: Array<Scalars['ID']['input']>;
-  seedNumber?: InputMaybe<Scalars['Int']['input']>;
+  secondRightToPlay?: InputMaybe<Scalars['Boolean']['input']>;
+  sgClubId?: InputMaybe<Scalars['ID']['input']>;
   withoutCompetition?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -1205,8 +1201,8 @@ export type RegistrationEligibility = {
 
 export enum RegistrationPermission {
   AllClubs = 'ALL_CLUBS',
-  InviteOnly = 'INVITE_ONLY',
-  LandesverbaendeOnly = 'LANDESVERBAENDE_ONLY'
+  AssociationsOnly = 'ASSOCIATIONS_ONLY',
+  InviteOnly = 'INVITE_ONLY'
 }
 
 export type SaveAssociationInput = {
@@ -1247,8 +1243,6 @@ export type SaveCompetitionInput = {
   coordinatorIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   description?: InputMaybe<Scalars['String']['input']>;
   endDate: Scalars['AWSDate']['input'];
-  format: CompetitionFormat;
-  groupNamingScheme?: InputMaybe<GroupNamingScheme>;
   maxAge?: InputMaybe<Scalars['Int']['input']>;
   minAge?: InputMaybe<Scalars['Int']['input']>;
   name: Scalars['String']['input'];
@@ -1264,11 +1258,11 @@ export type SaveCompetitionTeamInput = {
   clubId: Scalars['ID']['input'];
   competitionGroupId?: InputMaybe<Scalars['ID']['input']>;
   competitionId: Scalars['ID']['input'];
-  designation?: InputMaybe<Scalars['String']['input']>;
   exemptionRequest?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   playerIds: Array<Scalars['ID']['input']>;
-  seedNumber?: InputMaybe<Scalars['Int']['input']>;
+  secondRightToPlay?: InputMaybe<Scalars['Boolean']['input']>;
+  sgClubId?: InputMaybe<Scalars['ID']['input']>;
   withoutCompetition?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
