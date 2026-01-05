@@ -49,6 +49,7 @@ export type AddressInput = {
 export type Association = {
   __typename?: 'Association';
   address: Address;
+  competitions?: Maybe<Array<Maybe<Competition>>>;
   contactEmail: Scalars['AWSEmail']['output'];
   contactName: Scalars['String']['output'];
   coordinators: Array<Maybe<Person>>;
@@ -98,6 +99,79 @@ export type ClubConnection = {
   nextToken?: Maybe<Scalars['String']['output']>;
 };
 
+export type Competition = {
+  __typename?: 'Competition';
+  allowedRegistrars?: Maybe<Array<Maybe<Scalars['ID']['output']>>>;
+  association: Association;
+  coordinators?: Maybe<Array<Maybe<Person>>>;
+  description?: Maybe<Scalars['String']['output']>;
+  endDate: Scalars['AWSDate']['output'];
+  format: CompetitionFormat;
+  groupNamingScheme?: Maybe<GroupNamingScheme>;
+  groups?: Maybe<Array<Maybe<CompetitionGroup>>>;
+  id: Scalars['ID']['output'];
+  maxAge?: Maybe<Scalars['Int']['output']>;
+  minAge?: Maybe<Scalars['Int']['output']>;
+  name: Scalars['String']['output'];
+  registrationEnd: Scalars['AWSDate']['output'];
+  registrationPermission: RegistrationPermission;
+  registrationStart: Scalars['AWSDate']['output'];
+  regulationFileUrl?: Maybe<Scalars['AWSURL']['output']>;
+  shortName: Scalars['String']['output'];
+  startDate: Scalars['AWSDate']['output'];
+};
+
+export enum CompetitionFormat {
+  GroupStage = 'GROUP_STAGE',
+  GroupThenKnockout = 'GROUP_THEN_KNOCKOUT',
+  Knockout = 'KNOCKOUT',
+  RoundRobin = 'ROUND_ROBIN'
+}
+
+export type CompetitionGroup = {
+  __typename?: 'CompetitionGroup';
+  association: Association;
+  competition: Competition;
+  id: Scalars['ID']['output'];
+  leader?: Maybe<Person>;
+  name: Scalars['String']['output'];
+  number: Scalars['Int']['output'];
+  regulation: Scalars['String']['output'];
+  shortName: Scalars['String']['output'];
+  teams?: Maybe<Array<Maybe<CompetitionTeam>>>;
+};
+
+export type CompetitionRegistrationError = {
+  __typename?: 'CompetitionRegistrationError';
+  clubId?: Maybe<Scalars['ID']['output']>;
+  errorCode: Scalars['String']['output'];
+  message: Scalars['String']['output'];
+  teamName: Scalars['String']['output'];
+};
+
+export type CompetitionRegistrationResult = {
+  __typename?: 'CompetitionRegistrationResult';
+  errors: Array<Maybe<CompetitionRegistrationError>>;
+  registeredTeams: Array<Maybe<CompetitionTeam>>;
+  success: Scalars['Boolean']['output'];
+};
+
+export type CompetitionTeam = {
+  __typename?: 'CompetitionTeam';
+  club: Club;
+  competition: Competition;
+  competitionGroup?: Maybe<CompetitionGroup>;
+  designation?: Maybe<Scalars['String']['output']>;
+  exemptionRequest?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  players: Array<Maybe<Person>>;
+  registeredBy?: Maybe<Club>;
+  registeredByPerson?: Maybe<Person>;
+  seedNumber?: Maybe<Scalars['Int']['output']>;
+  withoutCompetition?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type Game = {
   __typename?: 'Game';
   bothLost?: Maybe<Scalars['Boolean']['output']>;
@@ -112,6 +186,13 @@ export type Game = {
   team1: MatchdayTeam;
   team2: MatchdayTeam;
 };
+
+export enum GroupNamingScheme {
+  Alphabetical = 'ALPHABETICAL',
+  Custom = 'CUSTOM',
+  Numbered = 'NUMBERED',
+  Regional = 'REGIONAL'
+}
 
 export type Gym = {
   __typename?: 'Gym';
@@ -228,6 +309,45 @@ export type ModifyClubInput = {
   website?: InputMaybe<Scalars['AWSURL']['input']>;
 };
 
+export type ModifyCompetitionGroupInput = {
+  id: Scalars['ID']['input'];
+  leaderId?: InputMaybe<Scalars['ID']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  number?: InputMaybe<Scalars['Int']['input']>;
+  regulation?: InputMaybe<Scalars['String']['input']>;
+  shortName?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ModifyCompetitionInput = {
+  allowedRegistrars?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  coordinatorIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  endDate?: InputMaybe<Scalars['AWSDate']['input']>;
+  format?: InputMaybe<CompetitionFormat>;
+  groupNamingScheme?: InputMaybe<GroupNamingScheme>;
+  id: Scalars['ID']['input'];
+  maxAge?: InputMaybe<Scalars['Int']['input']>;
+  minAge?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  registrationEnd?: InputMaybe<Scalars['AWSDate']['input']>;
+  registrationPermission?: InputMaybe<RegistrationPermission>;
+  registrationStart?: InputMaybe<Scalars['AWSDate']['input']>;
+  regulationFileUrl?: InputMaybe<Scalars['AWSURL']['input']>;
+  shortName?: InputMaybe<Scalars['String']['input']>;
+  startDate?: InputMaybe<Scalars['AWSDate']['input']>;
+};
+
+export type ModifyCompetitionTeamInput = {
+  competitionGroupId?: InputMaybe<Scalars['ID']['input']>;
+  designation?: InputMaybe<Scalars['String']['input']>;
+  exemptionRequest?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+  name?: InputMaybe<Scalars['String']['input']>;
+  playerIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  seedNumber?: InputMaybe<Scalars['Int']['input']>;
+  withoutCompetition?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type ModifyGameInput = {
   bothLost?: InputMaybe<Scalars['Boolean']['input']>;
   finalGoalsTeam1?: InputMaybe<Scalars['Int']['input']>;
@@ -335,6 +455,9 @@ export type Mutation = {
   __typename?: 'Mutation';
   addAssociation?: Maybe<Association>;
   addClub?: Maybe<Club>;
+  addCompetition?: Maybe<Competition>;
+  addCompetitionGroup?: Maybe<CompetitionGroup>;
+  addCompetitionTeam?: Maybe<CompetitionTeam>;
   addGameToMatchDay?: Maybe<Game>;
   addGym?: Maybe<Gym>;
   addLeague?: Maybe<League>;
@@ -345,11 +468,15 @@ export type Mutation = {
   addPreferredDateForLeague?: Maybe<PreferredMatchdayDate>;
   addSeason?: Maybe<Season>;
   addTeam?: Maybe<Team>;
+  createCompetitionGroups?: Maybe<Array<Maybe<CompetitionGroup>>>;
   generateMatchdayAttachmentUploadUrl?: Maybe<MatchdayAttachmentUpload>;
   generateSeasonRegulationUploadUrl?: Maybe<SeasonRegulationUpload>;
   importMatchdayFromRBT?: Maybe<MatchDay>;
   modifyAssociation?: Maybe<Association>;
   modifyClub?: Maybe<Club>;
+  modifyCompetition?: Maybe<Competition>;
+  modifyCompetitionGroup?: Maybe<CompetitionGroup>;
+  modifyCompetitionTeam?: Maybe<CompetitionTeam>;
   modifyGameInMatchDay?: Maybe<Game>;
   modifyGym?: Maybe<Gym>;
   modifyLeague?: Maybe<League>;
@@ -360,9 +487,13 @@ export type Mutation = {
   modifyPreferredDateForLeague?: Maybe<PreferredMatchdayDate>;
   modifySeason?: Maybe<Season>;
   modifyTeam?: Maybe<Team>;
+  registerCompetitionTeams?: Maybe<CompetitionRegistrationResult>;
   registerTeamsForSeason?: Maybe<Array<Maybe<Team>>>;
   removeAssociation?: Maybe<Scalars['Boolean']['output']>;
   removeClub?: Maybe<Scalars['Boolean']['output']>;
+  removeCompetition?: Maybe<Scalars['Boolean']['output']>;
+  removeCompetitionGroup?: Maybe<Scalars['Boolean']['output']>;
+  removeCompetitionTeam?: Maybe<Scalars['Boolean']['output']>;
   removeGameFromMatchDay?: Maybe<Scalars['Boolean']['output']>;
   removeGym?: Maybe<Scalars['Boolean']['output']>;
   removeLeague?: Maybe<Scalars['Boolean']['output']>;
@@ -373,6 +504,7 @@ export type Mutation = {
   removePreferredDateForLeague?: Maybe<Scalars['Boolean']['output']>;
   removeSeason?: Maybe<Scalars['Boolean']['output']>;
   removeTeam?: Maybe<Scalars['Boolean']['output']>;
+  updateCompetitionTeamGroup?: Maybe<CompetitionTeam>;
   updateTeamGroup?: Maybe<Team>;
 };
 
@@ -384,6 +516,21 @@ export type MutationAddAssociationArgs = {
 
 export type MutationAddClubArgs = {
   club: SaveClubInput;
+};
+
+
+export type MutationAddCompetitionArgs = {
+  competition: SaveCompetitionInput;
+};
+
+
+export type MutationAddCompetitionGroupArgs = {
+  group: SaveCompetitionGroupInput;
+};
+
+
+export type MutationAddCompetitionTeamArgs = {
+  team: SaveCompetitionTeamInput;
 };
 
 
@@ -439,6 +586,12 @@ export type MutationAddTeamArgs = {
 };
 
 
+export type MutationCreateCompetitionGroupsArgs = {
+  competitionId: Scalars['ID']['input'];
+  groups: Array<SaveCompetitionGroupInput>;
+};
+
+
 export type MutationGenerateMatchdayAttachmentUploadUrlArgs = {
   fileName: Scalars['String']['input'];
   matchdayId: Scalars['ID']['input'];
@@ -464,6 +617,21 @@ export type MutationModifyAssociationArgs = {
 
 export type MutationModifyClubArgs = {
   club: ModifyClubInput;
+};
+
+
+export type MutationModifyCompetitionArgs = {
+  competition: ModifyCompetitionInput;
+};
+
+
+export type MutationModifyCompetitionGroupArgs = {
+  group: ModifyCompetitionGroupInput;
+};
+
+
+export type MutationModifyCompetitionTeamArgs = {
+  team: ModifyCompetitionTeamInput;
 };
 
 
@@ -520,6 +688,11 @@ export type MutationModifyTeamArgs = {
 };
 
 
+export type MutationRegisterCompetitionTeamsArgs = {
+  registration: RegisterCompetitionTeamsInput;
+};
+
+
 export type MutationRegisterTeamsForSeasonArgs = {
   registration: RegisterTeamsForSeasonInput;
 };
@@ -532,6 +705,21 @@ export type MutationRemoveAssociationArgs = {
 
 export type MutationRemoveClubArgs = {
   clubId: Scalars['ID']['input'];
+};
+
+
+export type MutationRemoveCompetitionArgs = {
+  competitionId: Scalars['ID']['input'];
+};
+
+
+export type MutationRemoveCompetitionGroupArgs = {
+  groupId: Scalars['ID']['input'];
+};
+
+
+export type MutationRemoveCompetitionTeamArgs = {
+  teamId: Scalars['ID']['input'];
 };
 
 
@@ -589,6 +777,12 @@ export type MutationRemoveTeamArgs = {
 };
 
 
+export type MutationUpdateCompetitionTeamGroupArgs = {
+  groupId: Scalars['ID']['input'];
+  teamId: Scalars['ID']['input'];
+};
+
+
 export type MutationUpdateTeamGroupArgs = {
   data: UpdateTeamGroupInput;
 };
@@ -641,6 +835,7 @@ export type PreferredMatchdayDate = {
 
 export type Query = {
   __typename?: 'Query';
+  canClubRegisterForCompetition?: Maybe<RegistrationEligibility>;
   getAllGamesOfTeamInSeason?: Maybe<Array<Maybe<Game>>>;
   getAllMatchdaysInSeason: Array<MatchDay>;
   getAllMatchdaysOfTeamInSeason?: Maybe<Array<Maybe<MatchDay>>>;
@@ -651,6 +846,9 @@ export type Query = {
   getAuditLogEntriesForResource?: Maybe<Array<Maybe<AuditLogEntry>>>;
   getAvailableDatesForSeason?: Maybe<Array<Maybe<PreferredMatchdayDate>>>;
   getClubById?: Maybe<Club>;
+  getCompetitionById?: Maybe<Competition>;
+  getCompetitionGroupById?: Maybe<CompetitionGroup>;
+  getCompetitionTeamById?: Maybe<CompetitionTeam>;
   getGameById?: Maybe<Game>;
   getGymById?: Maybe<Gym>;
   getLeagueById?: Maybe<League>;
@@ -662,6 +860,8 @@ export type Query = {
   getListOfClubsByAssociation?: Maybe<Array<Maybe<Club>>>;
   getListOfClubsByLeague?: Maybe<Array<Maybe<Club>>>;
   getListOfClubsByLeagueGroup?: Maybe<Array<Maybe<Club>>>;
+  getListOfCompetitions?: Maybe<Array<Maybe<Competition>>>;
+  getListOfGroupsInCompetition?: Maybe<Array<Maybe<CompetitionGroup>>>;
   getListOfGroupsInLeague?: Maybe<Array<Maybe<LeagueGroup>>>;
   getListOfGyms?: Maybe<GymConnection>;
   getListOfLeagueInSeason?: Maybe<Array<Maybe<League>>>;
@@ -671,6 +871,8 @@ export type Query = {
   getListOfSeasons?: Maybe<Array<Maybe<Season>>>;
   getListOfTeamsForLeague?: Maybe<Array<Maybe<Team>>>;
   getListOfTeamsForLeagueGroup?: Maybe<Array<Maybe<Team>>>;
+  getListOfTeamsInCompetition?: Maybe<Array<Maybe<CompetitionTeam>>>;
+  getListOfTeamsInCompetitionGroup?: Maybe<Array<Maybe<CompetitionTeam>>>;
   getMatchdayById?: Maybe<MatchDay>;
   getPersonById?: Maybe<Person>;
   getPersonByUciCode?: Maybe<Person>;
@@ -680,6 +882,12 @@ export type Query = {
   getSeasonExportRBW?: Maybe<Scalars['String']['output']>;
   getTeamById?: Maybe<Team>;
   getUpcomingMatchdays: Array<CalendarDate>;
+};
+
+
+export type QueryCanClubRegisterForCompetitionArgs = {
+  clubId: Scalars['ID']['input'];
+  competitionId: Scalars['ID']['input'];
 };
 
 
@@ -743,6 +951,21 @@ export type QueryGetClubByIdArgs = {
 };
 
 
+export type QueryGetCompetitionByIdArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetCompetitionGroupByIdArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetCompetitionTeamByIdArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 export type QueryGetGameByIdArgs = {
   gameId: Scalars['ID']['input'];
   matchDayId: Scalars['ID']['input'];
@@ -796,6 +1019,16 @@ export type QueryGetListOfClubsByLeagueGroupArgs = {
 };
 
 
+export type QueryGetListOfCompetitionsArgs = {
+  associationId: Scalars['ID']['input'];
+};
+
+
+export type QueryGetListOfGroupsInCompetitionArgs = {
+  competitionId: Scalars['ID']['input'];
+};
+
+
 export type QueryGetListOfGroupsInLeagueArgs = {
   leagueId: Scalars['ID']['input'];
 };
@@ -845,6 +1078,16 @@ export type QueryGetListOfTeamsForLeagueArgs = {
 export type QueryGetListOfTeamsForLeagueGroupArgs = {
   groupId: Scalars['ID']['input'];
   leagueId: Scalars['ID']['input'];
+};
+
+
+export type QueryGetListOfTeamsInCompetitionArgs = {
+  competitionId: Scalars['ID']['input'];
+};
+
+
+export type QueryGetListOfTeamsInCompetitionGroupArgs = {
+  groupId: Scalars['ID']['input'];
 };
 
 
@@ -917,6 +1160,24 @@ export type RefereeInfoInput = {
   chiefRefereeId?: InputMaybe<Scalars['ID']['input']>;
 };
 
+export type RegisterCompetitionTeamInput = {
+  clubId: Scalars['ID']['input'];
+  competitionGroupId?: InputMaybe<Scalars['ID']['input']>;
+  designation?: InputMaybe<Scalars['String']['input']>;
+  exemptionRequest?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  playerIds: Array<Scalars['ID']['input']>;
+  seedNumber?: InputMaybe<Scalars['Int']['input']>;
+  withoutCompetition?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type RegisterCompetitionTeamsInput = {
+  competitionId: Scalars['ID']['input'];
+  registrarClubId: Scalars['ID']['input'];
+  registrarPersonId: Scalars['ID']['input'];
+  teams: Array<RegisterCompetitionTeamInput>;
+};
+
 export type RegisterTeamInput = {
   exemptionRequest?: InputMaybe<Scalars['String']['input']>;
   leagueId: Scalars['ID']['input'];
@@ -933,6 +1194,20 @@ export type RegisterTeamsForSeasonInput = {
   seasonId: Scalars['ID']['input'];
   teams: Array<RegisterTeamInput>;
 };
+
+export type RegistrationEligibility = {
+  __typename?: 'RegistrationEligibility';
+  canRegister: Scalars['Boolean']['output'];
+  reason?: Maybe<Scalars['String']['output']>;
+  registrationEnds?: Maybe<Scalars['AWSDate']['output']>;
+  registrationOpen: Scalars['Boolean']['output'];
+};
+
+export enum RegistrationPermission {
+  AllClubs = 'ALL_CLUBS',
+  InviteOnly = 'INVITE_ONLY',
+  LandesverbaendeOnly = 'LANDESVERBAENDE_ONLY'
+}
 
 export type SaveAssociationInput = {
   address: AddressInput;
@@ -955,6 +1230,46 @@ export type SaveClubInput = {
   resultServiceEmail?: InputMaybe<Scalars['AWSEmail']['input']>;
   shortName?: InputMaybe<Scalars['String']['input']>;
   website?: InputMaybe<Scalars['AWSURL']['input']>;
+};
+
+export type SaveCompetitionGroupInput = {
+  competitionId: Scalars['ID']['input'];
+  leaderId?: InputMaybe<Scalars['ID']['input']>;
+  name: Scalars['String']['input'];
+  number: Scalars['Int']['input'];
+  regulation: Scalars['String']['input'];
+  shortName: Scalars['String']['input'];
+};
+
+export type SaveCompetitionInput = {
+  allowedRegistrars?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  associationId: Scalars['ID']['input'];
+  coordinatorIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  endDate: Scalars['AWSDate']['input'];
+  format: CompetitionFormat;
+  groupNamingScheme?: InputMaybe<GroupNamingScheme>;
+  maxAge?: InputMaybe<Scalars['Int']['input']>;
+  minAge?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  registrationEnd: Scalars['AWSDate']['input'];
+  registrationPermission?: InputMaybe<RegistrationPermission>;
+  registrationStart: Scalars['AWSDate']['input'];
+  regulationFileUrl?: InputMaybe<Scalars['AWSURL']['input']>;
+  shortName: Scalars['String']['input'];
+  startDate: Scalars['AWSDate']['input'];
+};
+
+export type SaveCompetitionTeamInput = {
+  clubId: Scalars['ID']['input'];
+  competitionGroupId?: InputMaybe<Scalars['ID']['input']>;
+  competitionId: Scalars['ID']['input'];
+  designation?: InputMaybe<Scalars['String']['input']>;
+  exemptionRequest?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  playerIds: Array<Scalars['ID']['input']>;
+  seedNumber?: InputMaybe<Scalars['Int']['input']>;
+  withoutCompetition?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type SaveGymInput = {
