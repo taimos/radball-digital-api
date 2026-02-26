@@ -1,0 +1,365 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://radball.digital/schemas/competition-group-export.json",
+  "title": "Competition Group Export",
+  "description": "Schema for exporting competition group data including teams, clubs, gyms, and statistics",
+  "type": "object",
+  "required": ["group", "teams", "clubs", "gyms", "statistics"],
+  "properties": {
+    "group": {
+      "$ref": "#/definitions/CompetitionGroupDetail"
+    },
+    "teams": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TeamDetail"
+      }
+    },
+    "clubs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Club"
+      }
+    },
+    "gyms": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Gym"
+      }
+    },
+    "statistics": {
+      "$ref": "#/definitions/CompetitionGroupStatistics"
+    }
+  },
+  "definitions": {
+    "Address": {
+      "type": "object",
+      "required": ["street", "zip", "city", "country"],
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        }
+      }
+    },
+    "Association": {
+      "type": "object",
+      "required": ["id", "name", "shortName"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "shortName": {
+          "type": "string"
+        }
+      }
+    },
+    "Competition": {
+      "type": "object",
+      "required": ["id", "name", "shortName", "description", "association", "startDate", "endDate", "registrationStart", "registrationEnd", "registrationPermission", "minAge", "maxAge", "coordinators", "regulationFileUrl"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "shortName": {
+          "type": "string"
+        },
+        "description": {
+          "type": ["string", "null"]
+        },
+        "association": {
+          "$ref": "#/definitions/Association"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "registrationStart": {
+          "type": "string",
+          "format": "date"
+        },
+        "registrationEnd": {
+          "type": "string",
+          "format": "date"
+        },
+        "registrationPermission": {
+          "type": "string",
+          "enum": ["ALL_CLUBS", "ASSOCIATIONS_ONLY", "INVITE_ONLY"]
+        },
+        "minAge": {
+          "type": ["number", "null"]
+        },
+        "maxAge": {
+          "type": ["number", "null"]
+        },
+        "coordinators": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Coordinator"
+          }
+        },
+        "regulationFileUrl": {
+          "type": ["string", "null"],
+          "format": "uri"
+        }
+      }
+    },
+    "Coordinator": {
+      "type": "object",
+      "required": ["id", "firstName", "lastName", "email", "phone"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "phone": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "Leader": {
+      "type": "object",
+      "required": ["id", "firstName", "lastName", "email", "phone"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "phone": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "CompetitionGroupDetail": {
+      "type": "object",
+      "required": ["id", "number", "name", "shortName", "competition", "leader", "regulation"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "number": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        },
+        "shortName": {
+          "type": "string"
+        },
+        "competition": {
+          "$ref": "#/definitions/Competition"
+        },
+        "leader": {
+          "oneOf": [
+            { "$ref": "#/definitions/Leader" },
+            { "type": "null" }
+          ]
+        },
+        "regulation": {
+          "type": "string"
+        }
+      }
+    },
+    "Person": {
+      "type": "object",
+      "required": ["id", "firstName", "lastName", "dateOfBirth", "uciCode", "nationality", "clubId"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": ["string", "null"],
+          "format": "email"
+        },
+        "phone": {
+          "type": ["string", "null"]
+        },
+        "gender": {
+          "type": "string"
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "format": "date"
+        },
+        "uciCode": {
+          "type": "string"
+        },
+        "nationality": {
+          "type": "string"
+        },
+        "clubId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "PreferredMatchdayDate": {
+      "type": "object",
+      "required": ["preferenceDate", "status", "notes"],
+      "properties": {
+        "preferenceDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PREFERRED", "AVAILABLE"]
+        },
+        "notes": {
+          "type": ["string", "null"]
+        },
+        "gymId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        }
+      }
+    },
+    "Club": {
+      "type": "object",
+      "required": ["id", "name", "shortName", "preferredDates"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "shortName": {
+          "type": "string"
+        },
+        "preferredDates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PreferredMatchdayDate"
+          }
+        }
+      }
+    },
+    "TeamDetail": {
+      "type": "object",
+      "required": ["id", "name", "withoutCompetition", "secondRightToPlay", "exemptionRequest", "players", "clubId", "sgClubId"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "withoutCompetition": {
+          "type": "boolean"
+        },
+        "secondRightToPlay": {
+          "type": "boolean"
+        },
+        "exemptionRequest": {
+          "type": ["string", "null"]
+        },
+        "players": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Person"
+          }
+        },
+        "clubId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "sgClubId": {
+          "type": ["string", "null"],
+          "format": "uuid"
+        }
+      }
+    },
+    "Gym": {
+      "type": "object",
+      "required": ["id", "name", "availableFields", "address", "clubId"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "availableFields": {
+          "type": "string"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "clubId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "CompetitionGroupStatistics": {
+      "type": "object",
+      "required": ["totalTeams", "totalPlayers", "totalClubs", "totalGyms"],
+      "properties": {
+        "totalTeams": {
+          "type": "number"
+        },
+        "totalPlayers": {
+          "type": "number"
+        },
+        "totalClubs": {
+          "type": "number"
+        },
+        "totalGyms": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}
