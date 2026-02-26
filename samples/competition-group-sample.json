@@ -1,16 +1,16 @@
 {
   "group": {
-    "id": "cg-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
     "number": 1,
     "name": "Deutschlandpokal U19 - Gruppe A",
     "shortName": "DPU19-A",
     "competition": {
-      "id": "comp-b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
       "name": "Deutschlandpokal U19",
       "shortName": "DPU19",
       "description": "National cup competition for U19 radball teams",
       "association": {
-        "id": "assoc-c3d4e5f6-a7b8-9012-cdef-123456789012",
+        "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
         "name": "Bund Deutscher Radfahrer",
         "shortName": "BDR"
       },
@@ -23,14 +23,14 @@
       "maxAge": 19,
       "coordinators": [
         {
-          "id": "coord-d4e5f6a7-b8c9-0123-def1-234567890123",
+          "id": "d4e5f6a7-b8c9-0123-def1-234567890123",
           "firstName": "Klaus",
           "lastName": "Berger",
           "email": "k.berger@example.com",
           "phone": "+49 171 12345678"
         },
         {
-          "id": "coord-e5f6a7b8-c9d0-1234-ef12-345678901234",
+          "id": "e5f6a7b8-c9d0-1234-ef12-345678901234",
           "firstName": "Martina",
           "lastName": "Schneider",
           "email": "m.schneider@example.com",
@@ -40,7 +40,7 @@
       "regulationFileUrl": null
     },
     "leader": {
-      "id": "lead-f6a7b8c9-d0e1-2345-f123-456789012345",
+      "id": "f6a7b8c9-d0e1-2345-f123-456789012345",
       "firstName": "Peter",
       "lastName": "Hoffmann",
       "email": "p.hoffmann@example.com",
@@ -50,14 +50,14 @@
   },
   "teams": [
     {
-      "id": "ct-a7b8c9d0-e1f2-3456-1234-567890123456",
+      "id": "a7b8c9d0-e1f2-3456-1234-567890123456",
       "name": "Stuttgart Eagles U19 1",
       "withoutCompetition": false,
       "secondRightToPlay": false,
       "exemptionRequest": null,
       "players": [
         {
-          "id": "pl-b8c9d0e1-f2a3-4567-2345-678901234567",
+          "id": "b8c9d0e1-f2a3-4567-2345-678901234567",
           "firstName": "Luca",
           "lastName": "Mueller",
           "email": "luca.mueller@example.com",
@@ -66,10 +66,10 @@
           "dateOfBirth": "2007-04-12",
           "uciCode": "10022345678",
           "nationality": "GER",
-          "clubId": "cl-11111111-1111-1111-1111-111111111111"
+          "clubId": "11111111-1111-1111-1111-111111111111"
         },
         {
-          "id": "pl-c9d0e1f2-a3b4-5678-3456-789012345678",
+          "id": "c9d0e1f2-a3b4-5678-3456-789012345678",
           "firstName": "Maximilian",
           "lastName": "Braun",
           "email": "max.braun@example.com",
@@ -78,21 +78,21 @@
           "dateOfBirth": "2007-09-25",
           "uciCode": "10022345679",
           "nationality": "GER",
-          "clubId": "cl-11111111-1111-1111-1111-111111111111"
+          "clubId": "11111111-1111-1111-1111-111111111111"
         }
       ],
-      "clubId": "cl-11111111-1111-1111-1111-111111111111",
+      "clubId": "11111111-1111-1111-1111-111111111111",
       "sgClubId": null
     },
     {
-      "id": "ct-d0e1f2a3-b4c5-6789-4567-890123456789",
+      "id": "d0e1f2a3-b4c5-6789-4567-890123456789",
       "name": "Muenchen Riders U19 1",
       "withoutCompetition": false,
       "secondRightToPlay": false,
       "exemptionRequest": null,
       "players": [
         {
-          "id": "pl-e1f2a3b4-c5d6-7890-5678-901234567890",
+          "id": "e1f2a3b4-c5d6-7890-5678-901234567890",
           "firstName": "Jan",
           "lastName": "Weber",
           "email": "jan.weber@example.com",
@@ -101,10 +101,10 @@
           "dateOfBirth": "2008-01-17",
           "uciCode": "10022345680",
           "nationality": "GER",
-          "clubId": "cl-22222222-2222-2222-2222-222222222222"
+          "clubId": "22222222-2222-2222-2222-222222222222"
         },
         {
-          "id": "pl-f2a3b4c5-d6e7-8901-6789-012345678901",
+          "id": "f2a3b4c5-d6e7-8901-6789-012345678901",
           "firstName": "Philip",
           "lastName": "Schwarz",
           "email": "philip.schwarz@example.com",
@@ -113,21 +113,21 @@
           "dateOfBirth": "2007-06-30",
           "uciCode": "10022345681",
           "nationality": "GER",
-          "clubId": "cl-22222222-2222-2222-2222-222222222222"
+          "clubId": "22222222-2222-2222-2222-222222222222"
         }
       ],
-      "clubId": "cl-22222222-2222-2222-2222-222222222222",
+      "clubId": "22222222-2222-2222-2222-222222222222",
       "sgClubId": null
     },
     {
-      "id": "ct-a3b4c5d6-e7f8-9012-7890-123456789012",
+      "id": "a3b4c5d6-e7f8-9012-7890-123456789012",
       "name": "Frankfurt Thunder U19 1",
       "withoutCompetition": false,
       "secondRightToPlay": false,
       "exemptionRequest": null,
       "players": [
         {
-          "id": "pl-b4c5d6e7-f8a9-0123-8901-234567890123",
+          "id": "b4c5d6e7-f8a9-0123-8901-234567890123",
           "firstName": "Tom",
           "lastName": "Lange",
           "email": "tom.lange@example.com",
@@ -136,10 +136,10 @@
           "dateOfBirth": "2008-03-05",
           "uciCode": "10022345682",
           "nationality": "GER",
-          "clubId": "cl-33333333-3333-3333-3333-333333333333"
+          "clubId": "33333333-3333-3333-3333-333333333333"
         },
         {
-          "id": "pl-c5d6e7f8-a9b0-1234-9012-345678901234",
+          "id": "c5d6e7f8-a9b0-1234-9012-345678901234",
           "firstName": "Erik",
           "lastName": "Richter",
           "email": "erik.richter@example.com",
@@ -148,21 +148,21 @@
           "dateOfBirth": "2007-11-18",
           "uciCode": "10022345683",
           "nationality": "GER",
-          "clubId": "cl-33333333-3333-3333-3333-333333333333"
+          "clubId": "33333333-3333-3333-3333-333333333333"
         }
       ],
-      "clubId": "cl-33333333-3333-3333-3333-333333333333",
+      "clubId": "33333333-3333-3333-3333-333333333333",
       "sgClubId": null
     },
     {
-      "id": "ct-d6e7f8a9-b0c1-2345-0123-456789012345",
+      "id": "d6e7f8a9-b0c1-2345-0123-456789012345",
       "name": "Koeln Flames U19 1",
       "withoutCompetition": false,
       "secondRightToPlay": false,
       "exemptionRequest": null,
       "players": [
         {
-          "id": "pl-e7f8a9b0-c1d2-3456-1234-567890123456",
+          "id": "e7f8a9b0-c1d2-3456-1234-567890123456",
           "firstName": "Nico",
           "lastName": "Krause",
           "email": "nico.krause@example.com",
@@ -171,10 +171,10 @@
           "dateOfBirth": "2007-07-22",
           "uciCode": "10022345684",
           "nationality": "GER",
-          "clubId": "cl-44444444-4444-4444-4444-444444444444"
+          "clubId": "44444444-4444-4444-4444-444444444444"
         },
         {
-          "id": "pl-f8a9b0c1-d2e3-4567-2345-678901234567",
+          "id": "f8a9b0c1-d2e3-4567-2345-678901234567",
           "firstName": "Daniel",
           "lastName": "Vogel",
           "email": "daniel.vogel@example.com",
@@ -183,21 +183,21 @@
           "dateOfBirth": "2008-02-14",
           "uciCode": "10022345685",
           "nationality": "GER",
-          "clubId": "cl-44444444-4444-4444-4444-444444444444"
+          "clubId": "44444444-4444-4444-4444-444444444444"
         }
       ],
-      "clubId": "cl-44444444-4444-4444-4444-444444444444",
+      "clubId": "44444444-4444-4444-4444-444444444444",
       "sgClubId": null
     },
     {
-      "id": "ct-a9b0c1d2-e3f4-5678-3456-789012345678",
+      "id": "a9b0c1d2-e3f4-5678-3456-789012345678",
       "name": "Nuernberg Stars U19 1",
       "withoutCompetition": false,
       "secondRightToPlay": false,
       "exemptionRequest": null,
       "players": [
         {
-          "id": "pl-b0c1d2e3-f4a5-6789-4567-890123456789",
+          "id": "b0c1d2e3-f4a5-6789-4567-890123456789",
           "firstName": "Fabian",
           "lastName": "Zimmermann",
           "email": "fabian.zimmermann@example.com",
@@ -206,10 +206,10 @@
           "dateOfBirth": "2007-12-03",
           "uciCode": "10022345686",
           "nationality": "GER",
-          "clubId": "cl-55555555-5555-5555-5555-555555555555"
+          "clubId": "55555555-5555-5555-5555-555555555555"
         },
         {
-          "id": "pl-c1d2e3f4-a5b6-7890-5678-901234567890",
+          "id": "c1d2e3f4-a5b6-7890-5678-901234567890",
           "firstName": "Marcel",
           "lastName": "Peters",
           "email": "marcel.peters@example.com",
@@ -218,21 +218,21 @@
           "dateOfBirth": "2008-05-09",
           "uciCode": "10022345687",
           "nationality": "GER",
-          "clubId": "cl-55555555-5555-5555-5555-555555555555"
+          "clubId": "55555555-5555-5555-5555-555555555555"
         }
       ],
-      "clubId": "cl-55555555-5555-5555-5555-555555555555",
+      "clubId": "55555555-5555-5555-5555-555555555555",
       "sgClubId": null
     },
     {
-      "id": "ct-d2e3f4a5-b6c7-8901-6789-012345678901",
+      "id": "d2e3f4a5-b6c7-8901-6789-012345678901",
       "name": "SG Dortmund/Essen U19 1",
       "withoutCompetition": false,
       "secondRightToPlay": false,
       "exemptionRequest": null,
       "players": [
         {
-          "id": "pl-e3f4a5b6-c7d8-9012-7890-123456789012",
+          "id": "e3f4a5b6-c7d8-9012-7890-123456789012",
           "firstName": "Kai",
           "lastName": "Hartmann",
           "email": "kai.hartmann@example.com",
@@ -241,10 +241,10 @@
           "dateOfBirth": "2007-08-28",
           "uciCode": "10022345688",
           "nationality": "GER",
-          "clubId": "cl-66666666-6666-6666-6666-666666666666"
+          "clubId": "66666666-6666-6666-6666-666666666666"
         },
         {
-          "id": "pl-f4a5b6c7-d8e9-0123-8901-234567890123",
+          "id": "f4a5b6c7-d8e9-0123-8901-234567890123",
           "firstName": "Tobias",
           "lastName": "Koenig",
           "email": "tobias.koenig@example.com",
@@ -253,16 +253,16 @@
           "dateOfBirth": "2008-04-16",
           "uciCode": "10022345689",
           "nationality": "GER",
-          "clubId": "cl-77777777-7777-7777-7777-777777777777"
+          "clubId": "77777777-7777-7777-7777-777777777777"
         }
       ],
-      "clubId": "cl-66666666-6666-6666-6666-666666666666",
-      "sgClubId": "cl-77777777-7777-7777-7777-777777777777"
+      "clubId": "66666666-6666-6666-6666-666666666666",
+      "sgClubId": "77777777-7777-7777-7777-777777777777"
     }
   ],
   "clubs": [
     {
-      "id": "cl-11111111-1111-1111-1111-111111111111",
+      "id": "11111111-1111-1111-1111-111111111111",
       "name": "RSV Stuttgart Eagles",
       "shortName": "STE",
       "preferredDates": [
@@ -281,7 +281,7 @@
       ]
     },
     {
-      "id": "cl-22222222-2222-2222-2222-222222222222",
+      "id": "22222222-2222-2222-2222-222222222222",
       "name": "RC Muenchen Riders",
       "shortName": "MUR",
       "preferredDates": [
@@ -300,7 +300,7 @@
       ]
     },
     {
-      "id": "cl-33333333-3333-3333-3333-333333333333",
+      "id": "33333333-3333-3333-3333-333333333333",
       "name": "RV Frankfurt Thunder",
       "shortName": "FRT",
       "preferredDates": [
@@ -319,7 +319,7 @@
       ]
     },
     {
-      "id": "cl-44444444-4444-4444-4444-444444444444",
+      "id": "44444444-4444-4444-4444-444444444444",
       "name": "RSC Koeln Flames",
       "shortName": "KOF",
       "preferredDates": [
@@ -332,7 +332,7 @@
       ]
     },
     {
-      "id": "cl-55555555-5555-5555-5555-555555555555",
+      "id": "55555555-5555-5555-5555-555555555555",
       "name": "RV Nuernberg Stars",
       "shortName": "NBS",
       "preferredDates": [
@@ -351,7 +351,7 @@
       ]
     },
     {
-      "id": "cl-66666666-6666-6666-6666-666666666666",
+      "id": "66666666-6666-6666-6666-666666666666",
       "name": "RSC Dortmund Velocity",
       "shortName": "DOV",
       "preferredDates": [
@@ -364,7 +364,7 @@
       ]
     },
     {
-      "id": "cl-77777777-7777-7777-7777-777777777777",
+      "id": "77777777-7777-7777-7777-777777777777",
       "name": "RV Essen United",
       "shortName": "ESU",
       "preferredDates": [
@@ -379,7 +379,7 @@
   ],
   "gyms": [
     {
-      "id": "gym-11111111-1111-1111-1111-111111111111",
+      "id": "11111111-1111-1111-1111-111111111111",
       "name": "Sporthalle Stuttgart-Mitte",
       "availableFields": "2 courts available",
       "address": {
@@ -388,10 +388,10 @@
         "city": "Stuttgart",
         "country": "DE"
       },
-      "clubId": "cl-11111111-1111-1111-1111-111111111111"
+      "clubId": "11111111-1111-1111-1111-111111111111"
     },
     {
-      "id": "gym-22222222-2222-2222-2222-222222222222",
+      "id": "22222222-2222-2222-2222-222222222222",
       "name": "Olympia-Sporthalle Muenchen",
       "availableFields": "1 court",
       "address": {
@@ -400,10 +400,10 @@
         "city": "Muenchen",
         "country": "DE"
       },
-      "clubId": "cl-22222222-2222-2222-2222-222222222222"
+      "clubId": "22222222-2222-2222-2222-222222222222"
     },
     {
-      "id": "gym-33333333-3333-3333-3333-333333333333",
+      "id": "33333333-3333-3333-3333-333333333333",
       "name": "Mehrzweckhalle Frankfurt-Ost",
       "availableFields": "2 courts available",
       "address": {
@@ -412,10 +412,10 @@
         "city": "Frankfurt am Main",
         "country": "DE"
       },
-      "clubId": "cl-33333333-3333-3333-3333-333333333333"
+      "clubId": "33333333-3333-3333-3333-333333333333"
     },
     {
-      "id": "gym-44444444-4444-4444-4444-444444444444",
+      "id": "44444444-4444-4444-4444-444444444444",
       "name": "Koelner Sporthalle Sued",
       "availableFields": "1 court",
       "address": {
@@ -424,7 +424,7 @@
         "city": "Koeln",
         "country": "DE"
       },
-      "clubId": "cl-44444444-4444-4444-4444-444444444444"
+      "clubId": "44444444-4444-4444-4444-444444444444"
     }
   ],
   "statistics": {

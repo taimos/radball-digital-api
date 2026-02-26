@@ -107,10 +107,10 @@
           "enum": ["ALL_CLUBS", "ASSOCIATIONS_ONLY", "INVITE_ONLY"]
         },
         "minAge": {
-          "type": ["number", "null"]
+          "type": ["integer", "null"]
         },
         "maxAge": {
-          "type": ["number", "null"]
+          "type": ["integer", "null"]
         },
         "coordinators": {
           "type": "array",
@@ -179,7 +179,7 @@
           "format": "uuid"
         },
         "number": {
-          "type": "number"
+          "type": "integer"
         },
         "name": {
           "type": "string"
@@ -203,7 +203,7 @@
     },
     "Person": {
       "type": "object",
-      "required": ["id", "firstName", "lastName", "dateOfBirth", "uciCode", "nationality", "clubId"],
+      "required": ["id", "firstName", "lastName", "gender", "dateOfBirth", "uciCode", "nationality", "clubId"],
       "properties": {
         "id": {
           "type": "string",
@@ -243,7 +243,7 @@
     },
     "PreferredMatchdayDate": {
       "type": "object",
-      "required": ["preferenceDate", "status", "notes"],
+      "required": ["preferenceDate", "status", "notes", "gymId"],
       "properties": {
         "preferenceDate": {
           "type": "string",
@@ -348,16 +348,16 @@
       "required": ["totalTeams", "totalPlayers", "totalClubs", "totalGyms"],
       "properties": {
         "totalTeams": {
-          "type": "number"
+          "type": "integer"
         },
         "totalPlayers": {
-          "type": "number"
+          "type": "integer"
         },
         "totalClubs": {
-          "type": "number"
+          "type": "integer"
         },
         "totalGyms": {
-          "type": "number"
+          "type": "integer"
         }
       }
     }
