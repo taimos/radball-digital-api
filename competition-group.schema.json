@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://radball.digital/schemas/league-group-export.json",
-  "title": "League Group Export",
-  "description": "Schema for exporting league group data including teams, clubs, gyms, and statistics",
+  "$id": "https://radball.digital/schemas/competition-group-export.json",
+  "title": "Competition Group Export",
+  "description": "Schema for exporting competition group data including teams, clubs, gyms, and statistics",
   "type": "object",
   "required": ["group", "teams", "clubs", "gyms", "statistics"],
   "properties": {
     "group": {
-      "$ref": "#/definitions/Group"
+      "$ref": "#/definitions/CompetitionGroupDetail"
     },
     "teams": {
       "type": "array",
@@ -28,7 +28,7 @@
       }
     },
     "statistics": {
-      "$ref": "#/definitions/LeagueGroupStatistics"
+      "$ref": "#/definitions/CompetitionGroupStatistics"
     }
   },
   "definitions": {
@@ -50,9 +50,9 @@
         }
       }
     },
-    "Club": {
+    "Association": {
       "type": "object",
-      "required": ["id", "name", "shortName", "preferredDates"],
+      "required": ["id", "name", "shortName"],
       "properties": {
         "id": {
           "type": "string",
@@ -63,39 +63,12 @@
         },
         "shortName": {
           "type": "string"
-        },
-        "preferredDates": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PreferredMatchdayDate"
-          }
         }
       }
     },
-    "Season": {
+    "Competition": {
       "type": "object",
-      "required": ["id", "name", "startDate", "endDate"],
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "uuid"
-        },
-        "name": {
-          "type": "string"
-        },
-        "startDate": {
-          "type": "string",
-          "format": "date"
-        },
-        "endDate": {
-          "type": "string",
-          "format": "date"
-        }
-      }
-    },
-    "League": {
-      "type": "object",
-      "required": ["id", "name", "shortName", "description", "minAge", "maxAge", "matchdayDates"],
+      "required": ["id", "name", "shortName", "description", "association", "startDate", "endDate", "registrationStart", "registrationEnd", "registrationPermission", "minAge", "maxAge", "coordinators", "regulationFileUrl"],
       "properties": {
         "id": {
           "type": "string",
@@ -108,20 +81,69 @@
           "type": "string"
         },
         "description": {
-          "type": "string"
+          "type": ["string", "null"]
+        },
+        "association": {
+          "$ref": "#/definitions/Association"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "registrationStart": {
+          "type": "string",
+          "format": "date"
+        },
+        "registrationEnd": {
+          "type": "string",
+          "format": "date"
+        },
+        "registrationPermission": {
+          "type": "string",
+          "enum": ["ALL_CLUBS", "ASSOCIATIONS_ONLY", "INVITE_ONLY"]
         },
         "minAge": {
-          "type": ["number", "null"]
+          "type": ["integer", "null"]
         },
         "maxAge": {
-          "type": ["number", "null"]
+          "type": ["integer", "null"]
         },
-        "matchdayDates": {
+        "coordinators": {
           "type": "array",
           "items": {
-            "type": "string",
-            "format": "date"
+            "$ref": "#/definitions/Coordinator"
           }
+        },
+        "regulationFileUrl": {
+          "type": ["string", "null"],
+          "format": "uri"
+        }
+      }
+    },
+    "Coordinator": {
+      "type": "object",
+      "required": ["id", "firstName", "lastName", "email", "phone"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "phone": {
+          "type": ["string", "null"]
         }
       }
     },
@@ -148,16 +170,16 @@
         }
       }
     },
-    "Group": {
+    "CompetitionGroupDetail": {
       "type": "object",
-      "required": ["id", "number", "name", "shortName", "season", "league", "leader", "regulation"],
+      "required": ["id", "number", "name", "shortName", "competition", "leader", "regulation"],
       "properties": {
         "id": {
           "type": "string",
           "format": "uuid"
         },
         "number": {
-          "type": "number"
+          "type": "integer"
         },
         "name": {
           "type": "string"
@@ -165,14 +187,14 @@
         "shortName": {
           "type": "string"
         },
-        "season": {
-          "$ref": "#/definitions/Season"
-        },
-        "league": {
-          "$ref": "#/definitions/League"
+        "competition": {
+          "$ref": "#/definitions/Competition"
         },
         "leader": {
-          "$ref": "#/definitions/Leader"
+          "oneOf": [
+            { "$ref": "#/definitions/Leader" },
+            { "type": "null" }
+          ]
         },
         "regulation": {
           "type": "string"
@@ -181,7 +203,7 @@
     },
     "Person": {
       "type": "object",
-      "required": ["id", "firstName", "lastName", "dateOfBirth", "uciCode", "nationality", "clubId"],
+      "required": ["id", "firstName", "lastName", "gender", "dateOfBirth", "uciCode", "nationality", "clubId"],
       "properties": {
         "id": {
           "type": "string",
@@ -221,7 +243,7 @@
     },
     "PreferredMatchdayDate": {
       "type": "object",
-      "required": ["preferenceDate", "status", "notes"],
+      "required": ["preferenceDate", "status", "notes", "gymId"],
       "properties": {
         "preferenceDate": {
           "type": "string",
@@ -237,6 +259,28 @@
         "gymId": {
           "type": ["string", "null"],
           "format": "uuid"
+        }
+      }
+    },
+    "Club": {
+      "type": "object",
+      "required": ["id", "name", "shortName", "preferredDates"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "shortName": {
+          "type": "string"
+        },
+        "preferredDates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PreferredMatchdayDate"
+          }
         }
       }
     },
@@ -299,21 +343,21 @@
         }
       }
     },
-    "LeagueGroupStatistics": {
+    "CompetitionGroupStatistics": {
       "type": "object",
       "required": ["totalTeams", "totalPlayers", "totalClubs", "totalGyms"],
       "properties": {
         "totalTeams": {
-          "type": "number"
+          "type": "integer"
         },
         "totalPlayers": {
-          "type": "number"
+          "type": "integer"
         },
         "totalClubs": {
-          "type": "number"
+          "type": "integer"
         },
         "totalGyms": {
-          "type": "number"
+          "type": "integer"
         }
       }
     }

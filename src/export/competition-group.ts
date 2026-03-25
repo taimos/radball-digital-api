@@ -12,21 +12,37 @@ export interface Club {
   preferredDates: PreferredMatchdayDate[];
 }
 
-export interface Season {
-  id: string;
-  name: string;
-  startDate: string;
-  endDate: string;
-}
-
-export interface League {
+export interface Association {
   id: string;
   name: string;
   shortName: string;
-  description: string;
+}
+
+export interface Competition {
+  id: string;
+  name: string;
+  shortName: string;
+  description: string | null;
+  association: Association;
+  startDate: string;
+  endDate: string;
+  registrationStart: string;
+  registrationEnd: string;
+  registrationPermission: RegistrationPermission;
   minAge: number | null;
   maxAge: number | null;
-  matchdayDates: string[];
+  coordinators: Coordinator[];
+  regulationFileUrl: string | null;
+}
+
+export type RegistrationPermission = 'ALL_CLUBS' | 'ASSOCIATIONS_ONLY' | 'INVITE_ONLY';
+
+export interface Coordinator {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string | null;
 }
 
 export interface Leader {
@@ -37,14 +53,13 @@ export interface Leader {
   phone: string | null;
 }
 
-export interface Group {
+export interface CompetitionGroupDetail {
   id: string;
   number: number;
   name: string;
   shortName: string;
-  season: Season;
-  league: League;
-  leader: Leader;
+  competition: Competition;
+  leader: Leader | null;
   regulation: string;
 }
 
@@ -89,17 +104,17 @@ export interface Gym {
   clubId: string;
 }
 
-export interface LeagueGroupStatistics {
+export interface CompetitionGroupStatistics {
   totalTeams: number;
   totalPlayers: number;
   totalClubs: number;
   totalGyms: number;
 }
 
-export interface LeagueGroupExport {
-  group: Group;
+export interface CompetitionGroupExport {
+  group: CompetitionGroupDetail;
   teams: TeamDetail[];
   clubs: Club[];
   gyms: Gym[];
-  statistics: LeagueGroupStatistics;
+  statistics: CompetitionGroupStatistics;
 }
