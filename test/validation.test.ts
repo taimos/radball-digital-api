@@ -1,5 +1,5 @@
 import { SaveLeagueInput, SaveTeamInput, ModifyTeamInput, RegisterTeamInput } from '../src/generated/graphql.model.generated';
-import { validateAddress, validateAssociation, validateClub, validateGym, validateLeague, validatePerson, validateSeason, validateTeam } from '../src/validation';
+import { validateAddress, validateAssociation, validateClub, validateGym, validateLeague, validatePerson, validateSeason, validateTeam, calculateAge, checkPlayerEligibility, validatePlayerEligibility, isPlayerEligible } from '../src/validation';
 
 describe('validateAddress', () => {
   // Happy path test
@@ -961,5 +961,237 @@ describe('validateTeam', () => {
       };
       expect(() => validateTeam(team)).toThrow('Freistellungsantrag darf 1000 Zeichen nicht überschreiten');
     });
+  });
+});
+
+describe('calculateAge', () => {
+  it('should calculate age correctly for birthday that has passed this year', () => {
+    const referenceDate = new Date('2024-06-15');
+    const age = calculateAge('2000-01-15', referenceDate);
+    expect(age).toBe(24);
+  });
+
+  it('should calculate age correctly for birthday that has not passed this year', () => {
+    const referenceDate = new Date('2024-06-15');
+    const age = calculateAge('2000-08-15', referenceDate);
+    expect(age).toBe(23);
+  });
+
+  it('should calculate age correctly on birthday', () => {
+    const referenceDate = new Date('2024-06-15');
+    const age = calculateAge('2000-06-15', referenceDate);
+    expect(age).toBe(24);
+  });
+
+  it('should calculate age correctly for day before birthday', () => {
+    const referenceDate = new Date('2024-06-14');
+    const age = calculateAge('2000-06-15', referenceDate);
+    expect(age).toBe(23);
+  });
+
+  it('should return null for invalid date format', () => {
+    const age = calculateAge('invalid-date');
+    expect(age).toBeNull();
+  });
+
+  it('should use today as default reference date', () => {
+    const today = new Date();
+    const birthYear = today.getFullYear() - 25;
+    const birthDate = `${birthYear}-01-01`;
+    const age = calculateAge(birthDate);
+    // Age should be 24 or 25 depending on current date
+    expect(age).toBeGreaterThanOrEqual(24);
+    expect(age).toBeLessThanOrEqual(25);
+  });
+});
+
+describe('checkPlayerEligibility', () => {
+  const referenceDate = new Date('2024-06-15');
+
+  describe('no age restrictions', () => {
+    it('should return no errors when no age restrictions are set', () => {
+      const result = checkPlayerEligibility('2000-01-15', null, null, referenceDate);
+      expect(Object.keys(result.errors)).toHaveLength(0);
+    });
+
+    it('should return no errors when minAge and maxAge are undefined', () => {
+      const result = checkPlayerEligibility('2000-01-15', undefined, undefined, referenceDate);
+      expect(Object.keys(result.errors)).toHaveLength(0);
+    });
+  });
+
+  describe('missing date of birth', () => {
+    it('should return error when dateOfBirth is null but age restrictions exist', () => {
+      const result = checkPlayerEligibility(null, 16, 40, referenceDate);
+      expect(result.errors.dateOfBirth).toContain('Geburtsdatum ist erforderlich für die Altersüberprüfung');
+    });
+
+    it('should return error when dateOfBirth is undefined but age restrictions exist', () => {
+      const result = checkPlayerEligibility(undefined, 16, 40, referenceDate);
+      expect(result.errors.dateOfBirth).toContain('Geburtsdatum ist erforderlich für die Altersüberprüfung');
+    });
+
+    it('should return error when dateOfBirth is empty string but age restrictions exist', () => {
+      const result = checkPlayerEligibility('', 16, 40, referenceDate);
+      expect(result.errors.dateOfBirth).toContain('Geburtsdatum ist erforderlich für die Altersüberprüfung');
+    });
+  });
+
+  describe('invalid date format', () => {
+    it('should return error for invalid date format', () => {
+      const result = checkPlayerEligibility('invalid-date', 16, 40, referenceDate);
+      expect(result.errors.dateOfBirth).toContain('Ungültiges Geburtsdatumsformat');
+    });
+  });
+
+  describe('minimum age validation', () => {
+    it('should return error when player is too young', () => {
+      // Player born 2010-01-15, age = 14 on 2024-06-15
+      const result = checkPlayerEligibility('2010-01-15', 16, null, referenceDate);
+      expect(result.errors.age).toContain('Spieler ist zu jung. Mindestalter: 16 Jahre, aktuelles Alter: 14 Jahre');
+    });
+
+    it('should return no error when player meets minimum age', () => {
+      // Player born 2008-01-15, age = 16 on 2024-06-15
+      const result = checkPlayerEligibility('2008-01-15', 16, null, referenceDate);
+      expect(Object.keys(result.errors)).toHaveLength(0);
+    });
+
+    it('should return no error when player exceeds minimum age', () => {
+      // Player born 2000-01-15, age = 24 on 2024-06-15
+      const result = checkPlayerEligibility('2000-01-15', 16, null, referenceDate);
+      expect(Object.keys(result.errors)).toHaveLength(0);
+    });
+  });
+
+  describe('maximum age validation', () => {
+    it('should return error when player is too old', () => {
+      // Player born 1980-01-15, age = 44 on 2024-06-15
+      const result = checkPlayerEligibility('1980-01-15', null, 40, referenceDate);
+      expect(result.errors.age).toContain('Spieler ist zu alt. Maximalalter: 40 Jahre, aktuelles Alter: 44 Jahre');
+    });
+
+    it('should return no error when player meets maximum age', () => {
+      // Player born 1984-01-15, age = 40 on 2024-06-15
+      const result = checkPlayerEligibility('1984-01-15', null, 40, referenceDate);
+      expect(Object.keys(result.errors)).toHaveLength(0);
+    });
+
+    it('should return no error when player is under maximum age', () => {
+      // Player born 2000-01-15, age = 24 on 2024-06-15
+      const result = checkPlayerEligibility('2000-01-15', null, 40, referenceDate);
+      expect(Object.keys(result.errors)).toHaveLength(0);
+    });
+  });
+
+  describe('combined age validation', () => {
+    it('should return no error when player is within age range', () => {
+      // Player born 2000-01-15, age = 24 on 2024-06-15
+      const result = checkPlayerEligibility('2000-01-15', 16, 40, referenceDate);
+      expect(Object.keys(result.errors)).toHaveLength(0);
+    });
+
+    it('should return error when player is below age range', () => {
+      // Player born 2010-01-15, age = 14 on 2024-06-15
+      const result = checkPlayerEligibility('2010-01-15', 16, 40, referenceDate);
+      expect(result.errors.age).toContain('Spieler ist zu jung. Mindestalter: 16 Jahre, aktuelles Alter: 14 Jahre');
+    });
+
+    it('should return error when player is above age range', () => {
+      // Player born 1980-01-15, age = 44 on 2024-06-15
+      const result = checkPlayerEligibility('1980-01-15', 16, 40, referenceDate);
+      expect(result.errors.age).toContain('Spieler ist zu alt. Maximalalter: 40 Jahre, aktuelles Alter: 44 Jahre');
+    });
+
+    it('should return no error when player is exactly at minimum age', () => {
+      // Player born 2008-06-15, age = 16 on 2024-06-15 (birthday)
+      const result = checkPlayerEligibility('2008-06-15', 16, 40, referenceDate);
+      expect(Object.keys(result.errors)).toHaveLength(0);
+    });
+
+    it('should return no error when player is exactly at maximum age', () => {
+      // Player born 1984-06-15, age = 40 on 2024-06-15 (birthday)
+      const result = checkPlayerEligibility('1984-06-15', 16, 40, referenceDate);
+      expect(Object.keys(result.errors)).toHaveLength(0);
+    });
+  });
+
+  describe('edge cases', () => {
+    it('should handle same min and max age (exact age requirement)', () => {
+      // Player born 2006-01-15, age = 18 on 2024-06-15
+      const result = checkPlayerEligibility('2006-01-15', 18, 18, referenceDate);
+      expect(Object.keys(result.errors)).toHaveLength(0);
+    });
+
+    it('should return error when player does not match exact age requirement', () => {
+      // Player born 2007-01-15, age = 17 on 2024-06-15
+      const result = checkPlayerEligibility('2007-01-15', 18, 18, referenceDate);
+      expect(result.errors.age).toContain('Spieler ist zu jung. Mindestalter: 18 Jahre, aktuelles Alter: 17 Jahre');
+    });
+
+    it('should handle zero as minimum age', () => {
+      // Player born 2024-01-15, age = 0 on 2024-06-15
+      const result = checkPlayerEligibility('2024-01-15', 0, 100, referenceDate);
+      expect(Object.keys(result.errors)).toHaveLength(0);
+    });
+  });
+});
+
+describe('validatePlayerEligibility', () => {
+  const referenceDate = new Date('2024-06-15');
+
+  it('should not throw when player is eligible', () => {
+    expect(() => validatePlayerEligibility('2000-01-15', 16, 40, referenceDate)).not.toThrow();
+  });
+
+  it('should throw when player is too young', () => {
+    expect(() => validatePlayerEligibility('2010-01-15', 16, 40, referenceDate))
+      .toThrow('Spieler ist zu jung. Mindestalter: 16 Jahre, aktuelles Alter: 14 Jahre');
+  });
+
+  it('should throw when player is too old', () => {
+    expect(() => validatePlayerEligibility('1980-01-15', 16, 40, referenceDate))
+      .toThrow('Spieler ist zu alt. Maximalalter: 40 Jahre, aktuelles Alter: 44 Jahre');
+  });
+
+  it('should throw when dateOfBirth is missing', () => {
+    expect(() => validatePlayerEligibility(null, 16, 40, referenceDate))
+      .toThrow('Geburtsdatum ist erforderlich für die Altersüberprüfung');
+  });
+
+  it('should not throw when no age restrictions are set', () => {
+    expect(() => validatePlayerEligibility('2000-01-15', null, null, referenceDate)).not.toThrow();
+  });
+});
+
+describe('isPlayerEligible', () => {
+  const referenceDate = new Date('2024-06-15');
+
+  it('should return true when player is eligible', () => {
+    expect(isPlayerEligible('2000-01-15', 16, 40, referenceDate)).toBe(true);
+  });
+
+  it('should return false when player is too young', () => {
+    expect(isPlayerEligible('2010-01-15', 16, 40, referenceDate)).toBe(false);
+  });
+
+  it('should return false when player is too old', () => {
+    expect(isPlayerEligible('1980-01-15', 16, 40, referenceDate)).toBe(false);
+  });
+
+  it('should return false when dateOfBirth is missing but restrictions exist', () => {
+    expect(isPlayerEligible(null, 16, 40, referenceDate)).toBe(false);
+  });
+
+  it('should return true when no age restrictions are set', () => {
+    expect(isPlayerEligible('2000-01-15', null, null, referenceDate)).toBe(true);
+  });
+
+  it('should return true when only minAge is set and player meets it', () => {
+    expect(isPlayerEligible('2000-01-15', 16, null, referenceDate)).toBe(true);
+  });
+
+  it('should return true when only maxAge is set and player meets it', () => {
+    expect(isPlayerEligible('2000-01-15', null, 40, referenceDate)).toBe(true);
   });
 });
