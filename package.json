@@ -64,6 +64,11 @@
     "openapi-typescript": "^7.13.0",
     "uuid": "^8.3.2"
   },
+  "overrides": {
+    "projen": {
+      "shelljs": "0.10.0"
+    }
+  },
   "keywords": [
     "api",
     "digital",
