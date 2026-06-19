@@ -113,6 +113,16 @@ const generateRestCycleballTask = project.addTask('generate:api:restCB', {
 });
 project.preCompileTask.prependSpawn(generateRestCycleballTask);
 
+// Workaround for npm ci failure: projen@0.99.74 bundles shelljs@0.10.0
+// inside shx which declares ^0.9.2. Since 0.10.0 does not satisfy ^0.9.2
+// (pre-1.0 caret semantics), npm ci re-resolves and fails. This override
+// forces npm to accept the bundled version.
+project.package.addField('overrides', {
+  projen: {
+    shelljs: '0.10.0',
+  },
+});
+
 new GitHubAssignApprover(project, {
   approverMapping: [{
     author: 'hoegertn',
