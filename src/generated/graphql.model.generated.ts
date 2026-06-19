@@ -871,6 +871,7 @@ export type Query = {
   getPreferredDatesForClub?: Maybe<Array<Maybe<PreferredMatchdayDate>>>;
   getSeasonById?: Maybe<Season>;
   getSeasonExportRBW?: Maybe<Scalars['String']['output']>;
+  getSeasonExportRBWDiff?: Maybe<Scalars['String']['output']>;
   getTeamById?: Maybe<Team>;
   getUpcomingMatchdays: Array<CalendarDate>;
 };
@@ -1120,6 +1121,13 @@ export type QueryGetSeasonByIdArgs = {
 
 export type QueryGetSeasonExportRbwArgs = {
   associationId: Scalars['ID']['input'];
+  seasonId: Scalars['ID']['input'];
+};
+
+
+export type QueryGetSeasonExportRbwDiffArgs = {
+  associationId: Scalars['ID']['input'];
+  previousExport: Scalars['String']['input'];
   seasonId: Scalars['ID']['input'];
 };
 

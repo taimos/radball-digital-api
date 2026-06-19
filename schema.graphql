@@ -789,6 +789,8 @@ type Query {
   getLeagueGroupView(groupId: ID!): LeagueGroupView @aws_cognito_user_pools
   # Export the season in RBW format
   getSeasonExportRBW(associationId: ID!, seasonId: ID!): String @aws_cognito_user_pools
+  # Export only the diff since a previous RBW export
+  getSeasonExportRBWDiff(associationId: ID!, seasonId: ID!, previousExport: String!): String @aws_cognito_user_pools
 
   # Ranking
   getLeagueGroupRanking(groupId: ID!, includeNonCompetitive: Boolean): [RankingEntry!]! @aws_cognito_user_pools
